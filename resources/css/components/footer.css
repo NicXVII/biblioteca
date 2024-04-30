@@ -1,0 +1,28 @@
+footer {
+  margin: 0;
+  padding: 0;
+  font-family: "San Francisco", Arial, sans-serif;
+  width: 80vw;
+  background-color: #f2f2f27e;
+  text-align: center;
+  color: #333;
+  height: auto;
+  font-size: 15px!;
+  height: auto;
+  position: fixed;
+  bottom: 0;
+}
+
+@media screen and (min-width: 1500px) and (max-width: 1800px) {
+  footer {
+    height: auto;
+    font-size: 15px;
+  }
+
+  .footer-content {
+    font-size: 15px;
+  }
+  .footer-content h3 {
+    font-size: 17px;
+  }
+}

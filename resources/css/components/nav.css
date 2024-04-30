@@ -1,0 +1,45 @@
+.nav-bar {
+  font-family: "San Francisco", Arial, sans-serif;
+  height: auto;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0; /* Posiziona l'elemento all'inizio della pagina */
+  flex-direction: column;
+  padding: 0;
+  margin-bottom: 2vh;
+  text-align: center;
+}
+
+.nav-bar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-bar ul li {
+  margin-right: 60px;
+  float: left;
+  text-align: center;
+}
+
+.nav-bar ul li a {
+  font-size: 25px;
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  line-height: 36px;
+}
+
+.nav-bar ul li a:hover {
+  background-color: #111;
+}
+
+.fa-solid {
+  margin-right: 5px;
+}
