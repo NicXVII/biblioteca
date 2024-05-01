@@ -5,8 +5,9 @@ require_once("../database.php");
 $result = array();
 
 // Check if the request method is POST
-//if ($_SERVER['REQUEST_METHOD'] == 'POST')
-if (true) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+//if (true) 
+{
     $db;
 
     if (!$db) {
@@ -18,7 +19,7 @@ if (true) {
         $_SESSION['userID'] = 1;
         if (isset($_SESSION['userID'])) {
             $id = $_SESSION['userID'];
-            $query = "SELECT tprestito.dataInizio, tprestito.dataFine, tlibro.nome, tautore.nome, tautore.cognome  
+            $query = "SELECT tprestito.dataInizio, tprestito.dataFine, tlibro.nome AS nomeLibro, tautore.nome AS nomeAutore, tautore.cognome AS cognomeAutore  
             FROM `tprestito` 
             JOIN tprenotazione ON tprenotazione.idPrenotazione = tprestito.idPrenotazione
             JOIN tlibro ON tlibro.idLibro = tprenotazione.idLibro
@@ -40,16 +41,16 @@ if (true) {
                         $resultArray[] = [
                             'dataInizio'    =>  $row['dataInizio'],
                             'dataFine'      =>  $row['dataFine'],
-                            'nomeLibro'     =>  $row['tlibro.nome'],
-                            'nomeAutore'    =>  $row['tautore.nome'],
-                            'cognomeAutore' =>  $row['tautore.cognome'],
+                            'nomeLibro'     =>  $row['nomeLibro'],
+                            'nomeAutore'    =>  $row['nomeAutore'],
+                            'cognomeAutore' =>  $row['cognomeAutore'],
 
                         ];
                     }
 
                     $result = [
                         'success'       =>  true,
-                        'data'          =>  $resultArray[0],
+                        'data'          =>  $resultArray,
                     ];
                 } else {
                     $result = [
