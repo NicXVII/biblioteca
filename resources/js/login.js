@@ -1,4 +1,3 @@
-var url = 'http://localhost/info/concerto/';
 
 document.addEventListener("DOMContentLoaded",function(){
     console.log('DOMContentLoaded');
@@ -21,13 +20,14 @@ function preventDefault()
 
 function Fetchlogin(email, password)
 {
+    console.log(email, password);
     const data = {
         email:      email,
         password:   password,
     };
 
     console.log(data);
-    fetch(url+'function/login.php', {
+    fetch('function/login.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

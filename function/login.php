@@ -39,7 +39,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-$query = "SELECT * FROM tcliente WHERE email = ? AND password = ?";
+$query = "SELECT * FROM tcliente WHERE mail = ? AND password = ?";
 $statement = mysqli_prepare($db, $query);
 
 if ($statement) {
@@ -52,15 +52,13 @@ if ($statement) {
     if (mysqli_num_rows($queryResult) == 1) {
 
         $record = mysqli_fetch_array($queryResult);
-        $_SESSION['userID'] = $record['idCliente'];
-        $_SESSION['userEmail'] = $record['email'];
+        $_SESSION['userID'] = $record['IdCliente'];
 
         // Ottenimento dell'ID utente autenticato
         //$userID = $_SESSION['userID'];
         $result = array(
             'success' => true,
             'message' => 'Logged',
-            'token'   => $record['token']
         );
     } else {
         $result = array(
