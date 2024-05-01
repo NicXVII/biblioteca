@@ -5,9 +5,7 @@ require_once("../database.php");
 $result = array();
 
 // Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-//if (true) 
-{
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db;
 
     if (!$db) {
@@ -18,9 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     } else {
         if (isset($_SESSION['userID'])) {
             $id = $_SESSION['userID'];
-            $query = "SELECT tprestito.dataInizio, tprestito.dataFine, tlibro.nome AS nomeLibro, tautore.nome AS nomeAutore, tautore.cognome AS cognomeAutore  
-            FROM `tprestito` 
-            JOIN tprenotazione ON tprenotazione.idPrenotazione = tprestito.idPrenotazione
+            $query = "SELECT tprenotazione.dataPrenotazione, tprenotazione.dataAccetazione, tlibro.nome AS nomeLibro, tautore.nome AS nomeAutore, tautore.cognome AS cognomeAutore  
+            FROM `tprenotazione` 
             JOIN tlibro ON tlibro.idLibro = tprenotazione.idLibro
             JOIN tautore ON tlibro.idAutore = tautore.idAutore
             WHERE tprenotazione.idCliente = ? 
@@ -41,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                             'nomeLibro'     =>  $row['nomeLibro'],
                             'nomeAutore'    =>  $row['nomeAutore'],
                             'cognomeAutore' =>  $row['cognomeAutore'],
-                            'dataInizio'    =>  $row['dataInizio'],
-                            'dataFine'      =>  $row['dataFine'],
+                            'dataPrenotazione'    =>  $row['dataPrenotazione'],
+                            'dataAccetazione'      =>  $row['dataAccetazione'],
                         ];
                     }
 
