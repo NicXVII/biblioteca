@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 01, 2024 alle 15:27
+-- Creato il: Mag 01, 2024 alle 23:03
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -100,6 +100,22 @@ CREATE TABLE `tcartageopolitica` (
   `idAutore` int(11) DEFAULT NULL,
   `idCasaEditrice` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tcartageopolitica`
+--
+
+INSERT INTO `tcartageopolitica` (`idCartaGeoPolitica`, `titolo`, `data`, `dataRappresentazione`, `idAutore`, `idCasaEditrice`) VALUES
+(1, 'Mappa geopolitica dell\'Europa', '2023-05-15', '2023-06-01', 1, 1),
+(2, 'Le grandi potenze mondiali', '2023-08-20', '2023-09-10', 2, 2),
+(3, 'Crisi politica in Medio Oriente', '2023-10-10', '2023-10-25', 3, 3),
+(4, 'L\'Africa post-coloniale', '2023-04-05', '2023-05-01', 4, 1),
+(5, 'La geopolitica dell\'Asia orientale', '2023-06-12', '2023-07-01', 5, 2),
+(6, 'La Russia e il suo ruolo nel mondo contemporaneo', '2023-09-25', '2023-10-10', 6, 3),
+(7, 'L\'America Latina nel XXI secolo', '2023-11-15', '2023-12-01', 7, 1),
+(8, 'Il Medio Oriente e il petrolio', '2023-02-20', '2023-03-10', 8, 2),
+(9, 'Le dispute territoriali nel Mar Cinese Meridionale', '2023-07-08', '2023-08-01', 9, 3),
+(10, 'La politica estera degli Stati Uniti', '2023-10-30', '2023-11-15', 10, 1);
 
 -- --------------------------------------------------------
 
@@ -493,7 +509,7 @@ ALTER TABLE `tautoreenciclopedia`
 -- AUTO_INCREMENT per la tabella `tcartageopolitica`
 --
 ALTER TABLE `tcartageopolitica`
-  MODIFY `idCartaGeoPolitica` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCartaGeoPolitica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT per la tabella `tcasaeditrice`
