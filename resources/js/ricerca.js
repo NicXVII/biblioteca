@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 //----------------------------------fetching api here--------------------------------
-
+function fetchRicerca()
+{
+    
+}
 
 
 
@@ -29,10 +32,11 @@ function createSelect() {
     divSearch.appendChild(select);
 }
 
+var selected = null;
 function addEventListenerSelect() {
     var select = document.querySelector("select");
     select.addEventListener("change", function() {
-        var selected = select.options[select.selectedIndex].value;
+        selected = select.options[select.selectedIndex].value;
         console.log(selected);
     });
 }
