@@ -1,12 +1,12 @@
 <?php
 session_start();
 require_once("..//database.php");
-$result = array();
-$json = file_get_contents('php://input');
-$data = json_decode($json, true);
+$data = json_decode(file_get_contents('php://input'), true);
 $result = array();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+//if (true) 
+{
     $db;
 
     if (!$db) {
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             switch ($tipoElemento) {
                 case 'libro':
                     $query = "SELECT 
-                                tlibro.idLibro,
+                                tlibro.idLibro as id,
                                 tlibro.nome AS titolo,
                                 tlibro.isbn,
                                 tlibro.pubblicazione AS anno_pubblicazione,
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 tlibro.pubblicazione = ? OR
                                 tcasaeditrice.nome LIKE ?";
                     break;
-                case 'volume':
+                case 'enciclopedie':
                     $query = "SELECT 
                                 tvolume.idVolume,
                                 tvolume.titolo,
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 tcasaeditrice.nome LIKE ?";
                     break;
 
-                case 'cartaGeoPolitica':
+                case 'cartine':
                     $query = "SELECT 
                                 tcartageopolitica.idCartaGeoPolitica,
                                 tcartageopolitica.titolo,
@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, "ssssss", $ricerca, $ricerca, $ricerca, $ricerca, $ricerca, $ricerca);
+            mysqli_stmt_bind_param($stmt, "sss", $ricerca, $ricerca, $ricerca);
             mysqli_stmt_execute($stmt);
             $queryResult = mysqli_stmt_get_result($stmt);
 

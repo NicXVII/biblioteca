@@ -4,22 +4,25 @@ body {
   height: 100vh;
   margin: 0 !important;
   padding: 0 !important;
+  overflow: hidden; /* Prevent content from overflowing */
 }
 
 .content {
-  margin-top: 15vh;
-  height: 85vh;
+  margin-top: 20vh;
+  height: 90vh;
   width: 100vw;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
 }
-
 .search {
   height: 10vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2vh;
 }
 
 .search input[type="text"] {
@@ -54,4 +57,42 @@ body {
   border-radius: 5px;
   font-size: 16px;
   outline: none;
+}
+
+.searchResults {
+  align-items: center;
+  align-content: center;
+  justify-content: top;
+  overflow-y: auto;
+  height: 70vh !important;
+  text-align: center;
+  display: flex;
+
+  flex-direction: column;
+  width: 100vw;
+  height: auto;
+}
+
+.risultatoRicerca {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  padding: 20px; /* Increased padding for better spacing */
+  margin-bottom: 20px; /* Added margin between search results */
+  background-color: #f9f9f9; /* Light background color for better readability */
+  border-radius: 10px; /* Rounded corners for a more modern look */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+}
+
+.risultatoRicerca p {
+  margin-right: 5%;
+}
+
+.risultatoRicerca:last-child {
+  border-bottom: none;
+}
+
+#ricercaNulla {
+  font-size: 2rem;
 }
