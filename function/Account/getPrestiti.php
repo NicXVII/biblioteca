@@ -39,12 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
-                            'dataInizio'    =>  $row['dataInizio'],
-                            'dataFine'      =>  $row['dataFine'],
                             'nomeLibro'     =>  $row['nomeLibro'],
                             'nomeAutore'    =>  $row['nomeAutore'],
                             'cognomeAutore' =>  $row['cognomeAutore'],
-
+                            'dataInizio'    =>  $row['dataInizio'],
+                            'dataFine'      =>  $row['dataFine'],
                         ];
                     }
 

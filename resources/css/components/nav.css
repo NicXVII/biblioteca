@@ -1,7 +1,7 @@
 .nav-bar {
   font-family: "San Francisco", Arial, sans-serif;
-  height: 10vh;
-  width: 100vw;
+  height: 10vh !important;
+  width: 100vw !important;
   display: flex;
   justify-content: center;
   align-items: center;

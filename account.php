@@ -17,9 +17,9 @@
             <div class="userMediaData"></div>
             <div class="userMediaBtn"></div>
         </div>
-        <div class='prestiti'></div>
+        <div class='prestiti'>
+        </div>
         <div class='prenotazioni'>
-
         </div>
     </div>
 </body>

@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     fetcUtente();
+    fetchPrestiti();    
 });
 
 //----------------------------------------------------------------------------
@@ -32,6 +33,38 @@ function fetcUtente()
         console.error('Si è verificato un errore:', error);
     });
 }
+
+
+function fetchPrestiti()
+{
+    
+    fetch('function/Account/getPrestiti.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        if (data.success) {
+            console.log('La richiesta ha avuto successo:', data.data);
+            populatePrestiti(data.data);
+        } else {
+            console.log('La richiesta non ha avuto successo');
+            console.log(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });
+}
+
 
 
 
@@ -90,23 +123,33 @@ function logout(btn) {
 }
 
 
-function popUpRight()
-{
-    Swal.fire({
-        icon: 'success',
-        title: 'Eliminazione avvenuta con successo!',
-        text: 'Buona navigazione',
-    });
+function populatePrestiti(data) {
+    var divPrestiti = document.querySelector('.prestiti');
+    divPrestiti.innerHTML = '';	
 
+    var titolo = document.createElement("h2");
+    titolo.innerHTML = "Prestiti";
+    divPrestiti.appendChild(titolo);
+
+    for (dato of data) {
+        var divElemento = document.createElement("div");
+        divElemento.classList.add("elemento");
+
+        var p = document.createElement("p");
+        p.innerHTML = "Titolo: "+dato.nomeLibro;
+        divElemento.appendChild(p);
+
+        var p = document.createElement("p");
+        p.innerHTML = "Autore " +dato.nomeAutore + " " + dato.cognomeAutore;
+        divElemento.appendChild(p);
+        
+        var p  = document.createElement("p"); 
+        p.innerHTML = "Inizio prestito: " + dato.dataInizio + " Fine: " + dato.dataFine;
+        divElemento.appendChild(p);
+
+        divPrestiti.appendChild(divElemento);
+    }
 }
 
-function popUpWrong()
-{
-    Swal.fire({
-        icon: 'error',
-        title: 'Eliminazione non avvenuta!',
-        text: 'Riprova',
-    });
-}
 
 
