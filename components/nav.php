@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../resources/css/components/nav.css">
+<link rel="stylesheet" href="resources/css/components/nav.css">
 <?php
 ob_start();
 if (session_status() === PHP_SESSION_NONE) {
@@ -19,6 +19,7 @@ if (isset($_SESSION['idConcerto']))
 
     <div>
         <ul>
+
             <li>
                 <a href="index.php">
                     <i class="fa-solid fa-house"></i>
@@ -26,13 +27,13 @@ if (isset($_SESSION['idConcerto']))
                 </a>
             </li>
             <li>
-                <a href="show.php?type=concert">
+                <a href="ricerca.php">
                     <i class="fa-solid fa-scroll"></i>
                     Ricerca Elementi
                 </a>
             </li>
             <li>
-                <a href="show.php?type=artist">
+                <a href="account.php">
                     <i class="fa-solid fa-scroll"></i>
                     Account
                 </a>

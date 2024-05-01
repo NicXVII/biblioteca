@@ -1,0 +1,52 @@
+body {
+  font-family: "San Francisco", Arial, sans-serif !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  justify-content: center;
+  flex-direction: column !important;
+}
+.title {
+  margin-top: 10vh !important;
+  width: 100vw;
+  height: auto !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.location {
+  margin-top: 3vh !important;
+  width: 100vw;
+  height: 50vh !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.location img {
+  width: 50vw;
+  height: 50vh;
+}
+
+.location img:hover {
+  transform: scale(1.1);
+  animation-duration: 3s;
+}
+
+.info {
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 2vh;
+  width: 80vw;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}

@@ -39,7 +39,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-$query = "SELECT * FROM tclienti WHERE email = ? AND password = ?";
+$query = "SELECT * FROM tcliente WHERE email = ? AND password = ?";
 $statement = mysqli_prepare($db, $query);
 
 if ($statement) {

@@ -24,6 +24,10 @@ session_start();
                     <input type="email" name="email" id="email" placeholder="Email" required />
                     <label for="firstname">Nome</label>
                     <input type="text" name="firstname" id="firstname" placeholder="Nome" required />
+                    <label for="firstname">Cognome</label>
+                    <input type="text" name="surname" id="surname" placeholder="Cognome" required />
+                    <label for="firstname">Codice Fiscale</label>
+                    <input type="text" name="fiscale" id="fiscale" placeholder="Codice Fiscale" required />
                     <label for="password">Password</label>
                     <input type="text" name="password" id="password" placeholder="Password" required />
                     <label for="conpass">Conferma Password:</label>

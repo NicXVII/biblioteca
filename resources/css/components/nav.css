@@ -1,6 +1,6 @@
 .nav-bar {
   font-family: "San Francisco", Arial, sans-serif;
-  height: auto;
+  height: 10vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -8,7 +8,7 @@
   overflow: hidden;
   background-color: #333;
   position: fixed;
-  top: 0; /* Posiziona l'elemento all'inizio della pagina */
+  top: 0;
   flex-direction: column;
   padding: 0;
   margin-bottom: 2vh;
