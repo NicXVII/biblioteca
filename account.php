@@ -12,6 +12,16 @@
     <?php
     require_once('components/nav.php')
     ?>
+    <div class="media">
+        <div class="userMedia">
+            <div class="userMediaData"></div>
+            <div class="userMediaBtn"></div>
+        </div>
+        <div class='prestiti'></div>
+        <div class='prenotazioni'>
+
+        </div>
+    </div>
 </body>
 
 </html>

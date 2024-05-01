@@ -5,9 +5,8 @@ require_once("../database.php");
 $result = array();
 
 // Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-//if (true) 
-{
+//if ($_SERVER['REQUEST_METHOD'] == 'POST')
+if (true) {
     $db;
 
     if (!$db) {
@@ -19,8 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $_SESSION['userID'] = 1;
         if (isset($_SESSION['userID'])) {
             $id = $_SESSION['userID'];
-            $query = "SELECT * FROM `tcliente`
-            WHERE tcliente.IdCliente = ?";
+            $query = "SELECT tprestito.dataInizio, tprestito.dataFine, tlibro.nome, tautore.nome, tautore.cognome  
+            FROM `tprestito` 
+            JOIN tprenotazione ON tprenotazione.idPrenotazione = tprestito.idPrenotazione
+            JOIN tlibro ON tlibro.idLibro = tprenotazione.idLibro
+            JOIN tautore ON tlibro.idAutore = tautore.idAutore
+            WHERE tprenotazione.idCliente = ? 
+            LIMIT 0, 25;
+            ";
 
             $stmt = mysqli_prepare($db, $query);
 
@@ -33,11 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
-                            'nome'              => $row['nome'],
-                            'cognome'           => $row['cognome'],
-                            'codiceFiscale'     => $row['codiceFiscale'],
-                            'mail'              => $row['mail'],
-                            'password'          => $row['password'],
+                            'dataInizio'    =>  $row['dataInizio'],
+                            'dataFine'      =>  $row['dataFine'],
+                            'nomeLibro'     =>  $row['tlibro.nome'],
+                            'nomeAutore'    =>  $row['tautore.nome'],
+                            'cognomeAutore' =>  $row['tautore.cognome'],
+
                         ];
                     }
 
@@ -62,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         } else {
             $result = [
                 'success'    =>  false,
-                'message'   =>  'Missing element idGenere',
+                'message'   =>  'Missing element idUtente',
             ];
         }
 

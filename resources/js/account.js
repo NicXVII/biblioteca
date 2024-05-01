@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
+    fetcUtente();
 });
 
 //----------------------------------------------------------------------------
-function fetcUtente(id)
+function fetcUtente()
 {
     
-    fetch(url+'function/Account/getDati.php', {
+    fetch('function/Account/getDati.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -21,7 +22,7 @@ function fetcUtente(id)
 
         if (data.success) {
             console.log('La richiesta ha avuto successo:', data.data);
-            //popolateDataUser(data.data);
+            popolateDataUser(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
             console.log(data.message);
@@ -58,9 +59,16 @@ function popolateDataUser(data)
     p.innerHTML = "Nome utente: "+data.nome;
     divUser.appendChild(p);
 
+    var p = document.createElement("p");
+    p.innerHTML = "Cognome utente: "+data.cognome;
+    divUser.appendChild(p);
 
     var p = document.createElement("p");
-    p.innerHTML = "Email: "+data.email;
+    p.innerHTML = "Codice fiscale utente: "+data.codiceFiscale;
+    divUser.appendChild(p);
+
+    var p = document.createElement("p");
+    p.innerHTML = "Email: "+data.mail;
     divUser.appendChild(p);
 
     var p = document.createElement("p");
@@ -77,7 +85,7 @@ function popolateDataUser(data)
 
 function logout(btn) {
     btn.addEventListener("click", function() {
-        location.href = "function/logout.php"; // Correzione qui: location.href invece di Location.href
+        location.href = "function/logout.php"; 
     });
 }
 
