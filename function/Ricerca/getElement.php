@@ -14,7 +14,7 @@ if (true) {
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-        $data['tipoElemento'] = 'enciclopedie';
+        $data['tipoElemento'] = 'cartine';
         $data['ricerca'] = 'a';
         if (isset($data['tipoElemento']) && isset($data['ricerca'])) {
             $tipoElemento = $data['tipoElemento'];
@@ -81,8 +81,10 @@ if (true) {
                     tcasaeditrice.nome AS casa_editrice
                 FROM 
                     tcartageopolitica
-                JOIN 
-                    tautore ON tcartageopolitica.idAutore = tautore.idAutore
+                JOIN tautorecarta 
+                    ON tautorecarta.idCartaGeoPolitica = tcartageopolitica.idCartaGeoPolitica
+                JOIN tautore
+                    ON tautorecarta.idAutore = tautore.idAutore
                 JOIN 
                     tcasaeditrice ON tcartageopolitica.idCasaEditrice = tcasaeditrice.idCasaEditrice
                 WHERE 
