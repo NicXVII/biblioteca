@@ -179,11 +179,10 @@ if (true) {
                         'tipo_elemento'      => $tipoElemento,
                         'titolo'             => $row['titolo'],
                         'isbn'               => $row['isbn'],
-                        'anno_pubblicazione' => $row['anno_pubblicazione'],
+                        'anno_pubblicazione' => date('d/m/Y', strtotime($row['anno_pubblicazione'])),
                         'autore_nome'        => $row['autore_nome'],
                         'autore_cognome'     => $row['autore_cognome'],
                         'casa_editrice'      => $row['casa_editrice']
-
                     ];
                 }
 

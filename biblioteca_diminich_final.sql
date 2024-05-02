@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 01, 2024 alle 23:03
+-- Creato il: Mag 02, 2024 alle 22:32
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -74,6 +74,15 @@ CREATE TABLE `tautorecarta` (
   `idAutore` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `tautorecarta`
+--
+
+INSERT INTO `tautorecarta` (`idAutoreCarta`, `idCartaGeoPolitica`, `idAutore`) VALUES
+(1, 3, 2),
+(2, 4, 6),
+(3, 4, 10);
+
 -- --------------------------------------------------------
 
 --
@@ -86,6 +95,14 @@ CREATE TABLE `tautoreenciclopedia` (
   `idEnciclopedia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `tautoreenciclopedia`
+--
+
+INSERT INTO `tautoreenciclopedia` (`idMultiAutori`, `idAutore`, `idEnciclopedia`) VALUES
+(1, 5, 10),
+(2, 4, 10);
+
 -- --------------------------------------------------------
 
 --
@@ -97,25 +114,25 @@ CREATE TABLE `tcartageopolitica` (
   `titolo` varchar(255) NOT NULL,
   `data` date NOT NULL,
   `dataRappresentazione` date NOT NULL,
-  `idAutore` int(11) DEFAULT NULL,
-  `idCasaEditrice` int(11) DEFAULT NULL
+  `idCasaEditrice` int(11) DEFAULT NULL,
+  `isbn` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `tcartageopolitica`
 --
 
-INSERT INTO `tcartageopolitica` (`idCartaGeoPolitica`, `titolo`, `data`, `dataRappresentazione`, `idAutore`, `idCasaEditrice`) VALUES
-(1, 'Mappa geopolitica dell\'Europa', '2023-05-15', '2023-06-01', 1, 1),
-(2, 'Le grandi potenze mondiali', '2023-08-20', '2023-09-10', 2, 2),
-(3, 'Crisi politica in Medio Oriente', '2023-10-10', '2023-10-25', 3, 3),
-(4, 'L\'Africa post-coloniale', '2023-04-05', '2023-05-01', 4, 1),
-(5, 'La geopolitica dell\'Asia orientale', '2023-06-12', '2023-07-01', 5, 2),
-(6, 'La Russia e il suo ruolo nel mondo contemporaneo', '2023-09-25', '2023-10-10', 6, 3),
-(7, 'L\'America Latina nel XXI secolo', '2023-11-15', '2023-12-01', 7, 1),
-(8, 'Il Medio Oriente e il petrolio', '2023-02-20', '2023-03-10', 8, 2),
-(9, 'Le dispute territoriali nel Mar Cinese Meridionale', '2023-07-08', '2023-08-01', 9, 3),
-(10, 'La politica estera degli Stati Uniti', '2023-10-30', '2023-11-15', 10, 1);
+INSERT INTO `tcartageopolitica` (`idCartaGeoPolitica`, `titolo`, `data`, `dataRappresentazione`, `idCasaEditrice`, `isbn`) VALUES
+(1, 'Mappa geopolitica dell\'Europa', '2023-05-15', '2023-06-01', 1, '1'),
+(2, 'Le grandi potenze mondiali', '2023-08-20', '2023-09-10', 2, '2'),
+(3, 'Crisi politica in Medio Oriente', '2023-10-10', '2023-10-25', 3, '3'),
+(4, 'L\'Africa post-coloniale', '2023-04-05', '2023-05-01', 1, '4'),
+(5, 'La geopolitica dell\'Asia orientale', '2023-06-12', '2023-07-01', 2, '5'),
+(6, 'La Russia e il suo ruolo nel mondo contemporaneo', '2023-09-25', '2023-10-10', 3, '6'),
+(7, 'L\'America Latina nel XXI secolo', '2023-11-15', '2023-12-01', 1, '7'),
+(8, 'Il Medio Oriente e il petrolio', '2023-02-20', '2023-03-10', 2, '8'),
+(9, 'Le dispute territoriali nel Mar Cinese Meridionale', '2023-07-08', '2023-08-01', 3, '9'),
+(10, 'La politica estera degli Stati Uniti', '2023-10-30', '2023-11-15', 1, '10');
 
 -- --------------------------------------------------------
 
@@ -173,9 +190,19 @@ CREATE TABLE `tenciclopedia` (
   `data` date NOT NULL,
   `volumiTotali` int(11) NOT NULL,
   `isbn` varchar(255) NOT NULL,
-  `idCasaEditrice` int(11) DEFAULT NULL,
-  `idMultiAutori` int(11) DEFAULT NULL
+  `idCasaEditrice` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tenciclopedia`
+--
+
+INSERT INTO `tenciclopedia` (`idEnciclopedia`, `titolo`, `data`, `volumiTotali`, `isbn`, `idCasaEditrice`) VALUES
+(6, 'Enciclopedia di Storia Antica', '2023-01-15', 10, '978-1234567890', 1),
+(7, 'Enciclopedia di Biologia Moderna', '2023-02-20', 8, '978-2345678901', 1),
+(8, 'Enciclopedia di Fisica Quantistica', '2023-03-25', 12, '978-3456789012', 2),
+(9, 'Enciclopedia di Letteratura Contemporanea', '2023-04-30', 7, '978-4567890123', 2),
+(10, 'Enciclopedia di Arte Medievale', '2023-05-10', 9, '978-5678901234', 3);
 
 -- --------------------------------------------------------
 
@@ -240,7 +267,38 @@ CREATE TABLE `tprenotazione` (
 --
 
 INSERT INTO `tprenotazione` (`idPrenotazione`, `idCliente`, `idLibro`, `dataPrenotazione`, `dataAccetazione`) VALUES
-(1, 1, 19, '2024-04-01', '2024-05-01');
+(1, 1, 19, '2024-04-01', '2024-05-01'),
+(3, 1, 17, '2024-05-02', NULL),
+(31, 1, 14, '2024-05-02', NULL),
+(32, 1, 15, '2024-05-02', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `tprenotazionecarta`
+--
+
+CREATE TABLE `tprenotazionecarta` (
+  `idPrenotazione` int(11) NOT NULL,
+  `idCliente` int(11) NOT NULL,
+  `idCarta` int(11) NOT NULL,
+  `dataPrenotazione` date NOT NULL,
+  `dataAccetazione` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `tprenotazioneenciclopedia`
+--
+
+CREATE TABLE `tprenotazioneenciclopedia` (
+  `idPrenotazione` int(11) NOT NULL,
+  `idCliente` int(11) NOT NULL,
+  `idVolume` int(11) NOT NULL,
+  `dataPrenotazione` date NOT NULL,
+  `dataAccetazione` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -252,7 +310,7 @@ CREATE TABLE `tprestito` (
   `idPrestito` int(11) NOT NULL,
   `idPrenotazione` int(255) NOT NULL,
   `dataInizio` date NOT NULL,
-  `dataFine` date NOT NULL
+  `dataFine` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -260,7 +318,33 @@ CREATE TABLE `tprestito` (
 --
 
 INSERT INTO `tprestito` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`) VALUES
-(1, 1, '2024-05-01', '2024-05-31');
+(1, 1, '2024-05-01', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `tprestitocarta`
+--
+
+CREATE TABLE `tprestitocarta` (
+  `idPrestito` int(11) NOT NULL,
+  `idPrenotazione` int(11) NOT NULL,
+  `dataInizio` date NOT NULL,
+  `dataFine` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `tprestitoenciclopedia`
+--
+
+CREATE TABLE `tprestitoenciclopedia` (
+  `idPrestito` int(11) NOT NULL,
+  `idPrenotazione` int(11) NOT NULL,
+  `dataInizio` date NOT NULL,
+  `dataFine` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -339,6 +423,37 @@ CREATE TABLE `tvolume` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dump dei dati per la tabella `tvolume`
+--
+
+INSERT INTO `tvolume` (`idVolume`, `isbn`, `numeroVolume`, `idEnciclopedia`) VALUES
+(76, '978-0234567890', 1, 6),
+(77, '978-0234567891', 2, 6),
+(78, '978-0234567892', 3, 6),
+(79, '978-0234567893', 4, 6),
+(80, '978-0234567894', 5, 6),
+(81, '978-1234567895', 1, 7),
+(82, '978-2345678906', 2, 7),
+(83, '978-2345678907', 3, 7),
+(84, '978-2345678908', 4, 7),
+(85, '978-2345678909', 5, 7),
+(86, '978-3456789010', 1, 8),
+(87, '978-3456789011', 2, 8),
+(88, '978-3456789012', 3, 8),
+(89, '978-3456789013', 4, 8),
+(90, '978-3456789014', 5, 8),
+(91, '978-4567890125', 1, 9),
+(92, '978-4567890126', 2, 9),
+(93, '978-4567890127', 3, 9),
+(94, '978-4567890128', 4, 9),
+(95, '978-4567890129', 5, 9),
+(96, '978-5678901230', 1, 10),
+(97, '978-5678901231', 2, 10),
+(98, '978-5678901232', 3, 10),
+(99, '978-5678901233', 4, 10),
+(100, '978-5678901234', 5, 10);
+
+--
 -- Indici per le tabelle scaricate
 --
 
@@ -375,7 +490,6 @@ ALTER TABLE `tautoreenciclopedia`
 --
 ALTER TABLE `tcartageopolitica`
   ADD PRIMARY KEY (`idCartaGeoPolitica`),
-  ADD KEY `fk__idAutore` (`idAutore`),
   ADD KEY `fk_idCasaEditrice_` (`idCasaEditrice`);
 
 --
@@ -397,8 +511,7 @@ ALTER TABLE `tcliente`
 ALTER TABLE `tenciclopedia`
   ADD PRIMARY KEY (`idEnciclopedia`),
   ADD UNIQUE KEY `isbn` (`isbn`),
-  ADD KEY `fk_idCasaEditrice` (`idCasaEditrice`),
-  ADD KEY `fk_idMultiAutori` (`idMultiAutori`);
+  ADD KEY `fk_idCasaEditrice` (`idCasaEditrice`);
 
 --
 -- Indici per le tabelle `tlavoratore`
@@ -425,11 +538,41 @@ ALTER TABLE `tprenotazione`
   ADD KEY `fk_idLibro_tprenotazione` (`idLibro`);
 
 --
+-- Indici per le tabelle `tprenotazionecarta`
+--
+ALTER TABLE `tprenotazionecarta`
+  ADD PRIMARY KEY (`idPrenotazione`),
+  ADD KEY `fk_idCarta` (`idCarta`),
+  ADD KEY `fk_idClienteCarta` (`idCliente`);
+
+--
+-- Indici per le tabelle `tprenotazioneenciclopedia`
+--
+ALTER TABLE `tprenotazioneenciclopedia`
+  ADD PRIMARY KEY (`idPrenotazione`),
+  ADD KEY `fk_idVolumeEnciclopedia` (`idVolume`),
+  ADD KEY `fk_idClienteEnciclopediaVolume` (`idCliente`);
+
+--
 -- Indici per le tabelle `tprestito`
 --
 ALTER TABLE `tprestito`
   ADD PRIMARY KEY (`idPrestito`),
   ADD KEY `fk_idPrenotazione` (`idPrenotazione`);
+
+--
+-- Indici per le tabelle `tprestitocarta`
+--
+ALTER TABLE `tprestitocarta`
+  ADD PRIMARY KEY (`idPrestito`),
+  ADD KEY `fk_idPrenotazioneCarta` (`idPrenotazione`);
+
+--
+-- Indici per le tabelle `tprestitoenciclopedia`
+--
+ALTER TABLE `tprestitoenciclopedia`
+  ADD PRIMARY KEY (`idPrestito`),
+  ADD KEY `fk_idPrestitoEnciclopedia` (`idPrenotazione`);
 
 --
 -- Indici per le tabelle `tscaffale`
@@ -497,13 +640,13 @@ ALTER TABLE `tautore`
 -- AUTO_INCREMENT per la tabella `tautorecarta`
 --
 ALTER TABLE `tautorecarta`
-  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `tautoreenciclopedia`
 --
 ALTER TABLE `tautoreenciclopedia`
-  MODIFY `idMultiAutori` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMultiAutori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `tcartageopolitica`
@@ -527,7 +670,7 @@ ALTER TABLE `tcliente`
 -- AUTO_INCREMENT per la tabella `tenciclopedia`
 --
 ALTER TABLE `tenciclopedia`
-  MODIFY `idEnciclopedia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEnciclopedia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT per la tabella `tlavoratore`
@@ -545,13 +688,37 @@ ALTER TABLE `tlibro`
 -- AUTO_INCREMENT per la tabella `tprenotazione`
 --
 ALTER TABLE `tprenotazione`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT per la tabella `tprenotazionecarta`
+--
+ALTER TABLE `tprenotazionecarta`
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `tprenotazioneenciclopedia`
+--
+ALTER TABLE `tprenotazioneenciclopedia`
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `tprestito`
 --
 ALTER TABLE `tprestito`
   MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT per la tabella `tprestitocarta`
+--
+ALTER TABLE `tprestitocarta`
+  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `tprestitoenciclopedia`
+--
+ALTER TABLE `tprestitoenciclopedia`
+  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffale`
@@ -587,7 +754,7 @@ ALTER TABLE `tstanza`
 -- AUTO_INCREMENT per la tabella `tvolume`
 --
 ALTER TABLE `tvolume`
-  MODIFY `idVolume` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- Limiti per le tabelle scaricate
@@ -612,15 +779,13 @@ ALTER TABLE `tautoreenciclopedia`
 -- Limiti per la tabella `tcartageopolitica`
 --
 ALTER TABLE `tcartageopolitica`
-  ADD CONSTRAINT `fk__idAutore` FOREIGN KEY (`idAutore`) REFERENCES `tautore` (`idAutore`),
   ADD CONSTRAINT `fk_idCasaEditrice_` FOREIGN KEY (`idCasaEditrice`) REFERENCES `tcasaeditrice` (`idCasaEditrice`);
 
 --
 -- Limiti per la tabella `tenciclopedia`
 --
 ALTER TABLE `tenciclopedia`
-  ADD CONSTRAINT `fk_idCasaEditrice` FOREIGN KEY (`idCasaEditrice`) REFERENCES `tcasaeditrice` (`idCasaEditrice`),
-  ADD CONSTRAINT `fk_idMultiAutori` FOREIGN KEY (`idMultiAutori`) REFERENCES `tautoreenciclopedia` (`idMultiAutori`);
+  ADD CONSTRAINT `fk_idCasaEditrice` FOREIGN KEY (`idCasaEditrice`) REFERENCES `tcasaeditrice` (`idCasaEditrice`);
 
 --
 -- Limiti per la tabella `tlibro`
@@ -639,10 +804,38 @@ ALTER TABLE `tprenotazione`
   ADD CONSTRAINT `idCliente` FOREIGN KEY (`idCliente`) REFERENCES `tcliente` (`IdCliente`);
 
 --
+-- Limiti per la tabella `tprenotazionecarta`
+--
+ALTER TABLE `tprenotazionecarta`
+  ADD CONSTRAINT `fk_idCarta` FOREIGN KEY (`idCarta`) REFERENCES `tcartageopolitica` (`idCartaGeoPolitica`),
+  ADD CONSTRAINT `fk_idCliente` FOREIGN KEY (`idCliente`) REFERENCES `tcliente` (`IdCliente`),
+  ADD CONSTRAINT `fk_idClienteCarta` FOREIGN KEY (`idCliente`) REFERENCES `tcliente` (`IdCliente`),
+  ADD CONSTRAINT `fk_idClienteEnciclopedia` FOREIGN KEY (`idCliente`) REFERENCES `tcliente` (`IdCliente`);
+
+--
+-- Limiti per la tabella `tprenotazioneenciclopedia`
+--
+ALTER TABLE `tprenotazioneenciclopedia`
+  ADD CONSTRAINT `fk_idClienteEnciclopediaVolume` FOREIGN KEY (`idCliente`) REFERENCES `tcliente` (`IdCliente`),
+  ADD CONSTRAINT `fk_idVolumeEnciclopedia` FOREIGN KEY (`idVolume`) REFERENCES `tvolume` (`idVolume`);
+
+--
 -- Limiti per la tabella `tprestito`
 --
 ALTER TABLE `tprestito`
   ADD CONSTRAINT `fk_idPrenotazione` FOREIGN KEY (`idPrenotazione`) REFERENCES `tprenotazione` (`idPrenotazione`);
+
+--
+-- Limiti per la tabella `tprestitocarta`
+--
+ALTER TABLE `tprestitocarta`
+  ADD CONSTRAINT `fk_idPrenotazioneCarta` FOREIGN KEY (`idPrenotazione`) REFERENCES `tprenotazionecarta` (`idPrenotazione`);
+
+--
+-- Limiti per la tabella `tprestitoenciclopedia`
+--
+ALTER TABLE `tprestitoenciclopedia`
+  ADD CONSTRAINT `fk_idPrestitoEnciclopedia` FOREIGN KEY (`idPrenotazione`) REFERENCES `tprenotazioneenciclopedia` (`idPrenotazione`);
 
 --
 -- Limiti per la tabella `tscaffale`

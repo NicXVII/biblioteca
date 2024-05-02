@@ -21,6 +21,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $idLibro = $data['id'];
             $idUtente = $_SESSION['userID'];
 
+            $queryControllo = "SELECT COUNT(*) FROM tprenotazione 
+            WHERE tprenotazione.idCliente = ? 
+            AND tprenotazione.idLibro = ?
+            AND tprenotazione.dataAccetazione IS NULL;
+            ";
+            $stmt = mysqli_prepare($db, $queryControllo);
+
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "ii", $idUtente, $idLibro);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_bind_result($stmt, $count);
+                mysqli_stmt_fetch($stmt);
+                mysqli_stmt_close($stmt);
+
+                if ($count > 0) {
+                    $result = [
+                        'success'    =>  false,
+                        'message'   =>  'You have already booked this book',
+                    ];
+                    echo json_encode($result);
+                    exit();
+                }
+            }
+
+
+            $queryControllo = "SELECT COUNT(*) FROM tprestito 
+            JOIN tprenotazione
+            ON tprestito.idPrenotazione = tprenotazione.idPrenotazione
+            WHERE tprenotazione.idCliente = ?
+            AND tprenotazione.idLibro = ?
+            AND tprestito.dataFine IS NULL;            
+            ";
+
+            $stmt = mysqli_prepare($db, $queryControllo);
+
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "ii", $idUtente, $idLibro);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_bind_result($stmt, $count);
+                mysqli_stmt_fetch($stmt);
+                mysqli_stmt_close($stmt);
+
+                if ($count > 0) {
+                    $result = [
+                        'success'    =>  false,
+                        'message'   =>  'You have already booked this book',
+                    ];
+                    echo json_encode($result);
+                    exit();
+                }
+            }
             $query = "INSERT INTO tprenotazione (idCliente, idLibro, dataPrenotazione, dataAccetazione) VALUES (?, ?, NOW(), NULL)";
 
             $stmt = mysqli_prepare($db, $query);

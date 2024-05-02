@@ -35,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
-                            'nomeLibro'     =>  $row['nomeLibro'],
-                            'nomeAutore'    =>  $row['nomeAutore'],
-                            'cognomeAutore' =>  $row['cognomeAutore'],
-                            'dataPrenotazione'    =>  $row['dataPrenotazione'],
-                            'dataAccetazione'      =>  $row['dataAccetazione'],
+                            'nomeLibro'         => $row['nomeLibro'],
+                            'nomeAutore'        => $row['nomeAutore'],
+                            'cognomeAutore'     => $row['cognomeAutore'],
+                            'dataPrenotazione'  => date('d/m/Y', strtotime($row['dataPrenotazione'])),
+                            'dataAccetazione'   => ($row['dataAccetazione'] != null) ? date('d/m/Y', strtotime($row['dataAccetazione'])) : null,
                         ];
                     }
 
