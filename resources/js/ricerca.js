@@ -47,6 +47,54 @@ function fetchRicerca()
 }
 
 
+function checkPrenotaType(type,id){
+    switch(type){
+        case 'libri':
+            fetchPrenotaLibro(id);
+            break;
+        case 'cartine':
+            fetchPrenotaCartina(id);
+            break;
+        case 'enciclopedie':
+            fetchPrenotaEnciclopedia(id);
+            break;
+        default:
+            break;
+    }
+}
+function fetchPrenotaLibro(id)
+{
+    const data = {
+        id: id,
+    };
+    
+    fetch('function/Prenota/prenotaLibri.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+,    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        if (data.success) {
+            console.log('La richiesta ha avuto successo:', data.data);
+            //popolateRicerca(data.data);
+        } else {
+            console.log('La richiesta non ha avuto successo');
+            console.log(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });
+}
 
 //--------------------------------popolate data here--------------------------------
 
@@ -167,6 +215,7 @@ function addEventListenerSelect() {
 function addListenerPrenota(btn)
 {
     btn.addEventListener('click', function() {
-        console.log("Fetchando "+ btn.getAttribute('id') + " " + btn.getAttribute('type'));
+        //console.log("Fetchando "+ btn.getAttribute('id') + " " + btn.getAttribute('type'));
+        checkPrenotaType(btn.getAttribute('type'),btn.getAttribute('id'));
     });
 }
