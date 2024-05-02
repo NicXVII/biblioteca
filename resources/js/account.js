@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     fetcUtente();
     fetchPrestiti();  
     fetchPrenotazioni(); 
+    fetchPrenotazioniCarta();
 });
 
 //----------------------------------------------------------------------------
@@ -88,6 +89,36 @@ function fetchPrenotazioni()
         if (data.success) {
             console.log('La richiesta ha avuto successo:', data.data);
             populatePrenotazioni(data.data);
+        } else {
+            console.log('La richiesta non ha avuto successo');
+            console.log(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });
+}
+
+function fetchPrenotazioniCarta()
+{
+    
+    fetch('function/Account/getPrenotazioniCarta.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        if (data.success) {
+            console.log('La richiesta ha avuto successo:', data.data);
+            //populatePrenotazioni(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
             console.log(data.message);
