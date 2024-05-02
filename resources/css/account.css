@@ -1,6 +1,8 @@
 body {
   width: 100vw !important;
   height: 100vh !important;
+  max-width: 100vw;
+  max-height: 100vh;
   font-family: "San Francisco", Arial, sans-serif !important;
   margin: 0 !important;
   padding: 0 !important;

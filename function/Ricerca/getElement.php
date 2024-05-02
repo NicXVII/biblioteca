@@ -14,8 +14,7 @@ if (true) {
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-        $data['tipoElemento'] = 'cartine';
-        $data['ricerca'] = 'a';
+
         if (isset($data['tipoElemento']) && isset($data['ricerca'])) {
             $tipoElemento = $data['tipoElemento'];
             $ricerca = '%' . $data['ricerca'] . '%';
@@ -42,18 +41,17 @@ if (true) {
                                 tcasaeditrice.nome LIKE ?";
                     break;
                 case 'enciclopedie':
-                    $query = "SELECT 
-                    tvolume.idVolume as id,
+                    $query = "SELECT  DISTINCT
+                    tenciclopedia.idEnciclopedia as id,
                     tenciclopedia.titolo as titolo,
-                    tvolume.isbn,
+                    tenciclopedia.isbn,
                     tenciclopedia.data as anno_pubblicazione,
                     tautore.nome AS autore_nome,
                     tautore.cognome AS autore_cognome,
                     tcasaeditrice.nome AS casa_editrice
                 FROM 
-                    tvolume
-                JOIN tenciclopedia 
-                    ON tenciclopedia.idEnciclopedia = tvolume.idEnciclopedia
+                    tenciclopedia
+          
                 JOIN tcasaeditrice 
                     ON tenciclopedia.idCasaEditrice = tcasaeditrice.idCasaEditrice
                 JOIN tautoreenciclopedia 
@@ -70,7 +68,7 @@ if (true) {
                     )";
                     break;
                 case 'cartine':
-                    $query = "SELECT 
+                    $query = "SELECT  DISTINCT
                     tcartageopolitica.idCartaGeoPolitica as id,
                     tcartageopolitica.isbn,
                     tcartageopolitica.titolo,

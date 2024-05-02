@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     addEventListenerSelect();
     fetchRicerca();
     addListenerBtn()
-
+    addKeyBoardListener();
 });
 
 
@@ -92,6 +92,17 @@ function popolateRicerca(data) {
         divResult.appendChild(annoP);
         divResult.appendChild(casaEditriceP);
 
+        if(selected !== 'enciclopedie' && selected !== 'tutti')
+        {
+            var button = document.createElement('button');
+            button.setAttribute('id',dato.id);
+            button.setAttribute('type',dato.tipo_elemento);
+
+            button.innerHTML = 'Prenota';
+            button.classList.add('button-prenota');
+            divResult.appendChild(button);
+            addListenerPrenota(button);
+        }
         divSearch.appendChild(divResult);
     }
 }
@@ -104,7 +115,7 @@ function createSelect() {
 
     var select = document.createElement("select");
 
-    var options = ["Tutti", "Libri", "Enciclopedie", "Cartine"];
+    var options = ["Libri", "Enciclopedie", "Cartine"];
     for (var i = 0; i < options.length; i++) {
         var option = document.createElement("option");
         option.value = options[i].toLowerCase();
@@ -114,16 +125,26 @@ function createSelect() {
 
     divSearch.appendChild(select);
 }
-
-var selected = null;
-function addEventListenerSelect() {
-    var select = document.querySelector("select");
-    select.addEventListener("change", function() {
-        selected = select.options[select.selectedIndex].value;
-        console.log(selected);
-    });
+function getInputValue()
+{
+    var input = document.getElementById('search');
+    return input.value;
 }
 
+var selected = null;
+
+//--------------------------------listener here--------------------------------
+
+
+function addKeyBoardListener()
+{   window.addEventListener('keydown', function(event) {
+    //console.log('add keyboard listener ' + event.keyCode);
+ 
+    if (event.keyCode === 13) {
+        fetchRicerca();
+    }
+});
+}
 
 function addListenerBtn()
 {
@@ -134,8 +155,18 @@ function addListenerBtn()
 }
 
 
-function getInputValue()
+function addEventListenerSelect() {
+    var select = document.querySelector("select");
+    select.addEventListener("change", function() {
+        selected = select.options[select.selectedIndex].value;
+        console.log(selected);
+    });
+}
+
+
+function addListenerPrenota(btn)
 {
-    var input = document.getElementById('search');
-    return input.value;
+    btn.addEventListener('click', function() {
+        console.log("Fetchando "+ btn.getAttribute('id') + " " + btn.getAttribute('type'));
+    });
 }
