@@ -18,11 +18,13 @@ if (true) {
         if (isset($_SESSION['userID'])) {
             $id = $_SESSION['userID'];
 
-            $query = "SELECT tprenotazionecarta.dataPrenotazione, 
-            tprenotazionecarta.dataAccetazione, 
+            $query = "SELECT tprestitocarta.dataInizio, 
+            tprestitocarta.dataFine, 
             tcartageopolitica.titolo AS nome, 
             GROUP_CONCAT(tautore.nome, ' ', tautore.cognome) AS autori
-     FROM `tprenotazionecarta` 
+     FROM `tprestitocarta`
+     JOIN tprenotazionecarta
+     ON tprenotazionecarta.idPrenotazione = tprestitocarta.idPrenotazione
      JOIN tcartageopolitica 
      ON tcartageopolitica.idCartaGeoPolitica = tprenotazionecarta.idCarta
      JOIN tautorecarta
@@ -33,12 +35,12 @@ if (true) {
      GROUP BY tprenotazionecarta.dataPrenotazione, 
               tprenotazionecarta.dataAccetazione, 
               tcartageopolitica.titolo;
-     ";
+            ";
 
             $stmt = mysqli_prepare($db, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "i", $id);
+                mysqli_stmt_bind_param($stmt, "s", $id);
                 mysqli_stmt_execute($stmt);
                 $queryResult = mysqli_stmt_get_result($stmt);
 
@@ -48,8 +50,8 @@ if (true) {
                         $resultArray[] = [
                             'nome'         => $row['nome'],
                             'autori'        => $row['autori'],
-                            'dataPrenotazione'  => date('d/m/Y', strtotime($row['dataPrenotazione'])),
-                            'dataAccetazione'   => ($row['dataAccetazione'] != null) ? date('d/m/Y', strtotime($row['dataAccetazione'])) : null,
+                            'dataInizio'  => date('d/m/Y', strtotime($row['dataInizio'])),
+                            'dataFine'   => ($row['dataFine'] != null) ? date('d/m/Y', strtotime($row['dataFine'])) : null,
                         ];
                     }
 
