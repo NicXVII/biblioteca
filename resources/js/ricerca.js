@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function fetchRicerca()
 {
     if(selected == null)
-        selected = 'libro';
+        selected = 'libri';
     const data = {
         tipoElemento: selected,
         ricerca : getInputValue(),

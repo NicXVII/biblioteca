@@ -4,9 +4,8 @@ require_once("..//database.php");
 $data = json_decode(file_get_contents('php://input'), true);
 $result = array();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-//if (true) 
-{
+//if ($_SERVER['REQUEST_METHOD'] == 'POST')
+if (true) {
     $db;
 
     if (!$db) {
@@ -15,12 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             'message'   =>  'Failed to connect to database',
         ];
     } else {
+        $data['tipoElemento'] = 'enciclopedie';
+        $data['ricerca'] = 'a';
         if (isset($data['tipoElemento']) && isset($data['ricerca'])) {
             $tipoElemento = $data['tipoElemento'];
             $ricerca = '%' . $data['ricerca'] . '%';
 
             switch ($tipoElemento) {
-                case 'libro':
+                case 'libri':
                     $query = "SELECT 
                                 tlibro.idLibro as id,
                                 tlibro.nome AS titolo,
@@ -42,44 +43,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     break;
                 case 'enciclopedie':
                     $query = "SELECT 
-                                tvolume.idVolume,
-                                tvolume.titolo,
-                                tvolume.isbn,
-                                tvolume.anno_pubblicazione,
-                                tautore.nome AS autore_nome,
-                                tautore.cognome AS autore_cognome,
-                                tcasaeditrice.nome AS casa_editrice
-                            FROM 
-                                tvolume
-                            JOIN 
-                                tautore ON tvolume.idAutore = tautore.idAutore
-                            JOIN 
-                                tcasaeditrice ON tvolume.idCasaEditrice = tcasaeditrice.idCasaEditrice
-                            WHERE 
-                                tvolume.titolo LIKE ? OR
-                                tvolume.anno_pubblicazione = ? OR
-                                tcasaeditrice.nome LIKE ?";
-                    break;
+                    tvolume.idVolume as id,
+                    tenciclopedia.titolo as titolo,
+                    tvolume.isbn,
+                    tenciclopedia.data as anno_pubblicazione,
+                    tautore.nome AS autore_nome,
+                    tautore.cognome AS autore_cognome,
+                    tcasaeditrice.nome AS casa_editrice
+                FROM 
+                    tvolume
+                JOIN tenciclopedia 
+                    ON tenciclopedia.idEnciclopedia = tvolume.idEnciclopedia
+                JOIN tcasaeditrice 
+                    ON tenciclopedia.idCasaEditrice = tcasaeditrice.idCasaEditrice
+                JOIN tautoreenciclopedia 
+                    ON tenciclopedia.idEnciclopedia = tautoreenciclopedia.idEnciclopedia 
+                JOIN tautore
+                    ON tautore.idAutore = tautoreenciclopedia.idAutore
+              
 
+                WHERE 
+
+                    (tenciclopedia.titolo LIKE ? OR
+                    tenciclopedia.data = ? OR
+                    tcasaeditrice.nome LIKE ?
+                    )";
+                    break;
                 case 'cartine':
                     $query = "SELECT 
-                                tcartageopolitica.idCartaGeoPolitica,
-                                tcartageopolitica.titolo,
-                                tcartageopolitica.data,
-                                tautore.nome AS autore_nome,
-                                tautore.cognome AS autore_cognome,
-                                tcasaeditrice.nome AS casa_editrice
-                            FROM 
-                                tcartageopolitica
-                            JOIN 
-                                tautore ON tcartageopolitica.idAutore = tautore.idAutore
-                            JOIN 
-                                tcasaeditrice ON tcartageopolitica.idCasaEditrice = tcasaeditrice.idCasaEditrice
-                            WHERE 
-                                tcartageopolitica.titolo LIKE ? OR
-                                tcartageopolitica.data = ? OR
-                                tcasaeditrice.nome LIKE ?";
+                    tcartageopolitica.idCartaGeoPolitica as id,
+                    tcartageopolitica.isbn,
+                    tcartageopolitica.titolo,
+                    tcartageopolitica.data as anno_pubblicazione,
+                    tcartageopolitica.dataRappresentazione as reppresentazione,
+                    tautore.nome AS autore_nome,
+                    tautore.cognome AS autore_cognome,
+                    tcasaeditrice.nome AS casa_editrice
+                FROM 
+                    tcartageopolitica
+                JOIN 
+                    tautore ON tcartageopolitica.idAutore = tautore.idAutore
+                JOIN 
+                    tcasaeditrice ON tcartageopolitica.idCasaEditrice = tcasaeditrice.idCasaEditrice
+                WHERE 
+                    tcartageopolitica.titolo LIKE ? OR
+                    tcartageopolitica.data = ? OR
+                    tcasaeditrice.nome LIKE ?";
                     break;
+
 
                 case 'tutto':
                     $query = "SELECT 
@@ -152,6 +163,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             }
 
             $stmt = mysqli_prepare($db, $query);
+            if ($stmt === false) {
+                die("Error in preparing SQL query: " . mysqli_error($db));
+            }
+
             mysqli_stmt_bind_param($stmt, "sss", $ricerca, $ricerca, $ricerca);
             mysqli_stmt_execute($stmt);
             $queryResult = mysqli_stmt_get_result($stmt);
@@ -168,6 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'autore_nome'        => $row['autore_nome'],
                         'autore_cognome'     => $row['autore_cognome'],
                         'casa_editrice'      => $row['casa_editrice']
+
                     ];
                 }
 
