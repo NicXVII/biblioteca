@@ -15,7 +15,6 @@ if (isset($_SESSION['idConcerto']))
 ?>
 <nav class="nav-bar" id="nav-bar">
     <input type="hidden" name="hidden" id="userID" value="<?php echo $id; ?>">
-    <input type="hidden" name="hidden" id="concertID" value="<?php echo $idConcerto; ?>">
 
     <div>
         <ul>

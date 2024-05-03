@@ -48,3 +48,10 @@
 .fa-solid {
   margin-right: 5px;
 }
+a {
+  text-decoration: none !important;
+}
+a:hover {
+  text-decoration: none !important;
+  font-style: italic !important;
+}
