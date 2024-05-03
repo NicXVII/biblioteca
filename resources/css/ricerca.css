@@ -118,3 +118,15 @@ body {
 .button-prenota:active {
   background-color: #004080; /* Cambia colore di sfondo al clic */
 }
+
+/* CSS */
+a {
+  text-decoration: none !important;
+  color: black !important;
+}
+/* CSS */
+a:hover {
+  text-decoration: none !important;
+  color: black !important;
+  font-style: italic;
+}
