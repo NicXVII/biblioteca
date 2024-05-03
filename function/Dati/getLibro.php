@@ -33,20 +33,25 @@ if (true) {
                 if ($queryResult) {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
+                        $publicationDate = date('d/m/Y', strtotime($row['pubblicazione']));
+                        $authorBirthDate = date('d/m/Y', strtotime($row['dataNascita']));
+                        $authorDeathDate = date('d/m/Y', strtotime($row['dataMorte']));
+
                         $resultArray = [
                             'BookName'          => $row['nomeLibro'],
                             'ISBN'              => $row['isbn'],
                             'BookID'            => $row['idLibro'],
-                            'PublicationDate'   => $row['pubblicazione'],
+                            'PublicationDate'   => $publicationDate,
                             'PublisherName'     => $row['nomeEditore'],
                             'PublisherID'       => $row['idEditore'],
                             'AuthorID'          => $row['idAutore'],
                             'AuthorName'        => $row['nomeAutore'],
                             'AuthorSurname'     => $row['cognomeAutore'],
-                            'AuthorBirthDate'   => $row['dataNascita'],
-                            'AuthorDeathDate'   => $row['dataMorte']
+                            'AuthorBirthDate'   => $authorBirthDate,
+                            'AuthorDeathDate'   => $authorDeathDate
                         ];
                     }
+
 
                     $result = [
                         'success'       =>  true,

@@ -41,6 +41,8 @@ if (!isset($_SESSION['userID'])) {
     ?>
     <div class="title"></div>
     <div class='detailContaienr'>
+        <div class='detailImg'>
+        </div>
         <div class='detail'>
         </div>
     </div>
