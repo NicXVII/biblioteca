@@ -124,16 +124,37 @@ function popolateRicerca(data) {
         divResult.classList.add('risultatoRicerca');
 
         var titoloP = document.createElement('p');
-        titoloP.textContent = `Titolo: ${dato.titolo}`;
 
+        var link = document.createElement('a');
+
+        link.href = `show.php?id=${dato.id}&tipo_elemento=${dato.tipo_elemento}`;
+        link.textContent = dato.titolo;
+
+        titoloP.appendChild(link);
+
+
+
+        /*var autoreP = document.createElement('p');
+        var link = document.createElement('a');
+        link.textContent = `Autore: ${dato.autore_nome} ${dato.autore_cognome}`;
+        link.href = `show.php?id=${dato.id}&tipo_elementp=&${dato.tipo_elemento} nome=${dato.autore_nome}& cognome=${dato.autore_cognome}`;
+        autoreP.appendChild(link);*/
         var autoreP = document.createElement('p');
         autoreP.textContent = `Autore: ${dato.autore_nome} ${dato.autore_cognome}`;
-
         var annoP = document.createElement('p');
         annoP.textContent = `Anno di pubblicazione: ${dato.anno_pubblicazione}`;
 
-        var casaEditriceP = document.createElement('p');
-        casaEditriceP.textContent = `Casa editrice: ${dato.casa_editrice}`;
+// Creazione dell'elemento paragrafo per la casa editrice
+var casaEditriceP = document.createElement('p');
+
+// Creazione dell'elemento link per la casa editrice
+var link = document.createElement('a');
+link.href = `show.php?id=${dato.casa_editrice_id}&tipo_elemento=casa_editrice`;
+link.textContent = dato.casa_editrice; // Assegna il testo del link
+
+// Aggiungi il link come figlio dell'elemento paragrafo per la casa editrice
+casaEditriceP.appendChild(link);
+
 
         divResult.appendChild(titoloP);
         divResult.appendChild(autoreP);

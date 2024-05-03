@@ -14,8 +14,7 @@ if (true) {
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-        $data['tipoElemento'] = 'enciclopedie';
-        $data['ricerca'] = 'a';
+
         if (isset($data['tipoElemento']) && isset($data['ricerca'])) {
             $tipoElemento = $data['tipoElemento'];
             $ricerca = '%' . $data['ricerca'] . '%';
@@ -29,7 +28,9 @@ if (true) {
                                 tlibro.pubblicazione AS anno_pubblicazione,
                                 tautore.nome AS autore_nome,
                                 tautore.cognome AS autore_cognome,
-                                tcasaeditrice.nome AS casa_editrice
+                                tcasaeditrice.nome AS casa_editrice,
+                                tcasaeditrice.idCasaEditrice   AS casa_editrice_id
+
                             FROM 
                                 tlibro
                             JOIN 
@@ -48,6 +49,7 @@ if (true) {
                     tenciclopedia.isbn,
                     tenciclopedia.data AS anno_pubblicazione,
                     tcasaeditrice.nome AS casa_editrice,
+                    tcasaeditrice.idCasaEditrice  AS casa_editrice_id,
                     GROUP_CONCAT(tautore.nome, ' ', tautore.cognome) AS autore_nome,
                     tautore.cognome AS autore_cognome
                 FROM 
@@ -55,39 +57,38 @@ if (true) {
                 JOIN tcasaeditrice ON tenciclopedia.idCasaEditrice = tcasaeditrice.idCasaEditrice
                 JOIN tautoreenciclopedia AS ta1 ON ta1.idEnciclopedia = tenciclopedia.idEnciclopedia
                 JOIN tautore ON tautore.idAutore = ta1.idAutore
-                JOIN tautoreenciclopedia AS ta2 ON ta2.idEnciclopedia = tenciclopedia.idEnciclopedia
-                 
-                              
-                
-                                WHERE 
-                
-                                (tenciclopedia.titolo LIKE ? OR
-                                    tenciclopedia.data = ? OR
-                                    tcasaeditrice.nome LIKE ?
-                                    );";
+                WHERE 
+                    (tenciclopedia.titolo LIKE ? OR
+                    tenciclopedia.data = ? OR
+                    tcasaeditrice.nome LIKE ?);
+                ";
                     break;
                 case 'cartine':
-                    $query = "SELECT  DISTINCT
-                    tcartageopolitica.idCartaGeoPolitica as id,
+                    $query = "SELECT DISTINCT
+                    tcartageopolitica.idCartaGeoPolitica AS id,
                     tcartageopolitica.isbn,
                     tcartageopolitica.titolo,
-                    tcartageopolitica.data as anno_pubblicazione,
-                    tcartageopolitica.dataRappresentazione as reppresentazione,
-                    tautore.nome AS autore_nome,
+                    tcartageopolitica.data AS anno_pubblicazione,
+                    tcartageopolitica.dataRappresentazione AS rappresentazione,
                     tautore.cognome AS autore_cognome,
-                    tcasaeditrice.nome AS casa_editrice
+                    tcasaeditrice.nome AS casa_editrice,
+                    tcasaeditrice.idCasaEditrice  AS casa_editrice_id,
+                    GROUP_CONCAT(tautore.nome, ' ', tautore.cognome ORDER BY tautore.cognome, tautore.nome) AS autore_nome
                 FROM 
                     tcartageopolitica
-                JOIN tautorecarta 
-                    ON tautorecarta.idCartaGeoPolitica = tcartageopolitica.idCartaGeoPolitica
-                JOIN tautore
-                    ON tautorecarta.idAutore = tautore.idAutore
+                JOIN 
+                    tautorecarta ON tautorecarta.idCartaGeoPolitica = tcartageopolitica.idCartaGeoPolitica
+                JOIN 
+                    tautore ON tautorecarta.idAutore = tautore.idAutore
                 JOIN 
                     tcasaeditrice ON tcartageopolitica.idCasaEditrice = tcasaeditrice.idCasaEditrice
                 WHERE 
                     tcartageopolitica.titolo LIKE ? OR
                     tcartageopolitica.data = ? OR
-                    tcasaeditrice.nome LIKE ?";
+                    tcasaeditrice.nome LIKE ?
+                GROUP BY 
+                    tcartageopolitica.idCartaGeoPolitica;
+                ";
                     break;
 
 
@@ -181,7 +182,8 @@ if (true) {
                         'anno_pubblicazione' => date('d/m/Y', strtotime($row['anno_pubblicazione'])),
                         'autore_nome'        => $row['autore_nome'],
                         'autore_cognome'     => $row['autore_cognome'],
-                        'casa_editrice'      => $row['casa_editrice']
+                        'casa_editrice'      => $row['casa_editrice'],
+                        'casa_editrice_id'   => $row['casa_editrice_id']
                     ];
                 }
 
