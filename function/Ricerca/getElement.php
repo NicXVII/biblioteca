@@ -14,7 +14,8 @@ if (true) {
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-
+        $data['tipoElemento'] = 'enciclopedie';
+        $data['ricerca'] = 'a';
         if (isset($data['tipoElemento']) && isset($data['ricerca'])) {
             $tipoElemento = $data['tipoElemento'];
             $ricerca = '%' . $data['ricerca'] . '%';
@@ -41,31 +42,29 @@ if (true) {
                                 tcasaeditrice.nome LIKE ?";
                     break;
                 case 'enciclopedie':
-                    $query = "SELECT  DISTINCT
-                    tenciclopedia.idEnciclopedia as id,
-                    tenciclopedia.titolo as titolo,
+                    $query = "SELECT DISTINCT
+                    tenciclopedia.idEnciclopedia AS id,
+                    tenciclopedia.titolo AS titolo,
                     tenciclopedia.isbn,
-                    tenciclopedia.data as anno_pubblicazione,
-                    tautore.nome AS autore_nome,
-                    tautore.cognome AS autore_cognome,
-                    tcasaeditrice.nome AS casa_editrice
+                    tenciclopedia.data AS anno_pubblicazione,
+                    tcasaeditrice.nome AS casa_editrice,
+                    GROUP_CONCAT(tautore.nome, ' ', tautore.cognome) AS autore_nome,
+                    tautore.cognome AS autore_cognome
                 FROM 
                     tenciclopedia
-          
-                JOIN tcasaeditrice 
-                    ON tenciclopedia.idCasaEditrice = tcasaeditrice.idCasaEditrice
-                JOIN tautoreenciclopedia 
-                    ON tenciclopedia.idEnciclopedia = tautoreenciclopedia.idEnciclopedia 
-                JOIN tautore
-                    ON tautore.idAutore = tautoreenciclopedia.idAutore
-              
-
-                WHERE 
-
-                    (tenciclopedia.titolo LIKE ? OR
-                    tenciclopedia.data = ? OR
-                    tcasaeditrice.nome LIKE ?
-                    )";
+                JOIN tcasaeditrice ON tenciclopedia.idCasaEditrice = tcasaeditrice.idCasaEditrice
+                JOIN tautoreenciclopedia AS ta1 ON ta1.idEnciclopedia = tenciclopedia.idEnciclopedia
+                JOIN tautore ON tautore.idAutore = ta1.idAutore
+                JOIN tautoreenciclopedia AS ta2 ON ta2.idEnciclopedia = tenciclopedia.idEnciclopedia
+                 
+                              
+                
+                                WHERE 
+                
+                                (tenciclopedia.titolo LIKE ? OR
+                                    tenciclopedia.data = ? OR
+                                    tcasaeditrice.nome LIKE ?
+                                    );";
                     break;
                 case 'cartine':
                     $query = "SELECT  DISTINCT
