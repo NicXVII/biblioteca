@@ -149,7 +149,7 @@ var casaEditriceP = document.createElement('p');
 
 // Creazione dell'elemento link per la casa editrice
 var link = document.createElement('a');
-link.href = `show.php?id=${dato.id}&tipo_elemento=casa_editrice`;
+link.href = `show.php?id=${dato.id}&tipo_elemento=${dato.tipo_elemento}&casaEditrice=${dato.casa_editrice}`;
 link.textContent = dato.casa_editrice; // Assegna il testo del link
 
 // Aggiungi il link come figlio dell'elemento paragrafo per la casa editrice

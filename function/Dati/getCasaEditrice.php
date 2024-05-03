@@ -15,16 +15,15 @@ if (true) {
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
-        echo $data['id'];
-        if (isset($data['id'])) {
-            $id = $data['id'];
+        if (isset($data['casaEditrice'])) {
+            $id = $data['casaEditrice'];
             $query = "SELECT * FROM `tcasaeditrice` 
-            WHERE tcasaeditrice.idCasaEditrice = ? ";
+            WHERE tcasaeditrice.nome LIKE ? ";
 
             $stmt = mysqli_prepare($db, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "i", $id);
+                mysqli_stmt_bind_param($stmt, "s", $id);
                 mysqli_stmt_execute($stmt);
                 $queryResult = mysqli_stmt_get_result($stmt);
 
@@ -39,7 +38,7 @@ if (true) {
 
                     $result = [
                         'success'       =>  true,
-                        'data'          =>  $resultArray[0],
+                        'data'          =>  $resultArray,
                     ];
                 } else {
                     $result = [

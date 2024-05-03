@@ -4,11 +4,16 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 $id = null;
 $type = null;
+$casaEditrice = null;
 if (isset($_REQUEST['id'])) {
     $id = $_REQUEST['id'];
 }
 if (isset($_REQUEST['tipo_elemento'])) {
     $type = $_REQUEST['tipo_elemento'];
+}
+
+if (isset($_REQUEST['casaEditrice'])) {
+    $casaEditrice = $_REQUEST['casaEditrice'];
 }
 if (!isset($_SESSION['userID'])) {
     header('Location: login.php');
@@ -28,6 +33,8 @@ if (!isset($_SESSION['userID'])) {
 <body>
     <input type="hidden" name="idvValue" id="idValue" value="<?php echo $id; ?>">
     <input type="hidden" name="typeValue" id="typeValue" value="<?php echo $type; ?>">
+    <input type="hidden" name="casaEditriceValue" id="casaEditriceValue" value="<?php echo $casaEditrice; ?>">
+
 
     <?php
     require_once('components/nav.php');
