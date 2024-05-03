@@ -75,7 +75,7 @@ function fetchElement()
 
         if (data.success) {
             console.log('La richiesta ha avuto successo:', data.data);
-            //popolateRicerca(data.data);
+            popolate(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
             console.log(data.message);
@@ -85,4 +85,48 @@ function fetchElement()
         console.error('Si è verificato un errore:', error);
     });
 
+}
+
+//--------------------------------------------------------------------------------------------------
+function popolate(data)
+{
+    switch(type)
+    {
+        case 'libri':
+            popolateLibro(data);
+            break;
+        case 'cartine':
+            popolateCartina(data);
+            break;
+        case 'enciclopedie':
+            popolateEnciclopedia(data);
+            break;
+        case 'casaEditrice':
+            popolateCasaEditrice(data);
+            break;
+        default:
+            break;
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+function popolateLibro(data) {
+    // Seleziona gli elementi HTML in cui vuoi popolare i dati
+    var titleDiv = document.querySelector('.title');
+    var detailDiv = document.querySelector('.detail');
+
+    // Popola i dati nei div
+    titleDiv.innerHTML = data['BookName'];
+    detailDiv.innerHTML = `
+        <p>ISBN: ${data['ISBN']}</p>
+        <p>Book ID: ${data['BookID']}</p>
+        <p>Publication Date: ${data['PublicationDate']}</p>
+        <p>Publisher Name: ${data['PublisherName']}</p>
+        <p>Publisher ID: ${data['PublisherID']}</p>
+        <p>Author ID: ${data['AuthorID']}</p>
+        <p>Author Name: ${data['AuthorName']}</p>
+        <p>Author Surname: ${data['AuthorSurname']}</p>
+        <p>Author Birth Date: ${data['AuthorBirthDate']}</p>
+        <p>Author Death Date: ${data['AuthorDeathDate']}</p>
+    `;
 }

@@ -3,4 +3,54 @@ body {
   height: 100vh !important;
   padding: 0 !important;
   margin: 0 !important;
+  font-family: "San Francisco", Arial, sans-serif !important;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333; /* Colore del testo scuro */
+  margin-bottom: 5vh;
+  padding-bottom: 10px; /* Spazio sotto al titolo */
+}
+
+.detailContaienr {
+  height: 75vh;
+  margin-left: 10vw;
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.detail {
+  height: 60%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+  color: #666; /* Colore del testo grigio scuro */
+  margin-bottom: 20px;
+  border: 1px solid #ccc; /* Bordo grigio */
+  padding: 20px; /* Spazio interno */
+}
+
+.detail p {
+  margin: 8px 0; /* Margini del paragrafo */
+}
+
+.detail p:hover {
+  font-weight: bold; /* Grassetto al passaggio del mouse */
+}
+/* Stile del link */
+.detail a {
+  color: #007bff; /* Colore blu del link */
+  text-decoration: none; /* Rimuove il sottolineato */
+}
+
+/* Hover sul link */
+.detail a:hover {
+  text-decoration: underline; /* Sottolineato al passaggio del mouse */
 }

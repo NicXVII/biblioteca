@@ -39,6 +39,11 @@ if (!isset($_SESSION['userID'])) {
     <?php
     require_once('components/nav.php');
     ?>
+    <div class="title"></div>
+    <div class='detailContaienr'>
+        <div class='detail'>
+        </div>
+    </div>
 
 </body>
 <script src="resources/js/show.js"></script>
