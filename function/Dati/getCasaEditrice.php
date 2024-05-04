@@ -15,8 +15,9 @@ if (true) {
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
-        if (isset($data['casaEditrice'])) {
-            $id = $data['casaEditrice'];
+        if (isset($data['id'])) {
+            $id = $data['id'];
+            $id = '%' . $id . '%';
             $query = "SELECT * FROM `tcasaeditrice` 
             WHERE tcasaeditrice.nome LIKE ? ";
 

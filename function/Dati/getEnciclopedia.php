@@ -61,7 +61,6 @@ if (true) {
                 if ($queryResult) {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
-                        // Append each row to the $resultArray
                         $resultArray[] = [
                             'BookName'          => $row['titolo'],
                             'volumiTotali'      => $row['volumiTotali'],

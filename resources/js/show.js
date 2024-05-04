@@ -23,14 +23,6 @@ function fetchElement()
 {
     var functionFetch = 'function/Dati/get';
     var dataToSend = {};
-    if(casaEditrice === null)
-        {
-          
-            functionFetch += 'CasaEditrice.php';
-            dataToSend = {
-                casaEditrice: casaEditrice
-            };
-        }else{
         switch(type)
         {
             case 'libri':
@@ -45,13 +37,19 @@ function fetchElement()
                     id: id
                 };
             break;
+            case 'casaEditrice':
+                functionFetch += 'CasaEditrice.php';
+                dataToSend = {
+                    id: id
+                };
+                
+                break;
             case 'cartine':
                 functionFetch += 'Cartina.php';
                 dataToSend = {
                     id: id
                 };
             break;
-        }
         }
 
     //console.log(functionFetch);
@@ -84,25 +82,25 @@ function fetchElement()
     .catch(error => {
         console.error('Si è verificato un errore:', error);
     });
-
 }
 
 //--------------------------------------------------------------------------------------------------
 function popolate(data)
 {
+
     switch(type)
     {
+        case 'casaEditrice':
+            popolateCasaEditrice(data[0]);
+        break;
         case 'libri':
             popolateLibro(data);
             break;
         case 'cartine':
-            popolateCartina(data);
+            popolateCartina(data[0]);
             break;
         case 'enciclopedie':
-            popolateEnciclopedia(data);
-            break;
-        case 'casaEditrice':
-            popolateCasaEditrice(data);
+            popolateEnciclopedia(data[0]);
             break;
         default:
             break;
@@ -125,5 +123,50 @@ function popolateLibro(data) {
         <p>Author Surname: ${data['AuthorSurname']}</p>
         <p>Author Birth Date: ${data['AuthorBirthDate']}</p>
         <p>Author Death Date: ${data['AuthorDeathDate']}</p>
+    `;
+}
+
+
+function popolateEnciclopedia(data)
+{
+    var titleDiv = document.querySelector('.title');
+    var detailDiv = document.querySelector('.detail');
+
+    titleDiv.innerHTML = data.BookName;
+    detailDiv.innerHTML = `
+        <p>ISBN: ${data['ISBN']}</p>
+        <p>Publication Date: ${data['PublicationDate']}</p>
+        <p>Publisher Name: ${data['PublisherName']}</p>
+        <p>Authors: ${data['Authors']}</p>
+        <p>ISBN Volumi: ${data['isbn_volumi']}</p>
+        <p>Numero Volumi: ${data['numero_volumi']}</p>
+    `;
+  
+}
+
+function popolateCartina(data)
+{
+    var titleDiv = document.querySelector('.title');
+    var detailDiv = document.querySelector('.detail');
+
+    titleDiv.innerHTML = data.BookName;
+    detailDiv.innerHTML = `
+        <p>ISBN: ${data['ISBN']}</p>
+        <p>Publication Date: ${data['PublicationDate']}</p>
+        <p>Representation Date: ${data['RepresentationDate']}</p>
+        <p>Publisher Name: ${data['PublisherName']}</p>
+        <p>Authors: ${data['Authors']}</p>
+    `;
+}
+
+
+function popolateCasaEditrice(data)
+{
+    var titleDiv = document.querySelector('.title');
+    var detailDiv = document.querySelector('.detail');
+
+    titleDiv.innerHTML = data.nome;
+    detailDiv.innerHTML = `
+        Goth girl
     `;
 }
