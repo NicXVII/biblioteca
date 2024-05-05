@@ -9,7 +9,25 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 //----------------------------------------------------------------------------
+function whatIFecth(value)
+{
+    switch(value)
+    {
+        case "Libro":
+            fetchPrestiti();
+            fetchPrenotazioni();
+            break;
+        case "Enciclopedia":
+            prestitiVolume();
+            prenotazioniVolume();
+            break;
+        case "Carta Geo Politica":
+            fetchPrenotazioniCarta();
+            prestitiCarta();
+            break;
+    }
 
+}
 //----------------------------------------------------------------------------
 function fetcUtente()
 {
@@ -276,9 +294,23 @@ function populatePrestiti(data) {
     var divPrestiti = document.querySelector('.prestiti');
     divPrestiti.innerHTML = '';	
 
+    
     var titolo = document.createElement("h2");
     titolo.innerHTML = "Prestiti";
     divPrestiti.appendChild(titolo);
+    var select = document.createElement("select");
+    var elements = ['Libro', 'Enciclopedia', 'Carta Geo Politica'];
+    
+    for (var i = 0; i < elements.length; i++) {
+        var option = document.createElement("option");
+        option.text = elements[i];
+        select.add(option);
+    }
+    addEventListenerSelect(select);
+    divPrestiti.appendChild(select);
+    
+    
+ 
 
     divLibro = document.createElement("div");
     divLibro.classList.add("libro");
@@ -335,3 +367,12 @@ function populatePrenotazioni(data) {
     divPrestiti.appendChild(divLibro);
 }
 
+//-----------------------------------------------------------------------------
+
+function addEventListenerSelect(select) {
+    select.addEventListener("change", function() {
+        selected = select.options[select.selectedIndex].value;
+        //console.log(selected);
+        whatIFecth(selected);
+    });
+}

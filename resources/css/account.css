@@ -106,3 +106,19 @@ body {
   font-size: 20px;
   margin-left: 5%;
 }
+
+select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+select option {
+  padding: 8px;
+  background-color: #fff;
+  color: #333;
+}

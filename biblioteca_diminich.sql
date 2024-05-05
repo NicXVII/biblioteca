@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 02, 2024 alle 22:32
+-- Creato il: Mag 05, 2024 alle 21:37
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -81,7 +81,8 @@ CREATE TABLE `tautorecarta` (
 INSERT INTO `tautorecarta` (`idAutoreCarta`, `idCartaGeoPolitica`, `idAutore`) VALUES
 (1, 3, 2),
 (2, 4, 6),
-(3, 4, 10);
+(3, 4, 10),
+(4, 7, 8);
 
 -- --------------------------------------------------------
 
@@ -176,7 +177,8 @@ CREATE TABLE `tcliente` (
 --
 
 INSERT INTO `tcliente` (`IdCliente`, `nome`, `cognome`, `codiceFiscale`, `password`, `mail`) VALUES
-(1, 'Nicolas', 'Diminich', 'codiceFiscvale', '1234', 'test@gmail.com');
+(1, 'Nicolas', 'Diminich', 'codiceFiscvale', '1234', 'test@gmail.com'),
+(2, 'test2', 'test2', 'test2', 'test2', 'test2@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -202,7 +204,7 @@ INSERT INTO `tenciclopedia` (`idEnciclopedia`, `titolo`, `data`, `volumiTotali`,
 (7, 'Enciclopedia di Biologia Moderna', '2023-02-20', 8, '978-2345678901', 1),
 (8, 'Enciclopedia di Fisica Quantistica', '2023-03-25', 12, '978-3456789012', 2),
 (9, 'Enciclopedia di Letteratura Contemporanea', '2023-04-30', 7, '978-4567890123', 2),
-(10, 'Enciclopedia di Arte Medievale', '2023-05-10', 9, '978-5678901234', 3);
+(10, 'Enciclopedia di Arte Medievale', '2023-05-10', 5, '978-5678901234', 3);
 
 -- --------------------------------------------------------
 
@@ -286,6 +288,15 @@ CREATE TABLE `tprenotazionecarta` (
   `dataAccetazione` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `tprenotazionecarta`
+--
+
+INSERT INTO `tprenotazionecarta` (`idPrenotazione`, `idCliente`, `idCarta`, `dataPrenotazione`, `dataAccetazione`) VALUES
+(1, 1, 1, '2024-05-05', NULL),
+(2, 1, 4, '2024-05-05', NULL),
+(3, 1, 7, '2024-05-05', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -299,6 +310,15 @@ CREATE TABLE `tprenotazioneenciclopedia` (
   `dataPrenotazione` date NOT NULL,
   `dataAccetazione` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tprenotazioneenciclopedia`
+--
+
+INSERT INTO `tprenotazioneenciclopedia` (`idPrenotazione`, `idCliente`, `idVolume`, `dataPrenotazione`, `dataAccetazione`) VALUES
+(1, 1, 96, '2024-05-05', NULL),
+(2, 1, 97, '2024-05-05', NULL),
+(3, 1, 101, '2024-05-05', NULL);
 
 -- --------------------------------------------------------
 
@@ -345,6 +365,13 @@ CREATE TABLE `tprestitoenciclopedia` (
   `dataInizio` date NOT NULL,
   `dataFine` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tprestitoenciclopedia`
+--
+
+INSERT INTO `tprestitoenciclopedia` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`) VALUES
+(1, 1, '2024-05-05', NULL);
 
 -- --------------------------------------------------------
 
@@ -451,7 +478,8 @@ INSERT INTO `tvolume` (`idVolume`, `isbn`, `numeroVolume`, `idEnciclopedia`) VAL
 (97, '978-5678901231', 2, 10),
 (98, '978-5678901232', 3, 10),
 (99, '978-5678901233', 4, 10),
-(100, '978-5678901234', 5, 10);
+(100, '978-5678901234', 5, 10),
+(101, '978-5678901240', 1, 10);
 
 --
 -- Indici per le tabelle scaricate
@@ -640,7 +668,7 @@ ALTER TABLE `tautore`
 -- AUTO_INCREMENT per la tabella `tautorecarta`
 --
 ALTER TABLE `tautorecarta`
-  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `tautoreenciclopedia`
@@ -664,7 +692,7 @@ ALTER TABLE `tcasaeditrice`
 -- AUTO_INCREMENT per la tabella `tcliente`
 --
 ALTER TABLE `tcliente`
-  MODIFY `IdCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `IdCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `tenciclopedia`
@@ -688,19 +716,19 @@ ALTER TABLE `tlibro`
 -- AUTO_INCREMENT per la tabella `tprenotazione`
 --
 ALTER TABLE `tprenotazione`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT per la tabella `tprenotazionecarta`
 --
 ALTER TABLE `tprenotazionecarta`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `tprenotazioneenciclopedia`
 --
 ALTER TABLE `tprenotazioneenciclopedia`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `tprestito`
@@ -718,7 +746,7 @@ ALTER TABLE `tprestitocarta`
 -- AUTO_INCREMENT per la tabella `tprestitoenciclopedia`
 --
 ALTER TABLE `tprestitoenciclopedia`
-  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffale`
@@ -754,7 +782,7 @@ ALTER TABLE `tstanza`
 -- AUTO_INCREMENT per la tabella `tvolume`
 --
 ALTER TABLE `tvolume`
-  MODIFY `idVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `idVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- Limiti per le tabelle scaricate

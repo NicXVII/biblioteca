@@ -77,7 +77,7 @@ async function gestistiRegistrazione(nome,email,password,cognome,codiceFiscale,c
     if(!controlloPassword(password, checkPassword))
         return;
     else
-    {   if!codiceFiscaleCheck(codiceFiscale)
+    {   if(!codiceFiscaleCheck(codiceFiscale))
             esito =  await fetchRegister(nome,email,password,cognome,codiceFiscale);
     }
 
