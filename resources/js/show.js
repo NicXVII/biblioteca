@@ -106,6 +106,7 @@ function fetchVolume(id)
 
             if (data.success) {
                 console.log('La richiesta ha avuto successo:', data.data);
+                popolateVolume(data.data);
                 //popolate(data.data);
             } else {
                 console.log('La richiesta non ha avuto successo');
@@ -119,6 +120,44 @@ function fetchVolume(id)
 
 }
 
+
+async function prenotaVolume(id)
+{
+    const dataToSend = {
+        id: id,
+    };
+
+    console.log(dataToSend);
+
+    fetch('function/Prenota/prenotaVolume.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+        ,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+
+            if (data.success) {
+                console.log('La richiesta ha avuto successo:', data.data);
+                //popolate(data.data);
+            } else {
+                console.log('La richiesta non ha avuto successo');
+                console.log(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Si è verificato un errore:', error);
+        });
+
+}
 //--------------------------------------------------------------------------------------------------
 function popolate(data) {
 
@@ -175,6 +214,38 @@ function popolateEnciclopedia(data) {
 
 }
 
+function popolateVolume(data)
+{
+ var detailDiv = document.querySelector('.detail');
+ var divVolumi = document.createElement('div');
+
+ divVolumi.classList.add('divVolumi');
+
+ for(dato of data)
+    {
+        var div = document.createElement('div');
+        div.classList.add('divVolume');
+        var p = document.createElement('p');
+        p.innerHTML = "Numero Volume: "+dato.numeroVolume;
+        div.appendChild(p);
+
+        var p = document.createElement('p');
+        p.innerHTML = "ISBN: "+dato.isbn;
+        div.appendChild(p);
+
+        var btn = document.createElement('button');
+        btn.classList.add('btnPrenotazione');
+        btn.innerHTML = 'Prenota';
+        listenerPrenotaVolume(btn,dato.id);
+        div.appendChild(btn);
+
+        divVolumi.appendChild(div);
+
+    }
+
+    detailDiv.appendChild(divVolumi);
+}
+
 function popolateCartina(data) {
     var titleDiv = document.querySelector('.title');
     var detailDiv = document.querySelector('.detail');
@@ -198,4 +269,13 @@ function popolateCasaEditrice(data) {
     detailDiv.innerHTML = `
         Goth girl
     `;
+}
+
+//-------------------------------------------------------------------
+function listenerPrenotaVolume(btn,id)
+{
+    btn.addEventListener('click', function(){
+        console.log('Prenota Volume');
+        prenotaVolume(id);
+    });
 }

@@ -32,27 +32,74 @@ body {
   flex-direction: column;
   align-items: center;
   font-size: 18px;
-  color: #666; /* Colore del testo grigio scuro */
+  color: #666;
   margin-bottom: 20px;
-  border: 1px solid #ccc; /* Bordo grigio */
-  padding: 20px; /* Spazio interno */
+  border: 1px solid #ccc;
+  padding: 20px;
 }
 
 .detail p {
-  font-size: 1.5rem !important; /* Dimensione del testo */
-  margin: 8px 0; /* Margini del paragrafo */
+  font-size: 1.5rem !important;
+  margin: 8px 0;
 }
 
 .detail p:hover {
-  font-weight: bold; /* Grassetto al passaggio del mouse */
+  font-weight: bold;
 }
-/* Stile del link */
 .detail a {
-  color: #007bff; /* Colore blu del link */
-  text-decoration: none; /* Rimuove il sottolineato */
+  color: #007bff;
+  text-decoration: none;
 }
 
-/* Hover sul link */
 .detail a:hover {
-  text-decoration: underline; /* Sottolineato al passaggio del mouse */
+  text-decoration: underline;
+}
+
+/* Stile per il contenitore dei volumi */
+.divVolumi {
+  margin-top: 3vh;
+  max-height: 20vh;
+  overflow-y: auto;
+  width: 100%;
+  display: flex;
+  justify-content: top; /* Modifica: centrato verticalmente */
+  align-items: flex-start; /* Modifica: inizia dall'alto */
+  flex-direction: column;
+}
+
+/* Stile per ogni singolo volume */
+.divVolume {
+  display: flex;
+  justify-content: space-between; /* Modifica: spazio tra gli elementi */
+  align-items: center;
+  width: 90%; /* Modifica: ridotta la larghezza per margini laterali uniformi */
+  margin: 5px auto; /* Modifica: margini superiori e inferiori auto per centrare */
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #ccc;
+  transition: all 0.3s;
+}
+
+.divVolume p {
+  margin: 0;
+}
+
+.btnPrenotazione {
+  display: inline-block;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btnPrenotazione:hover {
+  background-color: #0056b3;
 }
