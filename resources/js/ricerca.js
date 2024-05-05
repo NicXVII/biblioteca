@@ -96,6 +96,40 @@ function fetchPrenotaLibro(id)
     });
 }
 
+
+function fetchPrenotaCartina(id)
+{
+    const data = {
+        id: id,
+    };
+    
+    fetch('function/Prenota/prenotaCartina.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+,    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        if (data.success) {
+            console.log('La richiesta ha avuto successo:', data.data);
+            //popolateRicerca(data.data);
+        } else {
+            console.log('La richiesta non ha avuto successo');
+            console.log(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });
+}
 //--------------------------------popolate data here--------------------------------
 
 

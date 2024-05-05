@@ -19,7 +19,8 @@ if (true) {
         if (isset($data['id'])) {
             $id = $data['id'];
             $query = "SELECT * FROM `tvolume`
-            WHERE tvolume.idEnciclopedia = ?";
+            WHERE tvolume.idEnciclopedia = ?
+            ORDER BY tvolume.numeroVolume";
 
             $stmt = mysqli_prepare($db, $query);
 
