@@ -19,28 +19,32 @@ if (true) {
             $id = $_SESSION['userID'];
 
             $query = "SELECT 
-            tprenotazioneenciclopedia.dataPrenotazione, 
-            tprenotazioneenciclopedia.dataAccetazione, 
-            tenciclopedia.titolo AS nome, 
-            GROUP_CONCAT(DISTINCT CONCAT(tautore.nome, ' ', tautore.cognome)) AS autori
+            tprestitoenciclopedia.dataInizio, 
+            tprestitoenciclopedia.dataFine, 
+            tenciclopedia.titolo AS nome,
+            tvolume.numeroVolume,
+            GROUP_CONCAT(tautore.nome, ' ', tautore.cognome) AS autori
         FROM 
-            `tprenotazioneenciclopedia` 
+            `tprestitoenciclopedia`
         JOIN 
-            tvolume ON tvolume.idVolume = tprenotazioneenciclopedia.idVolume
+            tprenotazioneenciclopedia ON tprenotazioneenciclopedia.idPrenotazione = tprestitoenciclopedia.idPrenotazione
+        JOIN 
+            tvolume ON tprenotazioneenciclopedia.idVolume = tvolume.idVolume
         JOIN 
             tenciclopedia ON tenciclopedia.idEnciclopedia = tvolume.idEnciclopedia
         JOIN 
-            tautoreenciclopedia ON tautoreenciclopedia.idEnciclopedia = tenciclopedia.idEnciclopedia 
+            tautoreenciclopedia ON tautoreenciclopedia.idEnciclopedia = tenciclopedia.idEnciclopedia
         JOIN 
             tautore ON tautoreenciclopedia.idAutore = tautore.idAutore
         WHERE 
             tprenotazioneenciclopedia.idCliente = ?
         GROUP BY 
-            tprenotazioneenciclopedia.dataPrenotazione, 
-            tprenotazioneenciclopedia.dataAccetazione, 
-            tenciclopedia.titolo;
+            tprestitoenciclopedia.dataInizio, 
+            tprestitoenciclopedia.dataFine, 
+            tenciclopedia.titolo,
+            tvolume.numeroVolume;
         
-     ";
+            ";
 
             $stmt = mysqli_prepare($db, $query);
 
@@ -55,8 +59,8 @@ if (true) {
                         $resultArray[] = [
                             'nome'         => $row['nome'],
                             'autori'        => $row['autori'],
-                            'dataPrenotazione'  => date('d/m/Y', strtotime($row['dataPrenotazione'])),
-                            'dataAccetazione'   => ($row['dataAccetazione'] != null) ? date('d/m/Y', strtotime($row['dataAccetazione'])) : null,
+                            'dataInizio'  => date('d/m/Y', strtotime($row['dataInizio'])),
+                            'dataFine'   => ($row['dataFine'] != null) ? date('d/m/Y', strtotime($row['dataFine'])) : null,
                         ];
                     }
 

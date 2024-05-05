@@ -2,8 +2,13 @@ document.addEventListener("DOMContentLoaded", function() {
     fetcUtente();
     fetchPrestiti();  
     fetchPrenotazioni(); 
-    fetchPrenotazioniCarta();
+    /*fetchPrenotazioniCarta();
+    prestitiCarta();
+    prenotazioniVolume();
+    prestitiVolume();*/
 });
+
+//----------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------
 function fetcUtente()
@@ -117,7 +122,37 @@ function fetchPrenotazioniCarta()
     .then(data => {
 
         if (data.success) {
-            console.log('La richiesta ha avuto successo:', data.data);
+            console.log('La richiesta ha avuto successo: fetchPrenotazioniCarta', data.data);
+            //populatePrenotazioni(data.data);
+        } else {
+            console.log('La richiesta non ha avuto successo');
+            console.log(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });
+}
+
+function prestitiCarta()
+{
+       
+    fetch('function/Account/getPrestitoCarta.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        if (data.success) {
+            console.log('La richiesta ha avuto successo: getPrestitoCarta', data.data);
             //populatePrenotazioni(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
@@ -131,7 +166,64 @@ function fetchPrenotazioniCarta()
 
 
 
+function prenotazioniVolume()
+{
+    fetch('function/Account/getPrenotazioniEnciclopedia.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
 
+        if (data.success) {
+            console.log('La richiesta ha avuto successo: getPrenotazioniEnciclopedia', data.data);
+            //populatePrenotazioni(data.data);
+        } else {
+            console.log('La richiesta non ha avuto successo');
+            console.log(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });
+}
+
+function prestitiVolume()
+
+    {
+        fetch('function/Account/getPrestitiEnciclopedia.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+    
+            if (data.success) {
+                console.log('La richiesta ha avuto successo: getPrestitiEnciclopedia', data.data);
+                //populatePrenotazioni(data.data);
+            } else {
+                console.log('La richiesta non ha avuto successo');
+                console.log(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Si è verificato un errore:', error);
+        });
+}
 
   
 
