@@ -9,7 +9,7 @@ body {
 }
 
 .media {
-  margin-top: 12vh; /* Spazio sopra il contenuto media */
+  margin-top: 5vh;
   width: 100%;
   height: 78vh; /* Altezza del contenuto media, togliendo l'altezza del navbar */
   display: flex;

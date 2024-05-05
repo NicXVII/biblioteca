@@ -19,6 +19,7 @@ if (true) {
         if (isset($data['id'])) {
             $id = $data['id'];
             $query = "SELECT 
+            tenciclopedia.idEnciclopedia,
             tenciclopedia.titolo,
             tenciclopedia.data,
             tenciclopedia.volumiTotali,
@@ -62,6 +63,7 @@ if (true) {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
+                            'id'                => $row['idEnciclopedia'],
                             'BookName'          => $row['titolo'],
                             'volumiTotali'      => $row['volumiTotali'],
                             'ISBN'              => $row['isbn'],

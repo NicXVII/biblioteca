@@ -7,7 +7,6 @@ body {
   flex-direction: column !important;
 }
 .title {
-  margin-top: 10vh !important;
   width: 100vw;
   height: auto !important;
   display: flex;
