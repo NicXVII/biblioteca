@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-        $_SESSION['userID'] = 1;
         if (isset($_SESSION['userID'])) {
             $id = $_SESSION['userID'];
             $query = "SELECT * FROM `tcliente`

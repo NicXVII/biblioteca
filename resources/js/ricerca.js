@@ -174,7 +174,12 @@ function popolateRicerca(data) {
         link.href = `show.php?id=${dato.id}&tipo_elementp=&${dato.tipo_elemento} nome=${dato.autore_nome}& cognome=${dato.autore_cognome}`;
         autoreP.appendChild(link);*/
         var autoreP = document.createElement('p');
-        autoreP.textContent = `Autore: ${dato.autore_nome} ${dato.autore_cognome}`;
+        if(selected === 'libri')
+            {
+                autoreP.textContent = `Autore: ${dato.autore_nome} ${dato.autore_cognome}`;
+
+            }else
+                autoreP.textContent = `Autore/i: ${dato.autore_nome}`;
         var annoP = document.createElement('p');
         annoP.textContent = `Anno di pubblicazione: ${dato.anno_pubblicazione}`;
 

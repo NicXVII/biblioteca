@@ -408,6 +408,14 @@ function populatePrenotazioni(data) {
         p.innerHTML = "Inizio prestito: " + dato.dataPrenotazione + " Accetazione: " + dato.dataAccetazione;
         divElemento.appendChild(p);
 
+
+        if(dato.dataAccetazione === null)
+            {
+                var btn = document.createElement("button");
+                btn.innerHTML = "Elimina Prenotazione";
+                btn.id = "btn";
+                divElemento.appendChild(btn);
+            }
         divLibro.appendChild(divElemento);
     }
     divPrestiti.appendChild(divLibro);

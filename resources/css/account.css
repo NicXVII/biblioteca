@@ -62,6 +62,22 @@ body {
   background-color: #c82333;
 }
 
+#btn {
+  margin-left: 2%;
+  width: 15%;
+  height: 40%;
+  background-color: #dc3545;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: x-large;
+}
+#bnt {
+  background-color: #c82333;
+}
+
 .prestiti,
 .prenotazioni {
   overflow-y: auto;
