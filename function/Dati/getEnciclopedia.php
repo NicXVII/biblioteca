@@ -4,8 +4,9 @@ require_once("../database.php");
 
 $result = array();
 
-//if ($_SERVER['REQUEST_METHOD'] == 'POST')
-if (true) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+//if (true) 
+{
     $db;
 
     if (!$db) {
@@ -15,7 +16,6 @@ if (true) {
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
-        $data['id'] = 10;
         if (isset($data['id'])) {
             $id = $data['id'];
             $query = "SELECT 
