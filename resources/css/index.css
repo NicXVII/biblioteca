@@ -28,11 +28,12 @@ body {
   justify-content: center;
   align-items: center;
 }
-.location img {
-  width: 50vw;
-  height: 50vh;
-}
 
+iframe {
+  width: 80%;
+  height: 100%;
+  border: 0;
+}
 .location img {
   transition: transform 0.3s ease; /* Cambio graduale della trasformazione con durata di 0.3 secondi e funzione di accelerazione */
 }

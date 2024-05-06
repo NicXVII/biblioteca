@@ -271,7 +271,8 @@ function deletePrenotazione(id)
     .then(data => {
 
         if (data.success) {
-            console.log('La richiesta ha avuto successo', data.data);
+            showSuccessAlert();
+            //console.log('La richiesta ha avuto successo', data.data);
             //populatePrestitiNoLibro(data.data);
             switch(selected)
             {
@@ -287,8 +288,9 @@ function deletePrenotazione(id)
 
             }
         } else {
-            console.log('La richiesta non ha avuto successo');
-            console.log(data.message);
+            //console.log('La richiesta non ha avuto successo');
+            showErrorAlert();
+            //console.log(data.message);
         }
     })
     .catch(error => {
@@ -533,3 +535,21 @@ function btnEliminaPrenotazione()
         });
     }
 }
+
+//------------------------------------------------------------------------------------------------
+function showSuccessAlert() {
+    Swal.fire(
+      'Eliminato!',
+      'La prenotazione è stata eliminata.',
+      'success'
+    );
+  }
+
+  // Funzione per mostrare un alert di errore
+  function showErrorAlert() {
+    Swal.fire(
+      'Errore!',
+      'Impossibile eliminare la prenotazione.',
+      'error'
+    );
+  }

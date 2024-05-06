@@ -27,7 +27,7 @@ if (!isset($_SESSION['userID'])) {
     </div>
 
     <div class='location'>
-        <img src="resources/img/backgroundLoginRegister.jpg" alt="Posizione Biblioteca">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2990.2188669231373!2d15.557238876442474!3d41.4561680917255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1339d84fd7af3ccf%3A0x17d51498dcfa8899!2sBiblioteca%20di%20Foggia%20%22la%20Magna%20Capitana%22!5e0!3m2!1sit!2sit!4v1715008983363!5m2!1sit!2sit" width="850" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 
     <div class='info'>

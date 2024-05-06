@@ -146,11 +146,13 @@ async function prenotaVolume(id)
         .then(data => {
 
             if (data.success) {
-                console.log('La richiesta ha avuto successo:', data.data);
+                showSuccessAlert();
+                //console.log('La richiesta ha avuto successo:', data.data);
                 //popolate(data.data);
             } else {
-                console.log('La richiesta non ha avuto successo');
-                console.log(data.message);
+                /*console.log('La richiesta non ha avuto successo');
+                console.log(data.message);*/
+                showErrorAlert();
             }
         })
         .catch(error => {
@@ -279,3 +281,20 @@ function listenerPrenotaVolume(btn,id)
         prenotaVolume(id);
     });
 }
+
+//--------------------------------------------------------------------------------------------------------------------------------
+function showSuccessAlert() {
+    Swal.fire(
+      'Prenotato!',
+      'La prenotazione è stata confermata.',
+      'success'
+    );
+  }
+
+  function showErrorAlert() {
+    Swal.fire(
+      'Errore!',
+      'Impossibile confermare la prenotazione.',
+      'error'
+    );
+  }

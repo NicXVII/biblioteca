@@ -84,15 +84,18 @@ function fetchPrenotaLibro(id)
     .then(data => {
 
         if (data.success) {
-            console.log('La richiesta ha avuto successo:', data.data);
+            //console.log('La richiesta ha avuto successo:', data.data);
             //popolateRicerca(data.data);
+            showSuccessAlert();
         } else {
-            console.log('La richiesta non ha avuto successo');
-            console.log(data.message);
+           /* console.log('La richiesta non ha avuto successo');
+            console.log(data.message);*/
+            showErrorAlert();
         }
     })
     .catch(error => {
         console.error('Si è verificato un errore:', error);
+        showErrorAlert();
     });
 }
 
@@ -119,15 +122,18 @@ function fetchPrenotaCartina(id)
     .then(data => {
 
         if (data.success) {
-            console.log('La richiesta ha avuto successo:', data.data);
+            showSuccessAlert();
+            //console.log('La richiesta ha avuto successo:', data.data);
             //popolateRicerca(data.data);
         } else {
-            console.log('La richiesta non ha avuto successo');
-            console.log(data.message);
+            /*console.log('La richiesta non ha avuto successo');
+            console.log(data.message);*/
+            showErrorAlert();
         }
     })
     .catch(error => {
         console.error('Si è verificato un errore:', error);
+        showSuccessAlert();
     });
 }
 //--------------------------------popolate data here--------------------------------
@@ -279,3 +285,20 @@ function addListenerPrenota(btn)
         checkPrenotaType(btn.getAttribute('type'),btn.getAttribute('id'));
     });
 }
+
+//------------------------------------------------------------------------------------------------
+function showSuccessAlert() {
+    Swal.fire(
+      'Prenotato!',
+      'La prenotazione è stata confermata.',
+      'success'
+    );
+  }
+
+  function showErrorAlert() {
+    Swal.fire(
+      'Errore!',
+      'Impossibile confermare la prenotazione.',
+      'error'
+    );
+  }
