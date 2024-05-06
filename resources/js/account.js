@@ -141,7 +141,7 @@ function fetchPrenotazioniCarta()
 
         if (data.success) {
             console.log('La richiesta ha avuto successo: fetchPrenotazioniCarta', data.data);
-            //populatePrenotazioni(data.data);
+            populatePrenotazioniNoLibro(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
             console.log(data.message);
@@ -171,7 +171,7 @@ function prestitiCarta()
 
         if (data.success) {
             console.log('La richiesta ha avuto successo: getPrestitoCarta', data.data);
-            //populatePrenotazioni(data.data);
+            populatePrestitiNoLibro(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
             console.log(data.message);
@@ -202,7 +202,7 @@ function prenotazioniVolume()
 
         if (data.success) {
             console.log('La richiesta ha avuto successo: getPrenotazioniEnciclopedia', data.data);
-            //populatePrenotazioni(data.data);
+            populatePrenotazioniNoLibro(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
             console.log(data.message);
@@ -232,7 +232,7 @@ function prestitiVolume()
     
             if (data.success) {
                 console.log('La richiesta ha avuto successo: getPrestitiEnciclopedia', data.data);
-                //populatePrenotazioni(data.data);
+                populatePrestitiNoLibro(data.data);
             } else {
                 console.log('La richiesta non ha avuto successo');
                 console.log(data.message);
@@ -289,15 +289,9 @@ function logout(btn) {
     });
 }
 
+function generateSelect(divPrestiti)
+{
 
-function populatePrestiti(data) {
-    var divPrestiti = document.querySelector('.prestiti');
-    divPrestiti.innerHTML = '';	
-
-    
-    var titolo = document.createElement("h2");
-    titolo.innerHTML = "Prestiti";
-    divPrestiti.appendChild(titolo);
     var select = document.createElement("select");
     var elements = ['Libro', 'Enciclopedia', 'Carta Geo Politica'];
     
@@ -308,6 +302,16 @@ function populatePrestiti(data) {
     }
     addEventListenerSelect(select);
     divPrestiti.appendChild(select);
+}
+
+function populatePrestiti(data) {
+    var divPrestiti = document.querySelector('.prestiti');
+    divPrestiti.innerHTML = '';	
+    var titolo = document.createElement("h2");
+    titolo.innerHTML = "Prestiti";
+    divPrestiti.appendChild(titolo);
+    
+   generateSelect(divPrestiti);
     
     
  
@@ -335,6 +339,40 @@ function populatePrestiti(data) {
     divPrestiti.appendChild(divLibro);
 }
 
+function populatePrestitiNoLibro(data)
+{
+    var divPrestiti = document.querySelector('.prestiti');
+    divPrestiti.innerHTML = '';	
+
+    
+    var titolo = document.createElement("h2");
+    titolo.innerHTML = "Prestiti";
+    divPrestiti.appendChild(titolo);
+    generateSelect(divPrestiti);
+
+        
+    divLibro = document.createElement("div");
+    divLibro.classList.add("libro");
+    for (dato of data) {
+        var divElemento = document.createElement("div");
+        divElemento.classList.add("elemento");
+
+        var p = document.createElement("p");
+        p.innerHTML = "Titolo: "+dato.nome;
+        divElemento.appendChild(p);
+
+        var p = document.createElement("p");
+        p.innerHTML = "Autore/i " +dato.autori;
+        divElemento.appendChild(p);
+        
+        var p  = document.createElement("p"); 
+        p.innerHTML = "Inizio prestito: " + dato.dataInizio + " Fine: " + dato.dataFine;
+        divElemento.appendChild(p);
+
+        divLibro.appendChild(divElemento);
+    }
+    divPrestiti.appendChild(divLibro);
+}
 
 function populatePrenotazioni(data) {
     var divPrestiti = document.querySelector('.prenotazioni');
@@ -356,6 +394,38 @@ function populatePrenotazioni(data) {
 
         var p = document.createElement("p");
         p.innerHTML = "Autore " +dato.nomeAutore + " " + dato.cognomeAutore;
+        divElemento.appendChild(p);
+        
+        var p  = document.createElement("p"); 
+        p.innerHTML = "Inizio prestito: " + dato.dataPrenotazione + " Accetazione: " + dato.dataAccetazione;
+        divElemento.appendChild(p);
+
+        divLibro.appendChild(divElemento);
+    }
+    divPrestiti.appendChild(divLibro);
+}
+
+function populatePrenotazioniNoLibro(data)
+{
+    var divPrestiti = document.querySelector('.prenotazioni');
+    divPrestiti.innerHTML = '';	
+
+    var titolo = document.createElement("h2");
+    titolo.innerHTML = "Prenotazioni";
+    divPrestiti.appendChild(titolo);
+
+    divLibro = document.createElement("div");
+    divLibro.classList.add("libro");
+    for (dato of data) {
+        var divElemento = document.createElement("div");
+        divElemento.classList.add("elemento");
+
+        var p = document.createElement("p");
+        p.innerHTML = "Titolo: "+dato.nome;
+        divElemento.appendChild(p);
+
+        var p = document.createElement("p");
+        p.innerHTML = "Autore/i " +dato.autori;
         divElemento.appendChild(p);
         
         var p  = document.createElement("p"); 
