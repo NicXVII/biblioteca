@@ -1,8 +1,6 @@
-<link rel="stylesheet" href="resources/css/components/nav.css">
 <?php
-ob_start();
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+    ob_start();
 }
 $id = null;
 $idConcerto = null;
@@ -13,6 +11,8 @@ if (isset($_SESSION['idConcerto']))
     $idConcerto = $_SESSION['idConcerto'];
 
 ?>
+<link rel="stylesheet" href="resources/css/components/nav.css">
+
 <nav class="nav-bar" id="nav-bar">
     <input type="hidden" name="hidden" id="userID" value="<?php echo $id; ?>">
 

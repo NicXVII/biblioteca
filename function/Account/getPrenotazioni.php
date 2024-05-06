@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         if (isset($_SESSION['userID'])) {
             $id = $_SESSION['userID'];
-            $query = "SELECT tprenotazione.dataPrenotazione, tprenotazione.dataAccetazione, tlibro.nome AS nomeLibro, tautore.nome AS nomeAutore, tautore.cognome AS cognomeAutore  
+            $query = "SELECT tprenotazione.idPrenotazione,tprenotazione.dataPrenotazione, tprenotazione.dataAccetazione, tlibro.nome AS nomeLibro, tautore.nome AS nomeAutore, tautore.cognome AS cognomeAutore  
             FROM `tprenotazione` 
             JOIN tlibro ON tlibro.idLibro = tprenotazione.idLibro
             JOIN tautore ON tlibro.idAutore = tautore.idAutore
@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
+                            'type'              => 'libro',
+                            'idPrenotazione'    => $row['idPrenotazione'],
                             'nomeLibro'         => $row['nomeLibro'],
                             'nomeAutore'        => $row['nomeAutore'],
                             'cognomeAutore'     => $row['cognomeAutore'],

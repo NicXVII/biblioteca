@@ -1,3 +1,8 @@
+<?php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+?>
 <!DOCTYPE html>
 <html lang="it">
 
@@ -9,9 +14,7 @@
 </head>
 
 <body>
-    <?php
-    session_start();
-    ?>
+
     <div class="login-container">
         <div class="login-window">
             <div class="login-form-container">

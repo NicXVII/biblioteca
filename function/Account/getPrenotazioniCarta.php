@@ -19,6 +19,7 @@ if (true) {
             $id = $_SESSION['userID'];
 
             $query = "SELECT tprenotazionecarta.dataPrenotazione, 
+            tprenotazionecarta.idPrenotazione,
             tprenotazionecarta.dataAccetazione, 
             tcartageopolitica.titolo AS nome, 
             GROUP_CONCAT(tautore.nome, ' ', tautore.cognome) AS autori
@@ -46,6 +47,8 @@ if (true) {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
+                            'id'                => $row['idPrenotazione'], // 'id' => 'idPrenotazione
+                            'type'              => 'carta',
                             'nome'         => $row['nome'],
                             'autori'        => $row['autori'],
                             'dataPrenotazione'  => date('d/m/Y', strtotime($row['dataPrenotazione'])),

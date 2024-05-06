@@ -19,6 +19,7 @@ if (true) {
             $id = $_SESSION['userID'];
 
             $query = "SELECT 
+            tprenotazioneenciclopedia.idPrenotazione,
             tprenotazioneenciclopedia.dataPrenotazione, 
             tprenotazioneenciclopedia.dataAccetazione, 
             tenciclopedia.titolo AS nome, 
@@ -54,6 +55,8 @@ if (true) {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
+                            'id'        => $row['idPrenotazione'], 
+                            'type'              => 'enciclopedia',
                             'nome'         => $row['nome'] . " ,volume: " . $row['numeroVolume'],
                             'autori'        => $row['autori'],
                             'dataPrenotazione'  => date('d/m/Y', strtotime($row['dataPrenotazione'])),

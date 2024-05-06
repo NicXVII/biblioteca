@@ -5,7 +5,9 @@ require_once("../database.php");
 $result = array();
 
 // Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+if(true)
+{
     $db;
 
     if (!$db) {
@@ -15,20 +17,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
-
-        if (isset($_SESSION['userID']) && isset($_POST['idPrenotazione']) && isset($_POST['type'])) {
+      
+        if (isset($_SESSION['userID']) && isset($data['id']) && isset($data['type'])) {
             $id = $_SESSION['userID'];
-            $idPrenotazione = $_POST['idPrenotazione'];
-            $type = $_POST['type'];
+            $idPrenotazione = $data['id'];
+            $type = $data['type'];
             $queryDelete = "";
             switch ($type) {
-                case 'libro':
-                    $queryDelete = "DELETE FROM tprenotazionelibro WHERE tprenotazionelibro.idPrenotazione = ? AND tprenotazionelibro.idCliente = ?";
+                case 'Libro':
+                    $queryDelete = "DELETE FROM tprenotazione WHERE tprenotazione.idPrenotazione = ? AND tprenotazione.idCliente = ?";
                     break;
-                case 'enciclopedia':
+                case 'Enciclopedia':
                     $queryDelete = "DELETE FROM tprenotazioneenciclopedia WHERE tprenotazioneenciclopedia.idPrenotazione = ? AND tprenotazioneenciclopedia.idCliente = ?";
                     break;
-                case 'carta':
+                case 'Carta Geo Politica':
                     $queryDelete = "DELETE FROM tprenotazionecarta WHERE tprenotazionecarta.idPrenotazione = ? AND tprenotazionecarta.idCliente = ?";
                     break;
             }
@@ -60,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $result = [
                 'success'    =>  false,
-                'message'   =>  'Missing element idGenere',
+                'message'   =>  'Missing element '.$data['id'].' '.$data['type'].' '.$_SESSION['userID'].'',
             ];
         }
 
