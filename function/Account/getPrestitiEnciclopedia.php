@@ -57,7 +57,7 @@ if (true) {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
-                            'nome'         => $row['nome'],
+                            'nome'         => $row['nome'] . " ,volume: " . $row['numeroVolume'],
                             'autori'        => $row['autori'],
                             'dataInizio'  => date('d/m/Y', strtotime($row['dataInizio'])),
                             'dataFine'   => ($row['dataFine'] != null) ? date('d/m/Y', strtotime($row['dataFine'])) : null,

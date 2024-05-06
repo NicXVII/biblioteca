@@ -353,6 +353,14 @@ function populatePrestitiNoLibro(data)
         
     divLibro = document.createElement("div");
     divLibro.classList.add("libro");
+    console.log(data.length);
+    if(data.length === 0)
+        {
+            var p = document.createElement("p");
+            p.innerHTML = "Nessun prestito";
+            divLibro.appendChild(p);
+            return;
+        }
     for (dato of data) {
         var divElemento = document.createElement("div");
         divElemento.classList.add("elemento");

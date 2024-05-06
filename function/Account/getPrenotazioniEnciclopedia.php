@@ -22,6 +22,7 @@ if (true) {
             tprenotazioneenciclopedia.dataPrenotazione, 
             tprenotazioneenciclopedia.dataAccetazione, 
             tenciclopedia.titolo AS nome, 
+            tvolume.numeroVolume,
             GROUP_CONCAT(DISTINCT CONCAT(tautore.nome, ' ', tautore.cognome)) AS autori
         FROM 
             `tprenotazioneenciclopedia` 
@@ -53,7 +54,7 @@ if (true) {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
-                            'nome'         => $row['nome'],
+                            'nome'         => $row['nome'] . " ,volume: " . $row['numeroVolume'],
                             'autori'        => $row['autori'],
                             'dataPrenotazione'  => date('d/m/Y', strtotime($row['dataPrenotazione'])),
                             'dataAccetazione'   => ($row['dataAccetazione'] != null) ? date('d/m/Y', strtotime($row['dataAccetazione'])) : null,
