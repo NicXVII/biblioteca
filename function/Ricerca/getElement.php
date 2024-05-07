@@ -43,7 +43,7 @@ if (true) {
                                 tcasaeditrice.nome LIKE ?";
                     break;
                 case 'enciclopedie':
-                    $query = "SELECT DISTINCT
+                    $query = "SELECT
                     tenciclopedia.idEnciclopedia AS id,
                     tenciclopedia.titolo AS titolo,
                     tenciclopedia.isbn,

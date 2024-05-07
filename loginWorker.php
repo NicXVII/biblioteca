@@ -22,7 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     Accedi
                 </div>
                 <form class="login-form" id="login-form" method="post">
-                    <label for="email">Email</label>
+                    <label for="codiceFiscale ">Codice Fiscale </label>
                     <input type="email" name="email" id="email" placeholder="Email" required />
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" placeholder="Password" required />
@@ -31,18 +31,15 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                 </form>
                 <p>
-                    Non sei ancora registrato?
-                    <a href="register.php">Registrati</a>
-                </p>
-                <p>
-                    Accedi come lavoratore
-                    <a href="loginWorker.php">Accedi</a>
+                    Accedi come cliente
+                    <a href="login.php">Accedi</a>
                 </p>
             </div>
             <div class="login-attachment-container">
                 <div class="photo-box login-attachment-photo">
                     <div class="login-attachment-text">
-                        Biblioteca Comunale Foggia
+                        Buon lavoro!
+                        Viva Foggia
                     </div>
                 </div>
             </div>
@@ -63,5 +60,5 @@ if (session_status() === PHP_SESSION_NONE) {
 
 </html>
 
-<script src="resources/js/login.js"></script>
+<script src="resources/js/loginLavoratore.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

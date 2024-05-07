@@ -419,7 +419,7 @@ function populatePrestitiNoLibro(data)
         divElemento.appendChild(p);
 
         var p = document.createElement("p");
-        p.innerHTML = "Autore/i " +dato.autori;
+        p.innerHTML = "Autore/i: " +dato.autori;
         divElemento.appendChild(p);
         
         var p  = document.createElement("p"); 
