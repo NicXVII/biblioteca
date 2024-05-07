@@ -367,6 +367,13 @@ function populatePrestiti(data) {
 
     divLibro = document.createElement("div");
     divLibro.classList.add("libro");
+    if(data.lengh === 0)
+        {
+            var p = document.createElement("p");
+            p.innerHTML = "Nessun prestito";
+            divLibro.appendChild(p);
+            return;
+        }
     for (dato of data) {
         var divElemento = document.createElement("div");
         divElemento.classList.add("elemento");
@@ -398,8 +405,14 @@ function populatePrestitiNoLibro(data)
     titolo.innerHTML = "Prestiti";
     divPrestiti.appendChild(titolo);
     generateSelect(divPrestiti);
-
-        
+    console.log("Test " +data.length <= 0);
+    if(data.lengh <= 0)
+        {
+            var p = document.createElement("p");
+            p.innerHTML = "Nessun prestito";
+            divLibro.appendChild(p);
+            return;
+        }
     divLibro = document.createElement("div");
     divLibro.classList.add("libro");
     console.log(data.length);
