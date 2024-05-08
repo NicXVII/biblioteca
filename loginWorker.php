@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 </div>
                 <form class="login-form" id="login-form" method="post">
                     <label for="codiceFiscale ">Codice Fiscale </label>
-                    <input type="email" name="email" id="email" placeholder="Email" required />
+                    <input type="text" name="codiceFiscale" id="codiceFiscale" placeholder="Codice Fiscale" required />
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" placeholder="Password" required />
                     <button class="btn" type="submit" name="submit" id="submit">

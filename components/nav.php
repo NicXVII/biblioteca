@@ -4,8 +4,12 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 $id = null;
 $idConcerto = null;
-if (isset($_SESSION['userID']))
+if (isset($_SESSION['userID'])) {
     $id = $_SESSION['userID'];
+}
+
+if (isset($_SESSION['workerID']))
+    $id = $_SESSION['workerID'];
 
 if (isset($_SESSION['idConcerto']))
     $idConcerto = $_SESSION['idConcerto'];
@@ -40,6 +44,3 @@ if (isset($_SESSION['idConcerto']))
         </ul>
     </div>
 </nav>
-
-
-<script src="resources/js/components/nav.js"></script>

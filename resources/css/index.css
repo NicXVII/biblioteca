@@ -53,3 +53,66 @@ iframe {
   flex-direction: column;
   align-items: center;
 }
+
+/* =================================================================*/
+.selectElement {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #ccc;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.selectElement button {
+  height: auto;
+  width: 15vw;
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.selectElement button:hover {
+  background-color: #e0e0e0;
+}
+
+.selectElement .btnSend {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.selectElement .btnSend button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.selectElement .btnSend button:hover {
+  background-color: #0056b3;
+}
+
+.divBtnElement {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  justify-content: center;
+}
+
+.divBtnSend {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
