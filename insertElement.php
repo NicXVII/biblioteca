@@ -2,11 +2,13 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+$type = null;
+if (!isset($_SESSION['workerID']) || !isset($_REQUEST['type'])) {
 
-if (!isset($_SESSION['workerID'])) {
     header('Location: loginWorker.php');
     exit();
 }
+$type = $_REQUEST['type'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +21,7 @@ if (!isset($_SESSION['workerID'])) {
 </head>
 
 <body>
+    <input type="hidden" id="type" value="<?php echo $type; ?>">
     <?php
     require_once('components/nav.php');
     ?>
@@ -26,3 +29,4 @@ if (!isset($_SESSION['workerID'])) {
 </body>
 
 </html>
+<script src="resources/js/insertElement.js"></script>
