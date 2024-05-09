@@ -11,7 +11,7 @@ function preventDefault()
     var formData;
     form.addEventListener("submit", function(event) {
         event.preventDefault();
-       var email = document.getElementById("email").value;
+       var email = document.getElementById("codiceFiscale").value;
        var password = document.getElementById("password").value;
        Fetchlogin(email, password);
     });
@@ -27,7 +27,7 @@ function Fetchlogin(email, password)
     };
 
     console.log(data);
-    fetch('function/login.php', {
+    fetch('function/loginLavoratore.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

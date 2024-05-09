@@ -10,6 +10,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 //----------------------------------fetching api here--------------------------------
+
+function whatFetch(){
+    if(type === 'prestiti')
+    {
+        fetchPrestiti();
+    }else if(type === 'prenotazioni')
+    {
+        fetchPrenotazioni();
+    }
+
+}
+
+
+function fetchPrestiti()
+{
+    switch(type){
+        case 'libri':
+            fetchLibriPrestiti();
+            break;
+        case 'cartine':
+            fetchCartePrestiti();
+            break;
+        case 'enciclopedie':
+            fetchEnciclopediePrestiti(id);
+            break;
+        default:
+            break;
+    }
+}
 function fetchRicerca()
 {
     if(selected == null)
@@ -292,6 +321,7 @@ function addListenerBtn()
     var btn = document.getElementById('searchBtn');
     btn.addEventListener('click', function() {
         fetchRicerca();
+        whatFetch();
     });
 }
 

@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
-    fetcUtente();
-    fetchPrestiti();  
-    fetchPrenotazioni(); 
+    var worker = document.getElementById("worker").value;
+    if(!worker)
+    {
+        fetcUtente();
+        fetchPrestiti();  
+        fetchPrenotazioni(); 
+    }
   
     /*fetchPrenotazioniCarta();
     prestitiCarta();

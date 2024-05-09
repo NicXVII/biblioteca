@@ -1,3 +1,12 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$worker = false;
+if (isset($_SESSION['workerID'])) {
+    $worker = true;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +20,8 @@
 </head>
 
 <body>
+    <input type="hidden" id="worker" value="<?php echo $worker; ?>">
+
     <?php
     require_once('components/nav.php')
     ?>
@@ -28,4 +39,5 @@
 
 </html>
 <script src="resources/js/account.js"></script>
+<script src="resources/js/accountLavoratore.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

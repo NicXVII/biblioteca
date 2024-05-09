@@ -32,14 +32,6 @@ $data = json_decode($json, true);
 $email = mysqli_real_escape_string($db, $data['email']);
 $pass  = mysqli_real_escape_string($db, $data['password']);
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $result = array(
-        'success' => false,
-        'message' => 'Invalid email format'
-    );
-    echo json_encode($result);
-    exit();
-}
 
 $query = "SELECT * FROM tlavoratore WHERE codiceFiscale = ? AND password = ?";
 $statement = mysqli_prepare($db, $query);
