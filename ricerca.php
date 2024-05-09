@@ -1,3 +1,12 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$worker;
+if ($_SESSION['workerID'])
+    $worker = true;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +20,7 @@
 </head>
 
 <body>
+    <input type="hidden" id="worker" value="<?php echo $worker; ?>">
     <?php
     require_once('components/nav.php')
     ?>

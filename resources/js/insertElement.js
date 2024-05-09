@@ -1,16 +1,15 @@
 var type = null;
 document.addEventListener('DOMContentLoaded', function() {
-type = document.getElementById('type').value;
-whichForm();
-//fetchCaseEditrici();
-//fetchAutori();
+    type = document.getElementById('type').value;
+    whichForm();
+    //fetchCaseEditrici();
+    //fetchAutori();
 });
+
 //------------------------------------------------------------------
 
-function whichForm()
-{
-    switch(type)
-    {
+function whichForm() {
+    switch (type) {
         case 'Enciclopedia':
             break;
         case 'Libro':
@@ -20,9 +19,10 @@ function whichForm()
             break;
     }
 }
+
 //------------------------------------------------------------------
-async function fetchCaseEditrici()
-{
+
+async function fetchCaseEditrici() {
     try {
         const response = await fetch('function/Dati/getCaseEditrici.php', {
             method: 'POST',
@@ -44,7 +44,6 @@ async function fetchCaseEditrici()
         return []; // Return an empty array if there's an error
     }
 }
-
 
 async function fetchAutori() {
     try {
@@ -71,15 +70,14 @@ async function fetchAutori() {
 
 //------------------------------------------------------------------
 
-
-async function createFormLibro()
-{   
+async function createFormLibro() {
     var formDiv = document.querySelector('.formDiv');
     formDiv.innerHTML = '';
 
     var titolo = document.createElement('h1');
     titolo.innerHTML = 'Inserisci un nuovo libro';
     formDiv.appendChild(titolo);
+
     var form = document.createElement('form');
     form.setAttribute('method', 'POST');
     //nome, isbn, pubblicazione, prezzo,autore, casa editrice, 
@@ -116,20 +114,18 @@ async function createFormLibro()
     form.appendChild(priceLabel);
     form.appendChild(priceInput);
 
-
     var autoriLabel = document.createElement('label');
     autoriLabel.textContent = 'Autori:';
     form.appendChild(autoriLabel);
     var selectAutori = document.createElement('select');
-
     var autori = await fetchAutori();
-    for (autore of autori)
-        {
-            var option = document.createElement('option');
-            option.setAttribute('value', autore.id);
-            option.textContent = autore.nome + ' ' + autore.cognome;
-            selectAutori.appendChild(option);
-        }
+    for (autore of autori) {
+        var option = document.createElement('option');
+        option.setAttribute('value', autore.id);
+        option.textContent = autore.nome + ' ' + autore.cognome;
+        selectAutori.appendChild(option);
+    }
+    listenerSelect(selectAutori);
     form.appendChild(selectAutori);
 
     var caseEditricilabel = document.createElement('label');
@@ -137,15 +133,65 @@ async function createFormLibro()
     form.appendChild(caseEditricilabel);
     var selectCaseEditrici = document.createElement('select');
     var caseEditrici = await fetchCaseEditrici();
-    for (casaEditrice of caseEditrici)
-        {
-            var option = document.createElement('option');
-            option.setAttribute('value', casaEditrice.id);
-            option.textContent = casaEditrice.nome;
-            selectCaseEditrici.appendChild(option);
-        }
+    for (casaEditrice of caseEditrici) {
+        var option = document.createElement('option');
+        option.setAttribute('value', casaEditrice.id);
+        option.textContent = casaEditrice.nome;
+        selectCaseEditrici.appendChild(option);
+    }
+    listenerSelectCasaEditrice(selectCaseEditrici);
     form.appendChild(selectCaseEditrici);
+
+    var button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.innerHTML = "Inserisci Libro";
+    form.appendChild(button);
+
+    var hiddenAutore = document.createElement('input');
+    hiddenAutore.setAttribute('type', 'hidden');
+    hiddenAutore.setAttribute('autore', "");
+    hiddenAutore.id = 'autoreHidden'; 
+    form.appendChild(hiddenAutore);
+
+    var hiddenCasaEditrice = document.createElement('input');
+    hiddenCasaEditrice.setAttribute('type', 'hidden');
+    hiddenCasaEditrice.setAttribute('casaEditrice', "");
+    hiddenCasaEditrice.id = 'casaEditrice';
+    form.appendChild(hiddenCasaEditrice);
 
     formDiv.appendChild(form);
 
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        var formData = new FormData(form);
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
+        autore = document.getElementById('autoreHidden').value;
+        console.log(autore);
+    });
 }
+
+
+var autore = null;
+
+function listenerSelect(select)
+{
+    select.addEventListener('change', function()
+    {
+        var input = document.getElementById('autoreHidden');
+        input =  select.options[select.selectedIndex].value;
+
+    });
+}
+var casaEditrice = null;
+
+function listenerSelectCasaEditrice(select) {
+    select.addEventListener('change', function() {
+        var input = document.getElementById('casaEditrice');
+        input =  select.options[select.selectedIndex].value;
+
+    });
+}
+
+

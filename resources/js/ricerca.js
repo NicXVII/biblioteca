@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
+    createSelectLavoratore();
     createSelect();
     addEventListenerSelect();
+    addEventListenerSelectLavoratore();
     fetchRicerca();
     addListenerBtn()
     addKeyBoardListener();
@@ -224,10 +226,35 @@ casaEditriceP.appendChild(link);
 
 
 //--------------------------------create data here--------------------------------
+
+function createSelectLavoratore()
+{
+    var worker = document.getElementById('worker');
+    if(!worker) return;
+
+    var divSearch = document.querySelector(".search");
+
+    var select = document.createElement("select");
+
+    select.id = "selectLavoratore";
+
+
+    var options = ["Prestiti", "Prenotazioni"];
+    for (var i = 0; i < options.length; i++) {
+        var option = document.createElement("option");
+        option.value = options[i].toLowerCase();
+        option.textContent = options[i];
+        select.appendChild(option);
+    }
+
+    divSearch.appendChild(select);
+
+}
 function createSelect() {
     var divSearch = document.querySelector(".search");
 
     var select = document.createElement("select");
+    select.id = 'selectType';
 
     var options = ["Libri", "Enciclopedie", "Cartine"];
     for (var i = 0; i < options.length; i++) {
@@ -270,12 +297,22 @@ function addListenerBtn()
 
 
 function addEventListenerSelect() {
-    var select = document.querySelector("select");
+    var select = document.getElementById("selectType");
     select.addEventListener("change", function() {
         selected = select.options[select.selectedIndex].value;
         console.log(selected);
     });
 }
+
+var type = null;
+function addEventListenerSelectLavoratore() {
+    var select = document.getElementById("selectLavoratore");
+    select.addEventListener("change", function() {
+        type = select.options[select.selectedIndex].value;
+        console.log(type);
+    });
+}
+
 
 
 function addListenerPrenota(btn)
