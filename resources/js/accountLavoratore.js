@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 //------------------------------------------------------------------------------------------------
+
+function fetchPrestitiConcessi()
+{
+    
+}
 function fetchData()
 {
     fetch('function/Account/getDatiLavoratore.php', {
@@ -44,11 +49,11 @@ function popolateDataUser(data)
     var divUser = document.querySelector(".userMediaData");
     divUser.innerHTML = '';
     var p = document.createElement("p");
-    p.innerHTML = "Nome utente: "+data.nome;
+    p.innerHTML = "Nome dipendente: "+data.nome;
     divUser.appendChild(p);
 
     var p = document.createElement("p");
-    p.innerHTML = "Cognome utente: "+data.cognome;
+    p.innerHTML = "Cognome dipendente: "+data.cognome;
     divUser.appendChild(p);
 
     var p = document.createElement("p");
@@ -72,3 +77,5 @@ function logout(btn) {
         location.href = "function/logout.php"; 
     });
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////        
