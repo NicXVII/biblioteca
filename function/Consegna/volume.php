@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require_once("../database.php");
@@ -6,9 +5,7 @@ require_once("../database.php");
 $result = array();
 
 // Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-//if (true) 
-{
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db;
 
     if (!$db) {
@@ -18,38 +15,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
-        if (isset($data['id'])) {
-            $id = $data['id'];
-            $query = "SELECT tlibro.isbn, tcliente.nome, tcliente.cognome, tprenotazione.dataPrenotazione, tprenotazione.dataAccetazione
-            FROM `tprenotazione`
-            JOIN tlibro
-            ON tlibro.idLibro = tprenotazione.idLibro
-            JOIN tcliente
-            ON tcliente.IdCliente = tprenotazione.idCliente
-            ORDER BY tprenotazione.dataPrenotazione DESC";
+        if (isset($data['idPrestito']) && isset($data['idLavoratore'])) {
+            $idPrestito = $data['idPrestito'];
+            $idLavoratore = $data['idLavoratore'];
+
+
+            $currentDate = date('Y-m-d H:i:s');
+            $query = "UPDATE tprestitolavoratore
+                        SET dataInizio = ?
+                        SET idLavoratoreConsegna = ?
+                        WHERE idPrestito = ?";
 
             $stmt = mysqli_prepare($db, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "s", $id);
+                mysqli_stmt_bind_param($stmt, "sii", $currentDate, $idLavoratore, $idPrenotazione);
                 mysqli_stmt_execute($stmt);
-                $queryResult = mysqli_stmt_get_result($stmt);
+                $queryResult = mysqli_affected_rows($db);
 
-                if ($queryResult) {
-                    $resultArray =  [];
-                    while ($row = mysqli_fetch_array($queryResult)) {
-                        $resultArray[] = [
-                            'isbn' => $row['isbn'],
-                            'nome' => $row['nome'],
-                            'cognome' => $row['cognome'],
-                            'dataPrenotazione' => $row['dataPrenotazione'],
-                            'dataAccetazione' => $row['dataAccetazione'],
-                        ];
-                    }
+                if ($queryResult > 0) {
 
                     $result = [
                         'success'       =>  true,
-                        'data'          =>  $resultArray[0],
                     ];
                 } else {
                     $result = [
@@ -68,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         } else {
             $result = [
                 'success'    =>  false,
-                'message'   =>  'Missing element idGenere',
+                'message'   =>  'Missing element id',
             ];
         }
 

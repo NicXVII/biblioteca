@@ -3,25 +3,28 @@ if (session_status() === PHP_SESSION_NONE) {
     ob_start();
 }
 $id = null;
-$idConcerto = null;
+$worker = null;
 if (isset($_SESSION['userID'])) {
     $id = $_SESSION['userID'];
+    $worker = true;
 }
 
-if (isset($_SESSION['workerID']))
+if (isset($_SESSION['workerID'])) {
     $id = $_SESSION['workerID'];
+    $worker = false;
+}
 
-if (isset($_SESSION['idConcerto']))
-    $idConcerto = $_SESSION['idConcerto'];
 
 ?>
 <link rel="stylesheet" href="resources/css/components/nav.css">
 
 <nav class="nav-bar" id="nav-bar">
     <input type="hidden" name="hidden" id="userID" value="<?php echo $id; ?>">
+    <input type="hidden" name="worker" id="worker" value="<?php echo $worker; ?>">
+
 
     <div>
-        <ul>
+        <ul id="ul">
 
             <li>
                 <a href="index.php">
@@ -44,3 +47,5 @@ if (isset($_SESSION['idConcerto']))
         </ul>
     </div>
 </nav>
+
+<script src="resources/js/nav.js"></script>

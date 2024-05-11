@@ -279,6 +279,7 @@ function createSelectLavoratore()
     divSearch.appendChild(select);
 
 }
+
 function createSelect() {
     var divSearch = document.querySelector(".search");
 

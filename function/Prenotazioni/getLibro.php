@@ -1,9 +1,11 @@
+
 <?php
 session_start();
 require_once("../database.php");
 
 $result = array();
 
+// Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 //if (true) 
 {
@@ -15,17 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-        $query = "SELECT tcliente.nome,tcliente.cognome, tprestitoenciclopedia.idPrenotazione, tvolume.isbn, tprestitoenciclopedia.dataInizio,tprestitoenciclopedia.dataFine
-        FROM `tprestitoenciclopedia`
-        JOIN tprenotazioneenciclopedia
-        ON tprestitoenciclopedia.idPrenotazione = tprestitoenciclopedia.idPrenotazione
-        JOIN tcliente
-        ON tcliente.IdCliente = tprenotazioneenciclopedia.idCliente
-        JOIN tvolume
-        ON tvolume.idVolume = tprenotazioneenciclopedia.idVolume
-        ORDER BY tprestitoenciclopedia.dataInizio
-        ";
-
+        $query = "SELECT tlibro.isbn, tcliente.nome, tcliente.cognome, tprenotazione.dataPrenotazione, tprenotazione.dataAccetazione
+            FROM `tprenotazione`
+            JOIN tlibro
+            ON tlibro.idLibro = tprenotazione.idLibro
+            JOIN tcliente
+            ON tcliente.IdCliente = tprenotazione.idCliente
+            ORDER BY tprenotazione.dataPrenotazione DESC";
 
         $stmt = mysqli_prepare($db, $query);
 
@@ -37,12 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 $resultArray =  [];
                 while ($row = mysqli_fetch_array($queryResult)) {
                     $resultArray[] = [
-                        'nome'  => $row['nome'],
-                        'cognome'  => $row['cognome'],
-                        'idPrenotazione'  => $row['idPrenotazione'],
-                        'isbn'  => $row['isbn'],
-                        'dataInizio'  => $row['dataInizio'],
-                        'dataFine'  => $row['dataFine']
+                        'isbn' => $row['isbn'],
+                        'nome' => $row['nome'],
+                        'cognome' => $row['cognome'],
+                        'dataPrenotazione' => $row['dataPrenotazione'],
+                        'dataAccetazione' => $row['dataAccetazione'],
                     ];
                 }
 
@@ -61,10 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         } else {
             $result = [
                 'success'    =>  false,
-                'message'   =>  'Failed to prepare statement: ' . mysqli_error($db),
+                'message'   =>  'Failed to prepare statement',
             ];
         }
-    }
+    } // Close database connection
     mysqli_close($db);
 } else {
     $result = [
@@ -73,4 +70,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     ];
 }
 
+// Return results in JSON format
 echo json_encode($result);

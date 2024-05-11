@@ -1,0 +1,132 @@
+body {
+  font-family: "San Francisco", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Prevent content from overflowing */
+}
+
+.content {
+  height: 90vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.search {
+  height: 10vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4vh;
+}
+
+.search input[type="text"] {
+  margin-left: 15%;
+  width: 20%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search button {
+  margin-left: 1.5%;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search button:hover {
+  background-color: #0056b3;
+}
+
+.search select {
+  margin-left: 10%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.searchResults {
+  align-items: center;
+  align-content: center;
+  justify-content: top;
+  overflow-y: auto;
+  height: 80vh !important;
+  text-align: center;
+  display: flex;
+
+  flex-direction: column;
+  width: 100vw;
+  height: auto;
+}
+
+.searchResults h2 {
+  font-size: 2.5rem;
+}
+.risultatoRicerca {
+  margin-top: 2vh;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  padding: 20px; /* Increased padding for better spacing */
+  margin-bottom: 20px; /* Added margin between search results */
+  background-color: #f5f2f2; /* Light background color for better readability */
+  border-radius: 10px; /* Rounded corners for a more modern look */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+}
+
+.risultatoRicerca p {
+  margin-right: 5%;
+}
+
+.risultatoRicerca:last-child {
+  border-bottom: none;
+}
+
+#ricercaNulla {
+  font-size: 2rem;
+}
+
+/* Stili per il bottone prenotazione */
+.button-prenota {
+  background-color: #007bff; /* Colore di sfondo del bottone */
+  color: #fff; /* Colore del testo */
+  padding: 10px 20px; /* Padding interno */
+  border: none; /* Nessun bordo */
+  border-radius: 5px; /* Bordi arrotondati */
+  cursor: pointer; /* Cambia il cursore al passaggio */
+  font-size: 16px; /* Dimensione del testo */
+  transition: background-color 0.3s ease; /* Transizione del colore di sfondo */
+}
+
+/* Stili per il passaggio del mouse */
+.button-prenota:hover {
+  background-color: #0056b3; /* Cambia colore di sfondo al passaggio del mouse */
+}
+
+/* Stili per il clic */
+.button-prenota:active {
+  background-color: #004080; /* Cambia colore di sfondo al clic */
+}
+
+a {
+  text-decoration: none !important;
+  color: black;
+}
+a:hover {
+  text-decoration: none !important;
+  font-style: italic;
+}
