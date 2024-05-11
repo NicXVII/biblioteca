@@ -15,17 +15,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
-        if (isset($data['id'])) {
-            $id = $data['id'];
+        if (isset($data['idPrenotazione']) && isset($data['idLavoratore'])) {
+            $idPrenotazione = $data['idPrenotazione'];
+            $idLavoratore = $data['idLavoratore'];
+
             $currentDate = date('Y-m-d H:i:s');
-            $query = "UPDATE tprenotazione
-                      SET dataAccetazione = ?
-                      WHERE idPrenotazione = ?";
+            $query = "INSERT INTO tprestitocarta (idPrenotazione, idLavoratore, dataPrestito)
+                      VALUES (?, ?, ?)";
 
             $stmt = mysqli_prepare($db, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "ss", $currentDate, $id);
+                mysqli_stmt_bind_param($stmt, "iis", $idPrenotazione, $idLavoratore, $currentDate);
                 mysqli_stmt_execute($stmt);
                 $queryResult = mysqli_affected_rows($db);
 

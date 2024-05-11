@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($data['id'])) {
             $id = $data['id'];
             $currentDate = date('Y-m-d H:i:s');
-            $query = "UPDATE tprenotazione
+            $query = "UPDATE tprenotazionecarta
                       SET dataAccetazione = ?
                       WHERE idPrenotazione = ?";
 
