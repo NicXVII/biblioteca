@@ -168,57 +168,56 @@ function fetchPrenotaCartina(id)
     });
 }
 
-async function fetchPosizione(id)
-{
-    console.log(id);
+async function fetchPosizione(id) {
+    //console.log(id);
     var functionToFetch = "function/Posizione/get";
-    console.log(elemento);
-    switch(elemento){
+    //console.log(elemento);
+    switch (elemento) {
         case 'libri':
-            functionToFetch+='Libro';
+            functionToFetch += 'Libro';
             break;
         case 'cartine':
-            functionToFetch+='Carta';
+            functionToFetch += 'Carta';
             break;
         case 'enciclopedie':
-            functionToFetch+='Volume';
+            functionToFetch += 'Volume';
             break;
         default:
             break;
     }
-    functionToFetch+='.php';
-    console.log(functionToFetch);
+    functionToFetch += '.php';
+    //console.log(functionToFetch);
     var dataToSend = {
         id: id
-    }
+    };
+    //console.log(dataToSend);
 
 
-    fetch('function/Prenota/prenotaCartina.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataToSend)
-,    })
-    .then(response => {
+    try {
+        const response = await fetch(functionToFetch, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend),
+        });
+
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json();
-    })
-    .then(data => {
+
+        const data = await response.json();
+        console.log(data.data);
         return data.data;
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Si è verificato un errore:', error);
-    });   
+    }
+}   
 
-
-}
 //--------------------------------popolate data here--------------------------------
 
 
-function popolateRicerca(data) {
+async function popolateRicerca(data) {
     var divSearch = document.querySelector('.searchResults');
     divSearch.innerHTML = '';
 
@@ -299,7 +298,7 @@ casaEditriceP.appendChild(link);
 
         if(worker)
         {
-            var data = fetchPosizione(dato.id);
+            var data = await fetchPosizione(dato.id);
             console.log(data);
             var p = document.createElement('p');
             p.innerHTML = "Stanza: " + data.nomeStanza + " Armadio: " + data.nomeArmadio + " Scaffale: " + data.nomeScaffale + " Numero: " + data.numeroScaffale;

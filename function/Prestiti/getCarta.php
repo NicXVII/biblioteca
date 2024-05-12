@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $search = '%' . '%';
         }
-        $query = "SELECT tcliente.nome,tcliente.cognome, tprestitocarta.idPrenotazione, tcartageopolitica.isbn,tprestitocarta.dataInizio,tprestitocarta.dataFine
+        $query = "SELECT tcliente.nome,tcliente.cognome, tprestitocarta.idPrenotazione, tcartageopolitica.isbn,tprestitocarta.dataInizio,tprestitocarta.dataFine, tprestitocarta.idPrestito
         FROM `tprestitocarta`
         JOIN tprenotazionecarta
         ON tprestitocarta.idPrenotazione = tprestitocarta.idPrenotazione
@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $resultArray =  [];
                 while ($row = mysqli_fetch_array($queryResult)) {
                     $resultArray[] = [
+                        'id'   => $row['idPrestito'],
                         'nome'  => $row['nome'],
                         'cognome'  => $row['cognome'],
                         'idPrenotazione'  => $row['idPrenotazione'],

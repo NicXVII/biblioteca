@@ -129,6 +129,134 @@ function fetchPrenotazioni()
 
     });
 }
+
+async function fetchAccettaPrenotazione(id) {
+    var functionToFetch = "function/AccettaPrenotazioni/accetta";
+    switch (selected) {
+        case 'libri':
+            functionToFetch += 'Libro';
+            break;
+        case 'cartine':
+            functionToFetch += 'Carta';
+            break;
+        case 'enciclopedie':
+            functionToFetch += 'Volume';
+            break;
+    }
+
+    functionToFetch += '.php';
+
+    const dataToSend = {
+        id: id
+    };
+
+    try {
+        const response = await fetch(functionToFetch, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        return data.success;
+    } catch (error) {
+        console.error('Si è verificato un errore:', error);
+        return false; 
+    }
+}
+
+
+async function fetchCreaPrestito(id)
+{
+    var functionToFetch = "function/creaPrestiti/crea";
+    switch (selected) {
+        case 'libri':
+            functionToFetch += 'Libro';
+            break;
+        case 'cartine':
+            functionToFetch += 'Carta';
+            break;
+        case 'enciclopedie':
+            functionToFetch += 'Volume';
+            break;
+    }
+
+    functionToFetch += '.php';
+
+    const dataToSend = {
+        id: id
+    };
+
+    try {
+        const response = await fetch(functionToFetch, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        return data.success;
+    } catch (error) {
+        console.error('Si è verificato un errore:', error);
+        return false; 
+    }
+}
+
+
+async function terminaPrestito(id)
+{
+    var functionToFetch = "function/terminaPrestito/termina";
+    switch (selected) {
+        case 'libri':
+            functionToFetch += 'Libro';
+            break;
+        case 'cartine':
+            functionToFetch += 'Carta';
+            break;
+        case 'enciclopedie':
+            functionToFetch += 'Volume';
+            break;
+    }
+
+    functionToFetch += '.php';
+
+    const dataToSend = {
+        id: id
+    };
+
+    try {
+        const response = await fetch(functionToFetch, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        return data.success;
+    } catch (error) {
+        console.error('Si è verificato un errore:', error);
+        return false; 
+    }
+}
+
 //------------------------------------------------------------------------------------------------
 
 function popolateRicerca(data) {
@@ -175,7 +303,9 @@ function popolateRicerca(data) {
             {
                 var button = document.createElement('button');
                 button.textContent = "Consegna";
+                listenerConsegna(button,dato.id);
                 divResult.appendChild(button);
+
             }
 
 
@@ -224,12 +354,21 @@ function popolateRicercaPrestito(data) {
         p.textContent = "Data fine: "+dato.dataFine;
         divResult.appendChild(p);
 
+        var p = document.createElement('p');
+        p.textContent = "ID operatore: "+dato.idLavoratoreConsegna;
+        divResult.appendChild(p);
         if(dato.dataFine === null)
             {
                 var button = document.createElement('button');
                 button.textContent = "Termina";
+                listenerTermina(button,dato.id);
                 divResult.appendChild(button);
-            }
+            }else
+        {
+            var p = document.createElement('p');
+            p.textContent = "ID operatore: " + dato.idLavoratoreConsegna;
+            divResult.appendChild(p);
+        }
 
        
         divSearch.appendChild(divResult);
@@ -312,4 +451,34 @@ function addKeyBoardListener()
         whatFetch();
     }
 });
+}
+
+function listenerConsegna(btn,id)
+{
+    btn.addEventListener('click', async function() {
+        console.log(id);
+        var result = await fetchAccettaPrenotazione(id);
+        if (result) {
+            console.log('Prenotazione accettata');
+            var result = await fetchCreaPrestito(id);
+            console.log("Esito creazione prestito: "+result);
+            whatFetch();
+        } else {
+            console.log('Prenotazione non accettata');
+        }
+    });
+}
+
+function listenerTermina(btn,id)
+{
+    btn.addEventListener('click', async function() {
+        //console.log(id);
+        var result = await terminaPrestito(id);
+        if (result) {
+            console.log('Prestito terminato');
+            whatFetch();
+        } else {
+            console.log('Prestito non terminato');
+        }
+    });
 }

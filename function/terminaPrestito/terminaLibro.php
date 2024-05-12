@@ -5,7 +5,8 @@ require_once("../database.php");
 $result = array();
 
 // Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//if ($_SERVER['REQUEST_METHOD'] == 'POST')
+if (true) {
     $db;
 
     if (!$db) {
@@ -15,18 +16,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
-        if (isset($data['id']) && isset($_SESSION['workerID'])) {
-            $idPrenotazione = $data['id'];
+        if (isset($data['id']) &&  isset($_SESSION['workerID'])) {
+            $id = $data['id'];
             $idLavoratore = $_SESSION['workerID'];
-
             $currentDate = date('Y-m-d H:i:s');
-            $query = "INSERT INTO tprestitoenciclopedia (idPrenotazione, idLavoratoreConsegna)
-                      VALUES (?, ?)";
+            $query = "UPDATE tprestito
+            SET dataFine = ?,
+                idLavoratoreRitiro = ?
+            WHERE idPrestito = ?;
+            ";
 
             $stmt = mysqli_prepare($db, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "ii", $idPrenotazione, $idLavoratore);
+                mysqli_stmt_bind_param($stmt, "sii", $currentDate, $idLavoratore, $id);
                 mysqli_stmt_execute($stmt);
                 $queryResult = mysqli_affected_rows($db);
 

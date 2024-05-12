@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         } else {
             $search = '%' . '%';
         }
-        $query = "SELECT tlibro.isbn, tcliente.nome, tcliente.cognome, tprenotazione.dataPrenotazione, tprenotazione.dataAccetazione
+        $query = "SELECT tlibro.isbn, tcliente.nome, tcliente.cognome, tprenotazione.dataPrenotazione, tprenotazione.dataAccetazione, tprenotazione.idPrenotazione
             FROM `tprenotazione`
             JOIN tlibro
             ON tlibro.idLibro = tprenotazione.idLibro
@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 $resultArray =  [];
                 while ($row = mysqli_fetch_array($queryResult)) {
                     $resultArray[] = [
+                        'id' => $row['idPrenotazione'],
                         'isbn' => $row['isbn'],
                         'nome' => $row['nome'],
                         'cognome' => $row['cognome'],
