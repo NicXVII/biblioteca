@@ -40,11 +40,18 @@ function fetchPrestiti()
  
     }
    functionToFetch+='.php';
+
+
+   var dataToSend = {
+    search: getInputValue()
+   }
+
     fetch(functionToFetch, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
+        body: JSON.stringify(dataToSend)
     })
     .then(response => {
         if (!response.ok) {
@@ -71,6 +78,7 @@ function fetchPrestiti()
 
 function fetchPrenotazioni()
 {
+
     var functionToFetch = "function/Prenotazioni/get";
    switch (selected)
    {
@@ -85,12 +93,19 @@ function fetchPrenotazioni()
             break;
 
    }
+
+
    functionToFetch+='.php';
+
+   var dataToSend = {
+    search: getInputValue()
+   }
     fetch(functionToFetch, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
+        body: JSON.stringify(dataToSend)
     })
     .then(response => {
         if (!response.ok) {
@@ -156,6 +171,13 @@ function popolateRicerca(data) {
         p.textContent = "Data accetazione: "+dato.dataAccetazione;
         divResult.appendChild(p);
 
+        if(dato.dataAccetazione === null)
+            {
+                var button = document.createElement('button');
+                button.textContent = "Consegna";
+                divResult.appendChild(button);
+            }
+
 
        
         divSearch.appendChild(divResult);
@@ -195,17 +217,17 @@ function popolateRicercaPrestito(data) {
         divResult.appendChild(p);
 
         var p = document.createElement('p');
-        p.textContent = "Data prenotazione: "+dato.dataInizio;
+        p.textContent = "Data inizio: "+dato.dataInizio;
         divResult.appendChild(p);
 
         var p = document.createElement('p');
-        p.textContent = "Data accetazione: "+dato.dataFine;
+        p.textContent = "Data fine: "+dato.dataFine;
         divResult.appendChild(p);
 
         if(dato.dataFine === null)
             {
                 var button = document.createElement('button');
-                button.textContent = "Consegna";
+                button.textContent = "Termina";
                 divResult.appendChild(button);
             }
 

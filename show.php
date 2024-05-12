@@ -15,7 +15,7 @@ if (isset($_REQUEST['tipo_elemento'])) {
 if (isset($_REQUEST['casaEditrice'])) {
     $casaEditrice = $_REQUEST['casaEditrice'];
 }
-if (!isset($_SESSION['userID'])) {
+if (!isset($_SESSION['userID']) && !isset($_SESSION['workerID'])) {
     header('Location: login.php');
     exit();
 }

@@ -14,6 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'message'   =>  'Failed to connect to database',
         ];
     } else {
+        $data = json_decode(file_get_contents('php://input'), true);
+        if (isset($data['search'])) {
+            $search = '%' . $data['search'] . '%';
+        } else {
+            $search = '%' . '%';
+        }
         $query = "SELECT tcliente.nome,tcliente.cognome, tprestitocarta.idPrenotazione, tcartageopolitica.isbn,tprestitocarta.dataInizio,tprestitocarta.dataFine
         FROM `tprestitocarta`
         JOIN tprenotazionecarta
@@ -22,6 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ON tcliente.IdCliente = tprenotazionecarta.idCliente
         JOIN tcartageopolitica
         ON tcartageopolitica.idCartaGeoPolitica = tprenotazionecarta.idCarta
+        WHERE tcliente.nome LIKE ?
+        OR tcliente.cognome LIKE ?
+        OR tprestitocarta.dataInizio LIKE ?
+        OR tprestitocarta.dataFine LIKE ?
+        OR tcartageopolitica.isbn LIKE ?
         ORDER BY tprestitocarta.dataInizio
         ";
 
@@ -29,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = mysqli_prepare($db, $query);
 
         if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "sssss", $search, $search, $search, $search, $search);
             mysqli_stmt_execute($stmt);
             $queryResult = mysqli_stmt_get_result($stmt);
 

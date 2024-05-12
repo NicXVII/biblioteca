@@ -17,19 +17,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-        $query = "
-
-        SELECT tvolume.isbn, tcliente.nome, tcliente.cognome, tprenotazioneenciclopedia.dataPrenotazione, tprenotazioneenciclopedia.dataAccetazione
+        $data = json_decode(file_get_contents('php://input'), true);
+        if (isset($data['search'])) {
+            $search = '%' . $data['search'] . '%';
+        } else {
+            $search = '%' . '%';
+        }
+        $query = "SELECT tvolume.isbn, tcliente.nome, tcliente.cognome, tprenotazioneenciclopedia.dataPrenotazione, tprenotazioneenciclopedia.dataAccetazione
         FROM `tprenotazioneenciclopedia`
         JOIN tvolume
         ON tvolume.idVolume = tprenotazioneenciclopedia.idVolume
         JOIN tcliente
         ON tcliente.IdCliente = tprenotazioneenciclopedia.idCliente
+        WHERE tcliente.nome LIKE ?
+        OR tcliente.cognome LIKE ?
+        OR tprenotazioneenciclopedia.dataAccetazione LIKE ?
+        OR tprenotazioneenciclopedia.dataAccetazione LIKE ?
+        OR tvolume.isbn LIKE ?
         ORDER BY tprenotazioneenciclopedia.dataPrenotazione DESC";
 
         $stmt = mysqli_prepare($db, $query);
 
         if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "sssss", $search, $search, $search, $search, $search);
+
             mysqli_stmt_execute($stmt);
             $queryResult = mysqli_stmt_get_result($stmt);
 

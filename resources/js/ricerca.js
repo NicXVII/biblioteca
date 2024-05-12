@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
-    createSelectLavoratore();
+    //createSelectLavoratore();
     createSelect();
     addEventListenerSelect();
-    addEventListenerSelectLavoratore();
+    //addEventListenerSelectLavoratore();
     fetchRicerca();
     addListenerBtn()
     addKeyBoardListener();
@@ -167,6 +167,54 @@ function fetchPrenotaCartina(id)
         showSuccessAlert();
     });
 }
+
+async function fetchPosizione(id)
+{
+    console.log(id);
+    var functionToFetch = "function/Posizione/get";
+    console.log(elemento);
+    switch(elemento){
+        case 'libri':
+            functionToFetch+='Libro';
+            break;
+        case 'cartine':
+            functionToFetch+='Carta';
+            break;
+        case 'enciclopedie':
+            functionToFetch+='Volume';
+            break;
+        default:
+            break;
+    }
+    functionToFetch+='.php';
+    console.log(functionToFetch);
+    var dataToSend = {
+        id: id
+    }
+
+
+    fetch('function/Prenota/prenotaCartina.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+,    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        return data.data;
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });   
+
+
+}
 //--------------------------------popolate data here--------------------------------
 
 
@@ -236,8 +284,8 @@ casaEditriceP.appendChild(link);
         divResult.appendChild(autoreP);
         divResult.appendChild(annoP);
         divResult.appendChild(casaEditriceP);
-
-        if(selected !== 'enciclopedie' && selected !== 'tutti')
+        
+        if(!worker && (selected !== 'enciclopedie' && selected !== 'tutti'))
         {
             var button = document.createElement('button');
             button.setAttribute('id',dato.id);
@@ -248,7 +296,16 @@ casaEditriceP.appendChild(link);
             divResult.appendChild(button);
             addListenerPrenota(button);
         }
-        divSearch.appendChild(divResult);
+
+        if(worker)
+        {
+            var data = fetchPosizione(dato.id);
+            console.log(data);
+            var p = document.createElement('p');
+            p.innerHTML = "Stanza: " + data.nomeStanza + " Armadio: " + data.nomeArmadio + " Scaffale: " + data.nomeScaffale + " Numero: " + data.numeroScaffale;
+            divResult.appendChild(p);
+        }
+            divSearch.appendChild(divResult);
     }
 }
 
@@ -326,12 +383,12 @@ function addListenerBtn()
     });
 }
 
-
+var elemento = 'libri';
 function addEventListenerSelect() {
     var select = document.getElementById("selectType");
     select.addEventListener("change", function() {
-        selected = select.options[select.selectedIndex].value;
-        console.log(selected);
+        elemento = select.options[select.selectedIndex].value;
+        //console.log(elemento);
     });
 }
 
@@ -340,7 +397,7 @@ function addEventListenerSelectLavoratore() {
     var select = document.getElementById("selectLavoratore");
     select.addEventListener("change", function() {
         type = select.options[select.selectedIndex].value;
-        console.log(type);
+        //console.log(type);
     });
 }
 
