@@ -5,6 +5,8 @@ if (session_status() === PHP_SESSION_NONE) {
 $worker = false;
 if (isset($_SESSION['workerID'])) {
     $worker = true;
+} else {
+    header('Location: index.php');
 }
 ?>
 <!DOCTYPE html>

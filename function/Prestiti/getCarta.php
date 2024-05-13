@@ -1,4 +1,3 @@
-   
 <?php
 session_start();
 require_once("../database.php");
@@ -20,10 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $search = '%' . '%';
         }
-        $query = "SELECT tcliente.nome,tcliente.cognome, tprestitocarta.idPrenotazione, tcartageopolitica.isbn,tprestitocarta.dataInizio,tprestitocarta.dataFine, tprestitocarta.idPrestito
+        $query = "SELECT tcliente.nome, tcliente.cognome, tprestitocarta.idPrenotazione, tcartageopolitica.isbn, tprestitocarta.dataInizio,
+        tprestitocarta.dataFine, tprestitocarta.idPrestito, tprestitocarta.idLavoratoreConsegna, tprestitocarta.idLavoratoreRitiro
         FROM `tprestitocarta`
         JOIN tprenotazionecarta
-        ON tprestitocarta.idPrenotazione = tprestitocarta.idPrenotazione
+        ON tprestitocarta.idPrenotazione = tprenotazionecarta.idPrenotazione
         JOIN tcliente
         ON tcliente.IdCliente = tprenotazionecarta.idCliente
         JOIN tcartageopolitica
@@ -33,9 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         OR tprestitocarta.dataInizio LIKE ?
         OR tprestitocarta.dataFine LIKE ?
         OR tcartageopolitica.isbn LIKE ?
-        ORDER BY tprestitocarta.dataInizio
-        ";
-
+        ORDER BY tprestitocarta.dataInizio";
 
         $stmt = mysqli_prepare($db, $query);
 
@@ -46,8 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($queryResult) {
                 $resultArray =  [];
-                while ($row = mysqli_fetch_array($queryResult)) {
+                while ($row = mysqli_fetch_assoc($queryResult)) {
                     $resultArray[] = [
+                        'idLavoratoreConsegna'   => $row['idLavoratoreConsegna'],
+                        'idLavoratoreRitiro'   => $row['idLavoratoreRitiro'],
                         'id'   => $row['idPrestito'],
                         'nome'  => $row['nome'],
                         'cognome'  => $row['cognome'],

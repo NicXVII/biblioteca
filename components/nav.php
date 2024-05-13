@@ -14,6 +14,9 @@ if (isset($_SESSION['workerID'])) {
     $worker = false;
 }
 
+if ($worker === null && $id === null)
+    header('Location: index.php');
+
 
 ?>
 <link rel="stylesheet" href="resources/css/components/nav.css">

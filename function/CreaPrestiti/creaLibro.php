@@ -20,15 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         if (isset($data['id']) && isset($_SESSION['workerID'])) {
             $idPrenotazione = $data['id'];
             $idLavoratore = $_SESSION['workerID'];
+            $dataInizio = date('Y-m-d H:i:s');
 
             $currentDate = date('Y-m-d H:i:s');
-            $query = "INSERT INTO tprestito (idPrenotazione, idLavoratoreConsegna)
-                      VALUES (?, ?)";
+            $query = "INSERT INTO tprestito (idPrenotazione, idLavoratoreConsegna, dataInizio)
+                      VALUES (?, ?, ?)";
 
             $stmt = mysqli_prepare($db, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "ii", $idPrenotazione, $idLavoratore);
+                mysqli_stmt_bind_param($stmt, "iis", $idPrenotazione, $idLavoratore, $dataInizio);
                 mysqli_stmt_execute($stmt);
                 $queryResult = mysqli_affected_rows($db);
 

@@ -366,7 +366,7 @@ function popolateRicercaPrestito(data) {
             }else
         {
             var p = document.createElement('p');
-            p.textContent = "ID operatore: " + dato.idLavoratoreConsegna;
+            p.textContent = "ID operatore: " + dato.idLavoratoreRitiro;
             divResult.appendChild(p);
         }
 

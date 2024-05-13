@@ -39,11 +39,16 @@ function generateSelectElement() {
 
     divLocation.appendChild(div);
 }
-
 function listenerBtnElement() {
     var btns = document.querySelectorAll('.divBtnElement button');
-    for(btn of btns) {
+    for (btn of btns) {
         btn.addEventListener('click', function() {
+            var allBtns = document.querySelectorAll('.divBtnElement button');
+            for (btn of allBtns) {
+                btn.classList.remove('selected');
+            }
+            this.classList.add('selected');
+
             var type = this.getAttribute('type');
             selectedElement = type;
             console.log(selectedElement);

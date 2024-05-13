@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $resultArray =  [];
                 while ($row = mysqli_fetch_array($queryResult)) {
                     $resultArray[] = [
-                        'idAutore ' => $row['idAutore'],
+                        'idAutore' => $row['idAutore'],
                         'nome'      => $row['nome'],
                         'cognome'   => $row['cognome'],
                     ];

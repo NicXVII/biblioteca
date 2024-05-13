@@ -58,6 +58,7 @@ async function fetchAutori() {
         }
         const data = await response.json();
         if (data.success) {
+            //console.log(data.data);
             return data.data; // Return the array of authors
         } else {
             throw new Error('Request was not successful: ' + data.message);
@@ -80,13 +81,14 @@ async function createFormLibro() {
 
     var form = document.createElement('form');
     form.setAttribute('method', 'POST');
-    //nome, isbn, pubblicazione, prezzo,autore, casa editrice, 
+    //nome, isbn, pubblicazione, prezzo, autore, casa editrice 
 
     var nameLabel = document.createElement('label');
     nameLabel.textContent = 'Name:';
     var nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('name', 'name');
+    nameInput.setAttribute('required', 'required'); // Aggiunto required
     form.appendChild(nameLabel);
     form.appendChild(nameInput);
 
@@ -95,6 +97,7 @@ async function createFormLibro() {
     var isbnInput = document.createElement('input');
     isbnInput.setAttribute('type', 'text');
     isbnInput.setAttribute('name', 'isbn');
+    isbnInput.setAttribute('required', 'required'); // Aggiunto required
     form.appendChild(isbnLabel);
     form.appendChild(isbnInput);
 
@@ -103,6 +106,7 @@ async function createFormLibro() {
     var publicationInput = document.createElement('input');
     publicationInput.setAttribute('type', 'date');
     publicationInput.setAttribute('name', 'publication');
+    publicationInput.setAttribute('required', 'required'); // Aggiunto required
     form.appendChild(publicationLabel);
     form.appendChild(publicationInput);
 
@@ -111,6 +115,7 @@ async function createFormLibro() {
     var priceInput = document.createElement('input');
     priceInput.setAttribute('type', 'text');
     priceInput.setAttribute('name', 'price');
+    priceInput.setAttribute('required', 'required'); // Aggiunto required
     form.appendChild(priceLabel);
     form.appendChild(priceInput);
 
@@ -118,10 +123,11 @@ async function createFormLibro() {
     autoriLabel.textContent = 'Autori:';
     form.appendChild(autoriLabel);
     var selectAutori = document.createElement('select');
+    selectAutori.setAttribute('required', 'required'); // Aggiunto required
     var autori = await fetchAutori();
     for (autore of autori) {
         var option = document.createElement('option');
-        option.setAttribute('value', autore.id);
+        option.setAttribute('value', autore.idAutore);
         option.textContent = autore.nome + ' ' + autore.cognome;
         selectAutori.appendChild(option);
     }
@@ -132,10 +138,11 @@ async function createFormLibro() {
     caseEditricilabel.textContent = 'Case Editrici:';
     form.appendChild(caseEditricilabel);
     var selectCaseEditrici = document.createElement('select');
+    selectCaseEditrici.setAttribute('required', 'required'); // Aggiunto required
     var caseEditrici = await fetchCaseEditrici();
     for (casaEditrice of caseEditrici) {
         var option = document.createElement('option');
-        option.setAttribute('value', casaEditrice.id);
+        option.setAttribute('value', casaEditrice.idCasaEditrice);
         option.textContent = casaEditrice.nome;
         selectCaseEditrici.appendChild(option);
     }
@@ -167,31 +174,31 @@ async function createFormLibro() {
         for (var pair of formData.entries()) {
             console.log(pair[0] + ': ' + pair[1]);
         }
-        autore = document.getElementById('autoreHidden').value;
+        console.log("Autore " + autore + " casaEditrice " + casaEditrice);
+    });
+}
+
+
+
+var autore = null;
+var casaEditrice = null;
+function listenerSelect(select) {
+    select.addEventListener('change', function() {
+        var input = document.getElementById('autoreHidden');
+        input.value = select.options[select.selectedIndex].value;
+        autore = select.options[select.selectedIndex].value;
         console.log(autore);
     });
 }
 
-
-var autore = null;
-
-function listenerSelect(select)
-{
-    select.addEventListener('change', function()
-    {
-        var input = document.getElementById('autoreHidden');
-        input =  select.options[select.selectedIndex].value;
-
-    });
-}
-var casaEditrice = null;
-
 function listenerSelectCasaEditrice(select) {
     select.addEventListener('change', function() {
         var input = document.getElementById('casaEditrice');
-        input =  select.options[select.selectedIndex].value;
-
+        input.value = select.options[select.selectedIndex].value;
+        casaEditrice = select.options[select.selectedIndex].value;
+        console.log(casaEditrice);
     });
 }
+
 
 

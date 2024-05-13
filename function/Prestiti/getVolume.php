@@ -4,9 +4,7 @@ require_once("../database.php");
 
 $result = array();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-//if (true) 
-{
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db;
 
     if (!$db) {
@@ -19,36 +17,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         if (isset($data['search'])) {
             $search = '%' . $data['search'] . '%';
         } else {
-            $search = '%' . '%';
+            $search = '';
         }
-        $query = "SELECT tcliente.nome,tcliente.cognome, tprestitoenciclopedia.idPrenotazione, tvolume.isbn, tprestitoenciclopedia.dataInizio,tprestitoenciclopedia.dataFine, tprestitoenciclopedia.idPrestito
-        FROM `tprestitoenciclopedia`
-        JOIN tprenotazioneenciclopedia
-        ON tprestitoenciclopedia.idPrenotazione = tprestitoenciclopedia.idPrenotazione
-        JOIN tcliente
+        $query = "SELECT 
+        tcliente.nome,
+        tcliente.cognome, 
+        tprestitoenciclopedia.idPrenotazione, 
+        tvolume.isbn, 
+        tprestitoenciclopedia.dataInizio,
+        tprestitoenciclopedia.dataFine, 
+        tvolume.idVolume,
+        tprestitoenciclopedia.idPrestito,
+        tprestitoenciclopedia.idLavoratoreConsegna,
+        tprestitoenciclopedia.idLavoratoreRitiro
+      FROM 
+        tprestitoenciclopedia
+      JOIN 
+        tprenotazioneenciclopedia 
+        ON tprestitoenciclopedia.idPrenotazione = tprenotazioneenciclopedia.idPrenotazione
+      JOIN 
+        tcliente 
         ON tcliente.IdCliente = tprenotazioneenciclopedia.idCliente
-        JOIN tvolume
+      JOIN 
+        tvolume 
         ON tvolume.idVolume = tprenotazioneenciclopedia.idVolume
-        WHERE tcliente.nome LIKE ?
+      WHERE 
+        tcliente.nome LIKE ?
         OR tcliente.cognome LIKE ?
-        OR tprestitoenciclopedia.dataInizio LIKE ?
-        OR tprestitoenciclopedia.dataFine LIKE ?
         OR tvolume.isbn LIKE ?
-        ORDER BY tprestitoenciclopedia.dataInizio
-        ";
-
+      ORDER BY 
+        tprestitoenciclopedia.dataInizio";
 
         $stmt = mysqli_prepare($db, $query);
 
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "sssss", $search, $search, $search, $search, $search);
+            mysqli_stmt_bind_param($stmt, "sss", $search, $search, $search);
             mysqli_stmt_execute($stmt);
             $queryResult = mysqli_stmt_get_result($stmt);
 
             if ($queryResult) {
                 $resultArray =  [];
-                while ($row = mysqli_fetch_array($queryResult)) {
+                while ($row = mysqli_fetch_assoc($queryResult)) {
                     $resultArray[] = [
+                        'idLavoratoreRitiro'   => $row['idLavoratoreRitiro'],
+                        'idLavoratoreConsegna'   => $row['idLavoratoreConsegna'],
                         'id'   => $row['idPrestito'],
                         'nome'  => $row['nome'],
                         'cognome'  => $row['cognome'],

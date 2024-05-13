@@ -5,8 +5,9 @@ require_once("../database.php");
 $result = array();
 
 // Check if the request method is POST
-//if ($_SERVER['REQUEST_METHOD'] == 'POST') 
-if (true) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+//if (true) 
+{
     $db;
 
     if (!$db) {
@@ -16,18 +17,19 @@ if (true) {
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
-        //$data['$idPrenotazione'] = 10;
-        if (isset($data['id']) && isset($_SESSION['workerID '])) {
+        if (isset($data['id']) && isset($_SESSION['workerID'])) {
             $idPrenotazione = $data['id'];
             $idLavoratore = $_SESSION['workerID'];
+            $dataInizio = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO tprestito (idPrenotazione, idLavoratoreConsegna)
-                      VALUES (?, ?)";
+            $currentDate = date('Y-m-d H:i:s');
+            $query = "INSERT INTO tprestitocarta (idPrenotazione, idLavoratoreConsegna, dataInizio)
+                      VALUES (?, ?, ?)";
 
             $stmt = mysqli_prepare($db, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "ii", $idPrenotazione, $idLavoratore);
+                mysqli_stmt_bind_param($stmt, "iis", $idPrenotazione, $idLavoratore, $dataInizio);
                 mysqli_stmt_execute($stmt);
                 $queryResult = mysqli_affected_rows($db);
 
