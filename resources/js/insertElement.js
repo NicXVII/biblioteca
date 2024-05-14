@@ -69,6 +69,41 @@ async function fetchAutori() {
     }
 }
 
+async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
+{
+    const dataToSend = {
+        nome: nome,
+        isbn: isbn,
+        pubblicazione: pubblicazione,
+        idAutore: autore,
+        idCasaEditrice: casaEditrice
+    };
+
+    console.log(dataToSend);
+    try {
+        const response = await fetch('function/Inserisci/inserisciLibro.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        if (data.success) {
+            //console.log(data.data);
+            return data.data; // Return the array of authors
+        } else {
+            throw new Error('Request was not successful: ' + data.message);
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return []; // Return an empty array if there's an error
+    }
+}
+
 //------------------------------------------------------------------
 
 async function createFormLibro() {
@@ -110,14 +145,14 @@ async function createFormLibro() {
     form.appendChild(publicationLabel);
     form.appendChild(publicationInput);
 
-    var priceLabel = document.createElement('label');
+    /*var priceLabel = document.createElement('label');
     priceLabel.textContent = 'Price:';
     var priceInput = document.createElement('input');
     priceInput.setAttribute('type', 'text');
     priceInput.setAttribute('name', 'price');
     priceInput.setAttribute('required', 'required'); // Aggiunto required
     form.appendChild(priceLabel);
-    form.appendChild(priceInput);
+    form.appendChild(priceInput);*/
 
     var autoriLabel = document.createElement('label');
     autoriLabel.textContent = 'Autori:';
@@ -175,6 +210,7 @@ async function createFormLibro() {
             console.log(pair[0] + ': ' + pair[1]);
         }
         console.log("Autore " + autore + " casaEditrice " + casaEditrice);
+        insertLibro(formData.get('name'), formData.get('isbn'), formData.get('publication'), autore, casaEditrice);
     });
 }
 

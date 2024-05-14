@@ -2,10 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once("database.php");
+require_once("../database.php");
 $result = array();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+/*if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $result = array(
         'success' => false,
         'message' => 'Invalid request'
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode($result);
     exit();
 }
-
+*/
 if (!$db) {
     $result = array(
         'success' => false,
@@ -25,14 +25,17 @@ if (!$db) {
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
-
+/*$data['nome'] = "test";
+$data['isbn'] = "test";
+$data['pubblicazione'] = "2024-01-01";
+$data['idAutore'] = "1";
+$data['idCasaEditrice'] = "1";*/
 if (
     !isset($data['nome']) || empty($data['nome']) ||
     !isset($data['isbn']) || empty($data['isbn']) ||
     !isset($data['pubblicazione']) || empty($data['pubblicazione']) ||
     !isset($data['idAutore']) || empty($data['idAutore']) ||
-    !isset($data['idCasaEditrice']) || empty($data['idCasaEditrice']) ||
-    !isset($data['prezzo']) || empty($data['prezzo'])
+    !isset($data['idCasaEditrice']) || empty($data['idCasaEditrice'])
 ) {
     $result = array(
         'success' => false,
@@ -47,13 +50,12 @@ $isbn = $data['isbn'];
 $pubblicazione = $data['pubblicazione'];
 $idAutore = $data['idAutore'];
 $idCasaEditrice = $data['idCasaEditrice'];
-$prezzo = $data['prezzo'];
 
-$insertQuery = "INSERT INTO tlibro (nome, isbn, pubblicazione, idAutore, idCasaEditrice, prezzo) VALUES (?, ?, ?, ?, ?, ?)";
+$insertQuery = "INSERT INTO tlibro (nome, isbn, pubblicazione, idAutore, idCasaEditrice) VALUES (?, ?, ?, ?, ?)";
 $insertStatement = mysqli_prepare($db, $insertQuery);
 
 if ($insertStatement) {
-    mysqli_stmt_bind_param($insertStatement, "sssssd", $nome, $isbn, $pubblicazione, $idAutore, $idCasaEditrice, $prezzo);
+    mysqli_stmt_bind_param($insertStatement, "ssdii", $nome, $isbn, $pubblicazione, $idAutore, $idCasaEditrice);
 
     if (mysqli_stmt_execute($insertStatement)) {
         $bookID = mysqli_insert_id($db);
