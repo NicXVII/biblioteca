@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     whichForm();
     //fetchCaseEditrici();
     //fetchAutori();
+    check();
 });
 
 //------------------------------------------------------------------
@@ -69,6 +70,64 @@ async function fetchAutori() {
     }
 }
 
+async function checkIsbn(type, isbn) {
+    console.log(isbn);
+
+    functionToFetch = 'function/checkIsbn/check';
+
+    switch (type) {
+        case 'Libro':
+            functionToFetch += 'Libro.php';
+            break;
+        case 'Enciclopedia':
+            functionToFetch += 'Enciclopedia.php';
+            break;
+        case 'Carta':
+            functionToFetch += 'Carta.php';
+            break;
+        case 'Volume':
+            functionToFetch += 'Volume.php';
+            break;
+    }
+
+    const dataToSend = {
+        isbn: isbn
+    };
+    try {
+        const response = await fetch(functionToFetch, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        if (data.success) {
+            //console.log(data.data);
+            return data.data; // Return the array of authors
+        } else {
+            throw new Error('Request was not successful: ' + data.message);
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return []; // Return an empty array if there's an error
+    }
+}
+
+async function check()
+{
+    var data = ['Libro', 'Enciclopedia', 'Carta', 'Volume'];
+
+    for(dato of data)
+    {
+        var result = await checkIsbn(dato, '978-88-04-12345-6');
+        console.log(result);
+
+    }
+}
 async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
 {
     const dataToSend = {
@@ -79,7 +138,8 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
         idCasaEditrice: casaEditrice
     };
 
-    console.log(dataToSend);
+
+    //console.log(dataToSend);
     try {
         const response = await fetch('function/Inserisci/inserisciLibro.php', {
             method: 'POST',
