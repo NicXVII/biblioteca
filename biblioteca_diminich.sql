@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 14, 2024 alle 17:13
+-- Creato il: Mag 14, 2024 alle 22:59
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -93,7 +93,10 @@ INSERT INTO `tautorecarta` (`idAutoreCarta`, `idCartaGeoPolitica`, `idAutore`) V
 (2, 4, 6),
 (3, 4, 10),
 (4, 7, 8),
-(5, 6, 1);
+(5, 6, 1),
+(6, 1, 1),
+(7, 2, 2),
+(8, 6, 6);
 
 -- --------------------------------------------------------
 
@@ -114,7 +117,10 @@ CREATE TABLE `tautoreenciclopedia` (
 INSERT INTO `tautoreenciclopedia` (`idMultiAutori`, `idAutore`, `idEnciclopedia`) VALUES
 (1, 5, 10),
 (2, 4, 10),
-(3, 4, 9);
+(3, 4, 9),
+(4, 4, 6),
+(5, 7, 7),
+(6, 2, 8);
 
 -- --------------------------------------------------------
 
@@ -334,17 +340,6 @@ CREATE TABLE `tprenotazioneenciclopedia` (
   `dataAccetazione` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dump dei dati per la tabella `tprenotazioneenciclopedia`
---
-
-INSERT INTO `tprenotazioneenciclopedia` (`idPrenotazione`, `idCliente`, `idVolume`, `dataPrenotazione`, `dataAccetazione`) VALUES
-(1, 1, 96, '2024-05-05', NULL),
-(2, 1, 97, '2024-05-05', NULL),
-(3, 1, 101, '2024-05-05', NULL),
-(4, 1, 100, '2024-05-06', '2024-05-13'),
-(5, 1, 99, '2024-05-06', '2024-05-13');
-
 -- --------------------------------------------------------
 
 --
@@ -408,14 +403,6 @@ CREATE TABLE `tprestitoenciclopedia` (
   `idLavoratoreRitiro` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dump dei dati per la tabella `tprestitoenciclopedia`
---
-
-INSERT INTO `tprestitoenciclopedia` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`, `idLavoratoreConsegna`, `idLavoratoreRitiro`) VALUES
-(11, 4, '2024-05-13', '2024-05-13', 1, 1),
-(12, 5, '2024-05-13', NULL, 1, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -460,15 +447,16 @@ CREATE TABLE `tscaffalecarta` (
 --
 
 INSERT INTO `tscaffalecarta` (`idScaffaleCarta`, `idScaffale`, `idCarta`, `numeroScaffale`) VALUES
-(1, 4, 7, 1),
-(2, 4, 1, 1),
-(3, 4, 2, 2),
-(4, 4, 3, 3),
-(5, 4, 4, 4),
-(6, 4, 5, 5),
-(7, 5, 6, 1),
-(8, 5, 7, 2),
-(9, 5, 8, 3);
+(10, 4, 1, 1),
+(11, 4, 2, 2),
+(13, 4, 3, 3),
+(14, 4, 4, 4),
+(15, 4, 5, 5),
+(16, 5, 6, 1),
+(18, 5, 7, 2),
+(19, 5, 8, 3),
+(20, 5, 9, 4),
+(21, 5, 10, 5);
 
 -- --------------------------------------------------------
 
@@ -512,6 +500,27 @@ CREATE TABLE `tscaffalevolume` (
   `numeroScaffale` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `tscaffalevolume`
+--
+
+INSERT INTO `tscaffalevolume` (`idScaffaleVolume`, `idScaffale`, `idVolume`, `numeroScaffale`) VALUES
+(1, 6, 76, 1),
+(2, 6, 77, 2),
+(3, 6, 78, 3),
+(4, 6, 81, 4),
+(5, 6, 83, 5),
+(6, 6, 83, 6),
+(7, 6, 86, 7),
+(8, 7, 87, 1),
+(9, 7, 88, 2),
+(10, 7, 91, 3),
+(11, 7, 92, 4),
+(12, 7, 93, 5),
+(13, 7, 96, 6),
+(14, 7, 97, 7),
+(15, 7, 98, 8);
+
 -- --------------------------------------------------------
 
 --
@@ -553,29 +562,18 @@ INSERT INTO `tvolume` (`idVolume`, `isbn`, `numeroVolume`, `idEnciclopedia`) VAL
 (76, '978-0234567890', 1, 6),
 (77, '978-0234567891', 2, 6),
 (78, '978-0234567892', 3, 6),
-(79, '978-0234567893', 4, 6),
-(80, '978-0234567894', 5, 6),
 (81, '978-1234567895', 1, 7),
 (82, '978-2345678906', 2, 7),
 (83, '978-2345678907', 3, 7),
-(84, '978-2345678908', 4, 7),
-(85, '978-2345678909', 5, 7),
 (86, '978-3456789010', 1, 8),
 (87, '978-3456789011', 2, 8),
 (88, '978-3456789012', 3, 8),
-(89, '978-3456789013', 4, 8),
-(90, '978-3456789014', 5, 8),
 (91, '978-4567890125', 1, 9),
 (92, '978-4567890126', 2, 9),
 (93, '978-4567890127', 3, 9),
-(94, '978-4567890128', 4, 9),
-(95, '978-4567890129', 5, 9),
 (96, '978-5678901230', 1, 10),
 (97, '978-5678901231', 2, 10),
-(98, '978-5678901232', 3, 10),
-(99, '978-5678901233', 4, 10),
-(100, '978-5678901234', 5, 10),
-(101, '978-5678901240', 1, 10);
+(98, '978-5678901232', 3, 10);
 
 --
 -- Indici per le tabelle scaricate
@@ -776,13 +774,13 @@ ALTER TABLE `tautore`
 -- AUTO_INCREMENT per la tabella `tautorecarta`
 --
 ALTER TABLE `tautorecarta`
-  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT per la tabella `tautoreenciclopedia`
 --
 ALTER TABLE `tautoreenciclopedia`
-  MODIFY `idMultiAutori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idMultiAutori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT per la tabella `tcartageopolitica`
@@ -866,7 +864,7 @@ ALTER TABLE `tscaffale`
 -- AUTO_INCREMENT per la tabella `tscaffalecarta`
 --
 ALTER TABLE `tscaffalecarta`
-  MODIFY `idScaffaleCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idScaffaleCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffalelibro`
@@ -878,7 +876,7 @@ ALTER TABLE `tscaffalelibro`
 -- AUTO_INCREMENT per la tabella `tscaffalevolume`
 --
 ALTER TABLE `tscaffalevolume`
-  MODIFY `idScaffaleVolume` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idScaffaleVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT per la tabella `tstanza`
