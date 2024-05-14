@@ -6,7 +6,7 @@ $result = array();
 
 // Check if the request method is POST
 //if ($_SERVER['REQUEST_METHOD'] == 'POST')
-if(true) {
+if (true) {
     $db;
 
     if (!$db) {
@@ -15,8 +15,10 @@ if(true) {
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-        if (isset($_REQUEST['isbn'])) {
-            $isbn = $_REQUEST['isbn'];
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (isset($data['isbn'])) {
+            $isbn = $data['isbn'];
             $query = "SELECT COUNT(*) AS count 
             FROM tvolume
             WHERE tvolume.isbn LIKE ?";
@@ -69,4 +71,3 @@ if(true) {
 
 // Return results in JSON format
 echo json_encode($result);
-?>

@@ -22,7 +22,7 @@ function whatFetch(){
 
 }
 
-
+/*
 function fetchPrestiti()
 {
     switch(type){
@@ -33,18 +33,17 @@ function fetchPrestiti()
             fetchCartePrestiti();
             break;
         case 'enciclopedie':
-            fetchEnciclopediePrestiti(id);
+            fetchEnciclopediePrestiti();
             break;
         default:
             break;
     }
-}
+}*/
 function fetchRicerca()
 {
-    if(selected == null)
-        selected = 'libri';
+
     const data = {
-        tipoElemento: selected,
+        tipoElemento: elemento,
         ricerca : getInputValue(),
     };
     
@@ -65,7 +64,7 @@ function fetchRicerca()
     .then(data => {
 
         if (data.success) {
-            console.log('La richiesta ha avuto successo:', data.data);
+            //console.log('La richiesta ha avuto successo:', data.data);
             popolateRicerca(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
@@ -207,7 +206,7 @@ async function fetchPosizione(id) {
         }
 
         const data = await response.json();
-        console.log(data.data);
+        //console.log(data.data);
         return data.data;
     } catch (error) {
         console.error('Si è verificato un errore:', error);
@@ -296,10 +295,10 @@ casaEditriceP.appendChild(link);
             addListenerPrenota(button);
         }
 
-        if(worker)
+        if(worker && elemento !== 'enciclopedie')  
         {
             var data = await fetchPosizione(dato.id);
-            console.log(data);
+            //console.log(data);
             var p = document.createElement('p');
             p.innerHTML = "Stanza: " + data.nomeStanza + " Armadio: " + data.nomeArmadio + " Scaffale: " + data.nomeScaffale + " Numero: " + data.numeroScaffale;
             divResult.appendChild(p);
@@ -387,7 +386,7 @@ function addEventListenerSelect() {
     var select = document.getElementById("selectType");
     select.addEventListener("change", function() {
         elemento = select.options[select.selectedIndex].value;
-        //console.log(elemento);
+        console.log(elemento);
     });
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 05, 2024 alle 21:37
+-- Creato il: Mag 14, 2024 alle 17:13
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -31,6 +31,16 @@ CREATE TABLE `tarmadio` (
   `idArmadio` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tarmadio`
+--
+
+INSERT INTO `tarmadio` (`idArmadio`, `nome`) VALUES
+(1, '1'),
+(2, '2'),
+(3, '3'),
+(4, '4');
 
 -- --------------------------------------------------------
 
@@ -82,7 +92,8 @@ INSERT INTO `tautorecarta` (`idAutoreCarta`, `idCartaGeoPolitica`, `idAutore`) V
 (1, 3, 2),
 (2, 4, 6),
 (3, 4, 10),
-(4, 7, 8);
+(4, 7, 8),
+(5, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -102,7 +113,8 @@ CREATE TABLE `tautoreenciclopedia` (
 
 INSERT INTO `tautoreenciclopedia` (`idMultiAutori`, `idAutore`, `idEnciclopedia`) VALUES
 (1, 5, 10),
-(2, 4, 10);
+(2, 4, 10),
+(3, 4, 9);
 
 -- --------------------------------------------------------
 
@@ -216,8 +228,16 @@ CREATE TABLE `tlavoratore` (
   `idLavoratore` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `cognome` varchar(255) NOT NULL,
-  `codiceFiscale` varchar(255) NOT NULL
+  `codiceFiscale` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tlavoratore`
+--
+
+INSERT INTO `tlavoratore` (`idLavoratore`, `nome`, `cognome`, `codiceFiscale`, `password`) VALUES
+(1, 'Nicolas', 'Diminich', '1234', '12');
 
 -- --------------------------------------------------------
 
@@ -231,24 +251,25 @@ CREATE TABLE `tlibro` (
   `isbn` varchar(255) NOT NULL,
   `pubblicazione` date NOT NULL,
   `idAutore` int(11) DEFAULT NULL,
-  `idCasaEditrice` int(11) DEFAULT NULL
+  `idCasaEditrice` int(11) DEFAULT NULL,
+  `prezzo` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `tlibro`
 --
 
-INSERT INTO `tlibro` (`idLibro`, `nome`, `isbn`, `pubblicazione`, `idAutore`, `idCasaEditrice`) VALUES
-(11, 'Orgoglio e Pregiudizio', '978-8809020422', '1813-01-28', 1, 1),
-(12, 'Anna Karenina', '978-1853262715', '1877-01-01', 2, 2),
-(13, 'La signora Dalloway', '978-0099470458', '1925-05-14', 3, 3),
-(14, 'Cent\'anni di solitudine', '978-8811661844', '1967-05-30', 4, 4),
-(15, 'Dieci piccoli indiani', '978-8804610459', '1939-11-06', 5, 5),
-(16, 'Il vecchio e il mare', '978-8807890135', '1952-09-01', 6, 1),
-(17, 'Harry Potter e la Pietra Filosofale', '978-88-7645-211-9', '1997-06-26', 7, 2),
-(18, 'Le avventure di Tom Sawyer', '978-8804424350', '1876-12-10', 8, 3),
-(19, '1984', '978-88-04-18278-0', '1949-06-08', 9, 4),
-(20, 'Beloved', '978-8807818436', '1987-09-02', 10, 5);
+INSERT INTO `tlibro` (`idLibro`, `nome`, `isbn`, `pubblicazione`, `idAutore`, `idCasaEditrice`, `prezzo`) VALUES
+(11, 'Orgoglio e Pregiudizio', '978-8809020422', '1813-01-28', 1, 1, 12),
+(12, 'Anna Karenina', '978-1853262715', '1877-01-01', 2, 2, 4),
+(13, 'La signora Dalloway', '978-0099470458', '1925-05-14', 3, 3, 5),
+(14, 'Cent\'anni di solitudine', '978-8811661844', '1967-05-30', 4, 4, 10),
+(15, 'Dieci piccoli indiani', '978-8804610459', '1939-11-06', 5, 5, 12),
+(16, 'Il vecchio e il mare', '978-8807890135', '1952-09-01', 6, 1, 7.5),
+(17, 'Harry Potter e la Pietra Filosofale', '978-88-7645-211-9', '1997-06-26', 7, 2, 8.5),
+(18, 'Le avventure di Tom Sawyer', '978-8804424350', '1876-12-10', 8, 3, 20.5),
+(19, '1984', '978-88-04-18278-0', '1949-06-08', 9, 4, 9.99),
+(20, 'Beloved', '978-8807818436', '1987-09-02', 10, 5, 4);
 
 -- --------------------------------------------------------
 
@@ -270,9 +291,10 @@ CREATE TABLE `tprenotazione` (
 
 INSERT INTO `tprenotazione` (`idPrenotazione`, `idCliente`, `idLibro`, `dataPrenotazione`, `dataAccetazione`) VALUES
 (1, 1, 19, '2024-04-01', '2024-05-01'),
-(3, 1, 17, '2024-05-02', NULL),
-(31, 1, 14, '2024-05-02', NULL),
-(32, 1, 15, '2024-05-02', NULL);
+(3, 1, 17, '2024-05-02', '2024-05-13'),
+(32, 1, 15, '2024-05-02', NULL),
+(66, 1, 16, '2024-05-06', '2024-05-13'),
+(67, 1, 11, '2024-05-07', '2024-05-12');
 
 -- --------------------------------------------------------
 
@@ -293,9 +315,10 @@ CREATE TABLE `tprenotazionecarta` (
 --
 
 INSERT INTO `tprenotazionecarta` (`idPrenotazione`, `idCliente`, `idCarta`, `dataPrenotazione`, `dataAccetazione`) VALUES
-(1, 1, 1, '2024-05-05', NULL),
+(1, 1, 1, '2024-05-05', '2024-05-13'),
 (2, 1, 4, '2024-05-05', NULL),
-(3, 1, 7, '2024-05-05', NULL);
+(3, 1, 7, '2024-05-05', NULL),
+(4, 1, 3, '2024-05-06', '2024-05-13');
 
 -- --------------------------------------------------------
 
@@ -318,7 +341,9 @@ CREATE TABLE `tprenotazioneenciclopedia` (
 INSERT INTO `tprenotazioneenciclopedia` (`idPrenotazione`, `idCliente`, `idVolume`, `dataPrenotazione`, `dataAccetazione`) VALUES
 (1, 1, 96, '2024-05-05', NULL),
 (2, 1, 97, '2024-05-05', NULL),
-(3, 1, 101, '2024-05-05', NULL);
+(3, 1, 101, '2024-05-05', NULL),
+(4, 1, 100, '2024-05-06', '2024-05-13'),
+(5, 1, 99, '2024-05-06', '2024-05-13');
 
 -- --------------------------------------------------------
 
@@ -329,16 +354,21 @@ INSERT INTO `tprenotazioneenciclopedia` (`idPrenotazione`, `idCliente`, `idVolum
 CREATE TABLE `tprestito` (
   `idPrestito` int(11) NOT NULL,
   `idPrenotazione` int(255) NOT NULL,
-  `dataInizio` date NOT NULL,
-  `dataFine` date DEFAULT NULL
+  `dataInizio` date DEFAULT NULL,
+  `dataFine` date DEFAULT NULL,
+  `idLavoratoreConsegna` int(11) NOT NULL,
+  `idLavoratoreRitiro` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `tprestito`
 --
 
-INSERT INTO `tprestito` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`) VALUES
-(1, 1, '2024-05-01', NULL);
+INSERT INTO `tprestito` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`, `idLavoratoreConsegna`, `idLavoratoreRitiro`) VALUES
+(1, 1, '2024-05-01', '2024-05-12', 1, 1),
+(5, 67, NULL, '2024-05-13', 1, 1),
+(6, 66, NULL, NULL, 1, NULL),
+(7, 3, '2024-05-13', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -350,8 +380,18 @@ CREATE TABLE `tprestitocarta` (
   `idPrestito` int(11) NOT NULL,
   `idPrenotazione` int(11) NOT NULL,
   `dataInizio` date NOT NULL,
-  `dataFine` date DEFAULT NULL
+  `dataFine` date DEFAULT NULL,
+  `idLavoratoreConsegna` int(11) NOT NULL,
+  `idLavoratoreRitiro` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tprestitocarta`
+--
+
+INSERT INTO `tprestitocarta` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`, `idLavoratoreConsegna`, `idLavoratoreRitiro`) VALUES
+(1, 4, '2024-05-13', '2024-05-13', 1, 1),
+(2, 1, '2024-05-13', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -363,15 +403,18 @@ CREATE TABLE `tprestitoenciclopedia` (
   `idPrestito` int(11) NOT NULL,
   `idPrenotazione` int(11) NOT NULL,
   `dataInizio` date NOT NULL,
-  `dataFine` date DEFAULT NULL
+  `dataFine` date DEFAULT NULL,
+  `idLavoratoreConsegna` int(11) NOT NULL,
+  `idLavoratoreRitiro` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `tprestitoenciclopedia`
 --
 
-INSERT INTO `tprestitoenciclopedia` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`) VALUES
-(1, 1, '2024-05-05', NULL);
+INSERT INTO `tprestitoenciclopedia` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`, `idLavoratoreConsegna`, `idLavoratoreRitiro`) VALUES
+(11, 4, '2024-05-13', '2024-05-13', 1, 1),
+(12, 5, '2024-05-13', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -386,6 +429,19 @@ CREATE TABLE `tscaffale` (
   `idArmadio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `tscaffale`
+--
+
+INSERT INTO `tscaffale` (`idScaffale`, `nome`, `idStanza`, `idArmadio`) VALUES
+(1, 'testLibro', 1, 1),
+(2, 'testLibro', 1, 2),
+(3, 'testLibro', 1, 3),
+(4, 'testCarta', 2, 1),
+(5, 'testCarta', 2, 2),
+(6, 'testEnciclopedia', 3, 1),
+(7, 'testEnciclopedia', 3, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -399,6 +455,21 @@ CREATE TABLE `tscaffalecarta` (
   `numeroScaffale` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `tscaffalecarta`
+--
+
+INSERT INTO `tscaffalecarta` (`idScaffaleCarta`, `idScaffale`, `idCarta`, `numeroScaffale`) VALUES
+(1, 4, 7, 1),
+(2, 4, 1, 1),
+(3, 4, 2, 2),
+(4, 4, 3, 3),
+(5, 4, 4, 4),
+(6, 4, 5, 5),
+(7, 5, 6, 1),
+(8, 5, 7, 2),
+(9, 5, 8, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -411,6 +482,22 @@ CREATE TABLE `tscaffalelibro` (
   `idLibro` int(255) NOT NULL,
   `numeroScaffale` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tscaffalelibro`
+--
+
+INSERT INTO `tscaffalelibro` (`idScaffaleLibro`, `idScaffale`, `idLibro`, `numeroScaffale`) VALUES
+(1, 1, 19, 1),
+(2, 1, 12, 2),
+(3, 1, 20, 3),
+(4, 1, 14, 4),
+(5, 1, 15, 5),
+(6, 1, 17, 6),
+(7, 1, 16, 7),
+(8, 1, 13, 8),
+(9, 1, 18, 9),
+(10, 1, 11, 10);
 
 -- --------------------------------------------------------
 
@@ -435,6 +522,15 @@ CREATE TABLE `tstanza` (
   `idStanza` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tstanza`
+--
+
+INSERT INTO `tstanza` (`idStanza`, `nome`) VALUES
+(1, '1A'),
+(2, '2B'),
+(3, '3C');
 
 -- --------------------------------------------------------
 
@@ -586,21 +682,33 @@ ALTER TABLE `tprenotazioneenciclopedia`
 --
 ALTER TABLE `tprestito`
   ADD PRIMARY KEY (`idPrestito`),
-  ADD KEY `fk_idPrenotazione` (`idPrenotazione`);
+  ADD UNIQUE KEY `idPrenotazione` (`idPrenotazione`),
+  ADD UNIQUE KEY `idPrenotazione_2` (`idPrenotazione`),
+  ADD KEY `fk_idPrenotazione` (`idPrenotazione`),
+  ADD KEY `fk_LavoratoreConsegna` (`idLavoratoreConsegna`),
+  ADD KEY `fk_LavoratoreRitiro` (`idLavoratoreRitiro`);
 
 --
 -- Indici per le tabelle `tprestitocarta`
 --
 ALTER TABLE `tprestitocarta`
   ADD PRIMARY KEY (`idPrestito`),
-  ADD KEY `fk_idPrenotazioneCarta` (`idPrenotazione`);
+  ADD UNIQUE KEY `idPrenotazione` (`idPrenotazione`),
+  ADD KEY `fk_idPrenotazioneCarta` (`idPrenotazione`),
+  ADD KEY `fk_LavoratoreConsegnaCarta` (`idLavoratoreConsegna`),
+  ADD KEY `fk_LavoratoreRitiroCarta` (`idLavoratoreRitiro`),
+  ADD KEY `idPrestito` (`idPrestito`) USING BTREE;
 
 --
 -- Indici per le tabelle `tprestitoenciclopedia`
 --
 ALTER TABLE `tprestitoenciclopedia`
   ADD PRIMARY KEY (`idPrestito`),
-  ADD KEY `fk_idPrestitoEnciclopedia` (`idPrenotazione`);
+  ADD UNIQUE KEY `idPrestito` (`idPrestito`),
+  ADD UNIQUE KEY `idPrenotazione` (`idPrenotazione`),
+  ADD KEY `fk_idPrestitoEnciclopedia` (`idPrenotazione`),
+  ADD KEY `fk_LavoratoreConsegnaEnciclopedia` (`idLavoratoreConsegna`),
+  ADD KEY `fk_LavoratoreRitiroEnciclopedia` (`idLavoratoreRitiro`);
 
 --
 -- Indici per le tabelle `tscaffale`
@@ -656,7 +764,7 @@ ALTER TABLE `tvolume`
 -- AUTO_INCREMENT per la tabella `tarmadio`
 --
 ALTER TABLE `tarmadio`
-  MODIFY `idArmadio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idArmadio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `tautore`
@@ -668,13 +776,13 @@ ALTER TABLE `tautore`
 -- AUTO_INCREMENT per la tabella `tautorecarta`
 --
 ALTER TABLE `tautorecarta`
-  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT per la tabella `tautoreenciclopedia`
 --
 ALTER TABLE `tautoreenciclopedia`
-  MODIFY `idMultiAutori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idMultiAutori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `tcartageopolitica`
@@ -704,7 +812,7 @@ ALTER TABLE `tenciclopedia`
 -- AUTO_INCREMENT per la tabella `tlavoratore`
 --
 ALTER TABLE `tlavoratore`
-  MODIFY `idLavoratore` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idLavoratore` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `tlibro`
@@ -716,55 +824,55 @@ ALTER TABLE `tlibro`
 -- AUTO_INCREMENT per la tabella `tprenotazione`
 --
 ALTER TABLE `tprenotazione`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT per la tabella `tprenotazionecarta`
 --
 ALTER TABLE `tprenotazionecarta`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `tprenotazioneenciclopedia`
 --
 ALTER TABLE `tprenotazioneenciclopedia`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT per la tabella `tprestito`
 --
 ALTER TABLE `tprestito`
-  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT per la tabella `tprestitocarta`
 --
 ALTER TABLE `tprestitocarta`
-  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `tprestitoenciclopedia`
 --
 ALTER TABLE `tprestitoenciclopedia`
-  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffale`
 --
 ALTER TABLE `tscaffale`
-  MODIFY `idScaffale` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idScaffale` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffalecarta`
 --
 ALTER TABLE `tscaffalecarta`
-  MODIFY `idScaffaleCarta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idScaffaleCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffalelibro`
 --
 ALTER TABLE `tscaffalelibro`
-  MODIFY `idScaffaleLibro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idScaffaleLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffalevolume`
@@ -776,7 +884,7 @@ ALTER TABLE `tscaffalevolume`
 -- AUTO_INCREMENT per la tabella `tstanza`
 --
 ALTER TABLE `tstanza`
-  MODIFY `idStanza` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idStanza` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `tvolume`
@@ -851,18 +959,24 @@ ALTER TABLE `tprenotazioneenciclopedia`
 -- Limiti per la tabella `tprestito`
 --
 ALTER TABLE `tprestito`
+  ADD CONSTRAINT `fk_LavoratoreConsegna` FOREIGN KEY (`idLavoratoreConsegna`) REFERENCES `tlavoratore` (`idLavoratore`),
+  ADD CONSTRAINT `fk_LavoratoreRitiro` FOREIGN KEY (`idLavoratoreRitiro`) REFERENCES `tlavoratore` (`idLavoratore`),
   ADD CONSTRAINT `fk_idPrenotazione` FOREIGN KEY (`idPrenotazione`) REFERENCES `tprenotazione` (`idPrenotazione`);
 
 --
 -- Limiti per la tabella `tprestitocarta`
 --
 ALTER TABLE `tprestitocarta`
+  ADD CONSTRAINT `fk_LavoratoreConsegnaCarta` FOREIGN KEY (`idLavoratoreConsegna`) REFERENCES `tlavoratore` (`idLavoratore`),
+  ADD CONSTRAINT `fk_LavoratoreRitiroCarta` FOREIGN KEY (`idLavoratoreRitiro`) REFERENCES `tlavoratore` (`idLavoratore`),
   ADD CONSTRAINT `fk_idPrenotazioneCarta` FOREIGN KEY (`idPrenotazione`) REFERENCES `tprenotazionecarta` (`idPrenotazione`);
 
 --
 -- Limiti per la tabella `tprestitoenciclopedia`
 --
 ALTER TABLE `tprestitoenciclopedia`
+  ADD CONSTRAINT `fk_LavoratoreConsegnaEnciclopedia` FOREIGN KEY (`idLavoratoreConsegna`) REFERENCES `tlavoratore` (`idLavoratore`),
+  ADD CONSTRAINT `fk_LavoratoreRitiroEnciclopedia` FOREIGN KEY (`idLavoratoreRitiro`) REFERENCES `tlavoratore` (`idLavoratore`),
   ADD CONSTRAINT `fk_idPrestitoEnciclopedia` FOREIGN KEY (`idPrenotazione`) REFERENCES `tprenotazioneenciclopedia` (`idPrenotazione`);
 
 --

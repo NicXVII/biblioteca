@@ -43,24 +43,24 @@ if (true) {
                                 tcasaeditrice.nome LIKE ?";
                     break;
                 case 'enciclopedie':
-                    $query = "SELECT
-                    tenciclopedia.idEnciclopedia AS id,
-                    tenciclopedia.titolo AS titolo,
+                    $query = "SELECT 
+                    tenciclopedia.titolo,
+                    tenciclopedia.idEnciclopedia,
+                    tenciclopedia.volumiTotali,
                     tenciclopedia.isbn,
-                    tenciclopedia.data AS anno_pubblicazione,
-                    tcasaeditrice.nome AS casa_editrice,
-                    tcasaeditrice.idCasaEditrice  AS casa_editrice_id,
-                    GROUP_CONCAT(tautore.nome, ' ', tautore.cognome) AS autore_nome,
-                    tautore.cognome AS autore_cognome
+                    tcasaeditrice.nome AS nome_casa_editrice,
+                    tcasaeditrice.idCasaEditrice,
+                    GROUP_CONCAT(tautore.nome, ' ', tautore.cognome) AS autori
                 FROM 
                     tenciclopedia
-                JOIN tcasaeditrice ON tenciclopedia.idCasaEditrice = tcasaeditrice.idCasaEditrice
-                JOIN tautoreenciclopedia AS ta1 ON ta1.idEnciclopedia = tenciclopedia.idEnciclopedia
-                JOIN tautore ON tautore.idAutore = ta1.idAutore
-                WHERE 
-                    (tenciclopedia.titolo LIKE ? OR
-                    tenciclopedia.data = ? OR
-                    tcasaeditrice.nome LIKE ?);
+                JOIN 
+                    tautoreenciclopedia ON tautoreenciclopedia.idEnciclopedia = tenciclopedia.idEnciclopedia
+                JOIN 
+                    tautore ON tautore.idAutore = tautoreenciclopedia.idAutore
+                JOIN 
+                    tcasaeditrice ON tcasaeditrice.idCasaEditrice = tenciclopedia.idCasaEditrice
+                GROUP BY 
+                    tenciclopedia.idEnciclopedia;
                 ";
                     break;
                 case 'cartine':

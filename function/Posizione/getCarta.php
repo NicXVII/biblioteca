@@ -5,9 +5,8 @@ require_once("../database.php");
 $result = array();
 
 // Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-//if (true) 
-{
+//if ($_SERVER['REQUEST_METHOD'] == 'POST')
+if (true) {
     $db;
 
     if (!$db) {
@@ -16,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             'message'   =>  'Failed to connect to database',
         ];
     } else {
+
         $data = json_decode(file_get_contents('php://input'), true);
         if (isset($data['id'])) {
             $id = $data['id'];
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $stmt = mysqli_prepare($db, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "s", $id);
+                mysqli_stmt_bind_param($stmt, "i", $id);
                 mysqli_stmt_execute($stmt);
                 $queryResult = mysqli_stmt_get_result($stmt);
 
