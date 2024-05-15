@@ -3,11 +3,12 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 $worker = false;
-if (isset($_SESSION['workerID'])) {
+if (isset($_SESSION['workerID']))  {
     $worker = true;
-} else {
-    header('Location: index.php');
 }
+
+if (!isset($_SESSION['workerID']) && !isset($_SESSION['userID'])) {
+    header('Location: index.php');}
 ?>
 <!DOCTYPE html>
 <html lang="en">

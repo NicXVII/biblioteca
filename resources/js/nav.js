@@ -1,7 +1,8 @@
 var worker = null;
 document.addEventListener("DOMContentLoaded", function()
 {
-    worker = document.getElementById("worker");
+    worker = document.getElementById("worker").value;
+    console.log(worker);
     addLiPrestiti();
 });
 

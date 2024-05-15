@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $worker;
-if ($_SESSION['workerID'])
+if (isset($_SESSION['workerID']))
     $worker = true;
 ?>
 <!DOCTYPE html>

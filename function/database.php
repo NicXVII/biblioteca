@@ -1,10 +1,10 @@
 <?php
-/*
-$db_hostname = "localhost";
+
+/*$db_hostname = "localhost";
 $db_username = "quintaf";
 $db_password = "Qu!nta";
-$db_database = "biblioteca_diminich";
-*/
+$db_database = "biblioteca_diminich";*/
+
 
 $db_hostname = "localhost";
 $db_username = "root";

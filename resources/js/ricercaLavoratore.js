@@ -96,7 +96,7 @@ function fetchPrenotazioni()
 
 
    functionToFetch+='.php';
-
+console.log(functionToFetch);
    var dataToSend = {
     search: getInputValue()
    }

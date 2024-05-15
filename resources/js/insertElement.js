@@ -231,6 +231,7 @@ async function createFormLibro() {
     listenerSelect(selectAutori);
     form.appendChild(selectAutori);
 
+
     var caseEditricilabel = document.createElement('label');
     caseEditricilabel.textContent = 'Case Editrici:';
     form.appendChild(caseEditricilabel);
@@ -353,6 +354,11 @@ async function createFormCarta()
         option.textContent = autore.nome + ' ' + autore.cognome;
         selectAutori.appendChild(option);
     }
+
+    
+    var buttonAddAutore = document.createElement('button');
+    buttonAddAutore.textContent = "Inserisci Autori";
+    form.appendChild(buttonAddAutore);
     listenerSelect(selectAutori);
     form.appendChild(selectAutori);
 
