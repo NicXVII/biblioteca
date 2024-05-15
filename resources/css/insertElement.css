@@ -10,7 +10,7 @@ body {
 .formDiv {
   margin-top: 10vh;
   width: 100vw;
-  height: 60vh;
+  height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,8 +19,8 @@ body {
 }
 
 .formDiv h1 {
-  margin-bottom: 8vh;
-  font-size: 4em;
+  margin-bottom: 4vh;
+  font-size: 3em;
 }
 form {
   width: 30%;
@@ -33,7 +33,7 @@ form {
 
 label {
   display: block;
-  margin-bottom: 2.5vh;
+  margin-bottom: 2vh;
 }
 
 input[type="text"],
@@ -60,4 +60,33 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
   background-color: #0056b3;
+}
+
+
+.divAutori
+{
+  display: flex;
+  justify-content: top;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 8vh;
+  overflow-y: auto;
+}
+
+.divAutoriSelect
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+}
+
+.divAutoriMostra
+{
+  
 }
