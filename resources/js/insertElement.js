@@ -353,6 +353,7 @@ async function createFormCarta()
 
 
     var divAutori = document.createElement('div');
+    divAutori.id = 'autori';
     divAutori.classList.add('divAutori');
 
     var divAutoriSelect = document.createElement('div');
@@ -375,10 +376,16 @@ for (var i = 1; i <= 10; i++) {
     select.appendChild(option);
 }
 select.addEventListener('change', async function() {
+    var divA = document.querySelector('#autori');
+    divA.innerHTML = '';
+    /*divAutori.id = 'autori';
+    divAutori.classList.add('divAutori');*/
    numero = select.options[select.selectedIndex].value;
-   divAutori.appendChild(await createSelectAutori());
+   var div  = await createSelectAutori();
+   divA.appendChild(div);
    //console.log(numero);
 });
+
 divAutoriSelect.appendChild(select);
 form.appendChild(divAutoriSelect);
 
@@ -387,7 +394,7 @@ form.appendChild(divAutoriSelect);
 
 
     //var select = ;
-    divAutori.appendChild(await createSelectAutori());
+    //await createSelectAutori();
   
     form.appendChild(divAutori);
 
@@ -437,9 +444,7 @@ form.appendChild(divAutoriSelect);
 }
 
 async function createSelectAutori() {
-   var divAutori = document.createElement('div');
-   divAutori.classList.add('divAutori');
-   divAutori.innerHTML = '';
+  
     var autori = await fetchAutori();
     console.log(numero);
     var div = document.createElement('div');
@@ -457,8 +462,7 @@ async function createSelectAutori() {
     listenerSelect(selectAutori);
     div.appendChild(selectAutori); 
     }
-    divAutori.appendChild(div);
-    return divAutori;
+    return div;
 }
 
 // ------------------------------------------------------------------------------------------------
