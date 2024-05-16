@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once("..//database.php");
-$data = json_decode(file_get_contents('php://input'), true);
 $result = array();
 
 //if ($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -14,6 +13,7 @@ if (true) {
             'message'   =>  'Failed to connect to database',
         ];
     } else {
+        $data = json_decode(file_get_contents('php://input'), true);
 
         if (isset($data['tipoElemento']) && isset($data['ricerca'])) {
             $tipoElemento = $data['tipoElemento'];
@@ -43,14 +43,17 @@ if (true) {
                                 tcasaeditrice.nome LIKE ?";
                     break;
                 case 'enciclopedie':
-                    $query = "SELECT 
+                    $query = "SELECT
+                    tenciclopedia.idEnciclopedia as id,
+                    tenciclopedia.data as anno_pubblicazione, 
                     tenciclopedia.titolo,
                     tenciclopedia.idEnciclopedia,
                     tenciclopedia.volumiTotali,
                     tenciclopedia.isbn,
-                    tcasaeditrice.nome AS nome_casa_editrice,
-                    tcasaeditrice.idCasaEditrice,
-                    GROUP_CONCAT(tautore.nome, ' ', tautore.cognome) AS autori
+                    tcasaeditrice.nome AS casa_editrice,
+                    tcasaeditrice.idCasaEditrice as casa_editrice_id,
+                    tautore.cognome AS autore_cognome,
+                    GROUP_CONCAT(tautore.nome, ' ', tautore.cognome ORDER BY tautore.cognome, tautore.nome) AS autore_nome
                 FROM 
                     tenciclopedia
                 JOIN 
@@ -59,8 +62,13 @@ if (true) {
                     tautore ON tautore.idAutore = tautoreenciclopedia.idAutore
                 JOIN 
                     tcasaeditrice ON tcasaeditrice.idCasaEditrice = tenciclopedia.idCasaEditrice
+                WHERE
+                    tenciclopedia.titolo LIKE ? OR
+                    tenciclopedia.data LIKE ? OR
+                    tcasaeditrice.nome LIKE ?
                 GROUP BY 
                     tenciclopedia.idEnciclopedia;
+
                 ";
                     break;
                 case 'cartine':

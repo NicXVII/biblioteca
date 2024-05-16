@@ -54,3 +54,8 @@ a:hover {
   text-decoration: none !important;
   font-style: italic !important;
 }
+
+#img img {
+  width: 125px;
+  height: 75px !important;
+}

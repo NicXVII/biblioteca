@@ -235,12 +235,18 @@ function popolateVolume(data)
         p.innerHTML = "ISBN: "+dato.isbn;
         div.appendChild(p);
 
-        var btn = document.createElement('button');
-        btn.classList.add('btnPrenotazione');
-        btn.innerHTML = 'Prenota';
-        listenerPrenotaVolume(btn,dato.id);
-        div.appendChild(btn);
-
+        console.log(sessionStorage.getItem('worker'));
+        if(sessionStorage.getItem("worker") === true)
+            {
+            var btn = document.createElement('button');
+            btn.classList.add('btnPrenotazione');
+            btn.innerHTML = 'Prenota';
+            listenerPrenotaVolume(btn,dato.id);
+            div.appendChild(btn);
+        }else
+        {
+            //write function to search for volume position
+        }
         divVolumi.appendChild(div);
 
     }

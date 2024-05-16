@@ -11,6 +11,7 @@ function addLiPrestiti()
 {
     if(worker)
         {
+            sessionStorage.setItem("worker", true);
             var ul = document.getElementById("ul");
             var li = document.createElement("li");
             li.className = "nav-item";

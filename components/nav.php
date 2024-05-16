@@ -6,12 +6,12 @@ $id = null;
 $worker = null;
 if (isset($_SESSION['userID'])) {
     $id = $_SESSION['userID'];
-    $worker = true;
+    $worker = false;
 }
 
 if (isset($_SESSION['workerID'])) {
     $id = $_SESSION['workerID'];
-    $worker = false;
+    $worker = true;
 }
 
 if ($worker === null && $id === null)
@@ -29,10 +29,10 @@ if ($worker === null && $id === null)
     <div>
         <ul id="ul">
 
-            <li>
+            <li id="img">
                 <a href="index.php">
                     <i class="fa-solid fa-house"></i>
-                    <img src="#" alt="logoBiblioteca">
+                    <img src="resources/img/logo.jpg" alt="logoBiblioteca">
                 </a>
             </li>
             <li>

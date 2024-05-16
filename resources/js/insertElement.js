@@ -136,7 +136,7 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
         nome: nome,
         isbn: isbn,
         pubblicazione: pubblicazione,
-        idAutore: autore,
+        idAutore: autore[0],
         idCasaEditrice: casaEditrice
     };
 
@@ -468,17 +468,17 @@ async function createSelectAutori() {
 // ------------------------------------------------------------------------------------------------
 
 
-var autore = null;
-var casaEditrice = null;
+var autore = [];
+var i = 0;
 function listenerSelect(select) {
     select.addEventListener('change', function() {
         var input = document.getElementById('autoreHidden');
         input.value = select.options[select.selectedIndex].value;
-        autore = select.options[select.selectedIndex].value;
+        //autore.push(select.options[select.selectedIndex].value);
         console.log(autore);
     });
-}
-
+} [];
+var casaEditrice = null;
 function listenerSelectCasaEditrice(select) {
     select.addEventListener('change', function() {
         var input = document.getElementById('casaEditrice');
