@@ -126,7 +126,7 @@ async function check()
     for(dato of data)
     {
         var result = await checkIsbn(dato, '978-8809020422');
-        console.log(result);
+        //console.log(result);
 
     }
 }
@@ -165,6 +165,44 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
         return []; // Return an empty array if there's an error
     }
 }
+
+async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, casaEditrice)
+{
+    const dataToSend = {
+        dataRiferimento : dataRiferimento,
+        nome: nome,
+        isbn: isbn,
+        pubblicazione: pubblicazione,
+        idAutore: autore[0],
+        idCasaEditrice: casaEditrice
+    };
+
+
+    //console.log(dataToSend);
+    try {
+        const response = await fetch('function/Inserisci/inserisciCarta.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        if (data.success) {
+            //console.log(data.data);
+            return data.data; // Return the array of authors
+        } else {
+            throw new Error('Request was not successful: ' + data.message);
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return []; // Return an empty array if there's an error
+    }
+}
+
 
 //------------------------------------------------------------------
 
@@ -315,7 +353,7 @@ async function createFormCarta()
     rappresentazioneLabel.textContent = 'Data di rappresentazione:';
     var rappresentationInput = document.createElement('input');
     rappresentationInput.setAttribute('type', 'date');
-    rappresentationInput.setAttribute('name', 'publication');
+    rappresentationInput.setAttribute('name', 'reference');
     rappresentationInput.setAttribute('required', 'required'); // Aggiunto required
     form.appendChild(rappresentazioneLabel);
     form.appendChild(rappresentationInput);
@@ -438,15 +476,15 @@ form.appendChild(divAutoriSelect);
         for (var pair of formData.entries()) {
             console.log(pair[0] + ': ' + pair[1]);
         }
-        console.log("Autore " + autore + " casaEditrice " + casaEditrice);
-        insertLibro(formData.get('name'), formData.get('isbn'), formData.get('publication'), autore, casaEditrice);
+        console.log("Autore " + autore[0] + " casaEditrice " + casaEditrice);
+        insertCarta(formData.get('name'), formData.get('isbn'), formData.get('publication'),formData.get('reference'), autore, casaEditrice);
     });
 }
 
 async function createSelectAutori() {
   
     var autori = await fetchAutori();
-    console.log(numero);
+    //console.log(numero);
     var div = document.createElement('div');
     div.classList.add('divAutoriMostra');
     for(var i = 0; i < numero; i++)
@@ -474,8 +512,11 @@ function listenerSelect(select) {
     select.addEventListener('change', function() {
         var input = document.getElementById('autoreHidden');
         input.value = select.options[select.selectedIndex].value;
-        //autore.push(select.options[select.selectedIndex].value);
-        console.log(autore);
+        //console.log(input.value);
+        //var id  = selected.idAutore;
+        //console.log(selected + '  ' + id);
+        autore[select.selectedIndex-1] = input.value;
+        console.log(autore[select.selectedIndex]);
     });
 } [];
 var casaEditrice = null;

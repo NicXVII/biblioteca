@@ -20,7 +20,7 @@ if (true) {
         $data = json_decode(file_get_contents('php://input'), true);
         if (isset($data['id'])) {
             $id = $data['id'];
-            $query = "SELECT tstanza.nome, tarmadio.nome, tscaffalevolume.numeroScaffale, tvolume.numeroVolume, tvolume.isbn
+            $query = "SELECT tstanza.nome as nomeStanza, tarmadio.nome as nomeArmadio, tscaffalevolume.numeroScaffale as numeroScaffale, tvolume.idVolume as id, tscaffale.nome as nomeScaffale
             FROM tscaffalevolume
             JOIN tscaffale
             ON tscaffalevolume.idScaffale = tscaffale.idScaffale
@@ -44,7 +44,6 @@ if (true) {
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $resultArray[] = [
                             'id'                      => $row['id'],
-                            'titolo'                  => $row['titolo'],
                             'nomeStanza'              => $row['nomeStanza'],
                             'nomeArmadio'             => $row['nomeArmadio'],
                             'nomeScaffale'            => $row['nomeScaffale'],

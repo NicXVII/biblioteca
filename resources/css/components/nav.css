@@ -18,6 +18,7 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-content: center;
+  align-items: center;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -56,6 +57,6 @@ a:hover {
 }
 
 #img img {
-  width: 125px;
-  height: 75px !important;
+  width: 150px;
+  height: 100px !important;
 }

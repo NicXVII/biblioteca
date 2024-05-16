@@ -85,8 +85,9 @@ function fetchElement() {
 function fetchVolume(id)
 {
     const data = {
-        id: id,
+        volume: id
     };
+    console.log(data);
 
     fetch('function/Dati/getVolume.php', {
         method: 'POST',
@@ -160,6 +161,34 @@ async function prenotaVolume(id)
         });
 
 }
+async function fetchPosizioneVolume(id)
+{
+    var dataToSend = {
+        id: id
+    };
+    //console.log(dataToSend);
+
+
+    try {
+        const response = await fetch('function/Posizione/getVolume.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        //console.log(data.data);
+        return data.data;
+    } catch (error) {
+        console.error('Si è verificato un errore:', error);
+    }
+}
 //--------------------------------------------------------------------------------------------------
 function popolate(data) {
 
@@ -216,7 +245,7 @@ function popolateEnciclopedia(data) {
 
 }
 
-function popolateVolume(data)
+async function popolateVolume(data)
 {
  var detailDiv = document.querySelector('.detail');
  var divVolumi = document.createElement('div');
@@ -235,7 +264,8 @@ function popolateVolume(data)
         p.innerHTML = "ISBN: "+dato.isbn;
         div.appendChild(p);
 
-        console.log(sessionStorage.getItem('worker'));
+        
+        //console.log(sessionStorage.getItem('worker'));
         if(sessionStorage.getItem("worker") === true)
             {
             var btn = document.createElement('button');
@@ -245,7 +275,11 @@ function popolateVolume(data)
             div.appendChild(btn);
         }else
         {
-            //write function to search for volume position
+            var data = await fetchPosizioneVolume(dato.id);
+            //console.log(data);
+            var p = document.createElement('p');
+            p.innerHTML = "Stanza: " + data.nomeStanza+ " armadio: " + data.nomeArmadio + " scaffale: " + data.nomeScaffale + " posizione: " + data.numeroScaffale;
+            div.appendChild(p);
         }
         divVolumi.appendChild(div);
 
