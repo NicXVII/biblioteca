@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once("../database.php");
 $result = array();
 
-/*if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $result = array(
         'success' => false,
         'message' => 'Invalid request'
@@ -13,7 +13,7 @@ $result = array();
     echo json_encode($result);
     exit();
 }
-*/
+
 if (!$db) {
     $result = array(
         'success' => false,
@@ -25,11 +25,11 @@ if (!$db) {
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
-/*$data['nome'] = "test";
-$data['isbn'] = "test";
-$data['pubblicazione'] = "2024-01-01";
-$data['idAutore'] = "1";
-$data['idCasaEditrice'] = "1";*/
+/*$data['nome'] = '12';
+$data['isbn'] = '12';
+$data['pubblicazione'] = '2024-12-04';
+$data['dataRiferimento'] = '2024-12-04';
+$data['idCasaEditrice']  = 1;*/
 if (
     !isset($data['nome']) || empty($data['nome']) ||
     !isset($data['isbn']) || empty($data['isbn']) ||
@@ -51,24 +51,24 @@ $pubblicazione = $data['pubblicazione'];
 $dataRiferimento = $data['dataRiferimento'];
 $idCasaEditrice = $data['idCasaEditrice'];
 
-$insertQuery = "INSERT INTO tlibro (nome, isbn, data,dataRappresentazione, idCasaEditrice) VALUES (?, ?, ?, ?, ?)";
+$insertQuery = "INSERT INTO `tcartageopolitica` (`titolo`, `data`, `dataRappresentazione`, `idCasaEditrice`, `isbn`) VALUES (?,?,?,?,?);";
 $insertStatement = mysqli_prepare($db, $insertQuery);
 
 if ($insertStatement) {
-    mysqli_stmt_bind_param($insertStatement, "ssddi", $nome, $isbn, $pubblicazione, $idAutore, $idCasaEditrice);
+    mysqli_stmt_bind_param($insertStatement, "sssis", $nome, $pubblicazione, $dataRiferimento, $idCasaEditrice, $isbn);
 
     if (mysqli_stmt_execute($insertStatement)) {
-        $bookID = mysqli_insert_id($db);
+        $cartaID = mysqli_insert_id($db);
 
         $result = array(
             'success' => true,
-            'message' => 'Book inserted successfully',
-            'bookID' => $bookID
+            'message' => 'Carta Geo Politica inserted successfully',
+            'id' => $cartaID
         );
     } else {
         $result = array(
             'success' => false,
-            'message' => 'Failed to insert book'
+            'message' => 'Failed to insert Carta Geo Politica'
         );
     }
 

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     whichForm();
     //fetchCaseEditrici();
     //fetchAutori();
-    check();
+    //check();
 });
 
 //------------------------------------------------------------------
@@ -107,41 +107,54 @@ async function checkIsbn(type, isbn) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        if (data.success) {
-            //console.log(data.data);
-            return data.data; // Return the array of authors
-        } else {
-            throw new Error('Request was not successful: ' + data.message);
-        }
+        //console.log(data.data);
+        return data.data;   
     } catch (error) {
         console.error('An error occurred:', error);
         return []; // Return an empty array if there's an error
     }
 }
 
-async function check()
+async function check(isbn)
 {
     var data = ['Libro', 'Enciclopedia', 'Carta', 'Volume'];
-
+    var result = 0;
     for(dato of data)
     {
-        var result = await checkIsbn(dato, '978-8809020422');
-        //console.log(result);
+        result += await checkIsbn(dato, isbn);
 
     }
+
+    return result;
 }
 async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
 {
+    var numerico = isNumericString(isbn);
+    if(!numerico)
+        {
+            wrongPopUp();
+            return;
+
+        }
+    var isbnFORMAT = fixISBN(isbn);
+
+    var result = 0;
+    result = await check(isbnFORMAT);
+
+    console.log(result);
+
+    if(result !== 0)
+        {
+            wrongPopUp();
+            return;
+        }
     const dataToSend = {
         nome: nome,
-        isbn: isbn,
+        isbn: isbnFORMAT,
         pubblicazione: pubblicazione,
         idAutore: autore[0],
         idCasaEditrice: casaEditrice
     };
-
-
-    //console.log(dataToSend);
     try {
         const response = await fetch('function/Inserisci/inserisciLibro.php', {
             method: 'POST',
@@ -168,15 +181,33 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
 
 async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, casaEditrice)
 {
+    var numerico = isNumericString(isbn);
+    if(!numerico)
+        {
+            wrongPopUp();
+            return;
+        }
+    var isbnFORMAT = fixISBN(isbn);
+
+    var result = 0;
+    result = await check(isbnFORMAT);
+
+    console.log(result);
+
+    if(result !== 0)
+        {
+            wrongPopUp();
+            return;
+        }
     const dataToSend = {
-        dataRiferimento : dataRiferimento,
         nome: nome,
-        isbn: isbn,
+        isbn: isbnFORMAT,
         pubblicazione: pubblicazione,
-        idAutore: autore[0],
+        dataRiferimento: dataRiferimento,
         idCasaEditrice: casaEditrice
     };
-
+    //check
+    //console.log(dataToSend);
 
     //console.log(dataToSend);
     try {
@@ -191,9 +222,11 @@ async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, ca
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        //console.log(data);
         if (data.success) {
-            //console.log(data.data);
-            return data.data; // Return the array of authors
+            return data; 
+
+
         } else {
             throw new Error('Request was not successful: ' + data.message);
         }
@@ -203,6 +236,47 @@ async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, ca
     }
 }
 
+
+async function insertAutori(type,autori, id)
+{
+    const dataToSend = {
+        autore: autori,
+        id: id
+    };
+
+    var functionToFetch = 'function/Inserisci/Autori/insertAutori';
+
+    switch (type)
+    {
+        case 'Enciclopedia':
+            functionToFetch += 'Enciclopedia.php';
+            break;
+        case 'Carta':
+            functionToFetch += 'Carta.php';
+            break;
+    }
+    try {
+        const response = await fetch(functionToFetch, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        if (data.success) {
+            return data.data; 
+        } else {
+            throw new Error('Request was not successful: ' + data.message);
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return []; // Return an empty array if there's an error
+    }
+}
 
 //------------------------------------------------------------------
 
@@ -232,9 +306,12 @@ async function createFormLibro() {
     var isbnInput = document.createElement('input');
     isbnInput.setAttribute('type', 'text');
     isbnInput.setAttribute('name', 'isbn');
-    isbnInput.setAttribute('required', 'required'); // Aggiunto required
+    isbnInput.setAttribute('required', 'required');
+    isbnInput.setAttribute('minlength', '13'); 
+    isbnInput.setAttribute('maxlength', '13');
     form.appendChild(isbnLabel);
     form.appendChild(isbnInput);
+    
 
     var publicationLabel = document.createElement('label');
     publicationLabel.textContent = 'Publication Date:';
@@ -334,7 +411,7 @@ async function createFormCarta()
     var nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('name', 'name');
-    nameInput.setAttribute('required', 'required'); // Aggiunto required
+    nameInput.setAttribute('required', 'required'); 
     form.appendChild(nameLabel);
     form.appendChild(nameInput);
 
@@ -343,7 +420,9 @@ async function createFormCarta()
     var isbnInput = document.createElement('input');
     isbnInput.setAttribute('type', 'text');
     isbnInput.setAttribute('name', 'isbn');
-    isbnInput.setAttribute('required', 'required'); // Aggiunto required
+    isbnInput.setAttribute('required', 'required');
+    isbnInput.setAttribute('minlength', '13'); 
+    isbnInput.setAttribute('maxlength', '13');
     form.appendChild(isbnLabel);
     form.appendChild(isbnInput);
 
@@ -354,7 +433,7 @@ async function createFormCarta()
     var rappresentationInput = document.createElement('input');
     rappresentationInput.setAttribute('type', 'date');
     rappresentationInput.setAttribute('name', 'reference');
-    rappresentationInput.setAttribute('required', 'required'); // Aggiunto required
+    rappresentationInput.setAttribute('required', 'required');
     form.appendChild(rappresentazioneLabel);
     form.appendChild(rappresentationInput);
 
@@ -364,7 +443,7 @@ async function createFormCarta()
     var publicationInput = document.createElement('input');
     publicationInput.setAttribute('type', 'date');
     publicationInput.setAttribute('name', 'publication');
-    publicationInput.setAttribute('required', 'required'); // Aggiunto required
+    publicationInput.setAttribute('required', 'required'); 
     form.appendChild(publicationLabel);
     form.appendChild(publicationInput);
 
@@ -474,10 +553,17 @@ form.appendChild(divAutoriSelect);
         event.preventDefault();
         var formData = new FormData(form);
         for (var pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
+            //console.log(pair[0] + ': ' + pair[1]);
         }
-        console.log("Autore " + autore[0] + " casaEditrice " + casaEditrice);
-        insertCarta(formData.get('name'), formData.get('isbn'), formData.get('publication'),formData.get('reference'), autore, casaEditrice);
+
+        //console.log("Autore " + autore[0] + " casaEditrice " + casaEditrice);
+        var data = await insertCarta(formData.get('name'), formData.get('isbn'), formData.get('publication'),formData.get('reference'), autore, casaEditrice);
+        console.log(data);
+        console.log(autore);
+        if(data.success)
+        {
+            insertAutori('Carta', autore, data.id);
+        }
     });
 }
 
@@ -490,13 +576,14 @@ async function createSelectAutori() {
     for(var i = 0; i < numero; i++)
         {
             var selectAutori = document.createElement('select');
-            selectAutori.setAttribute('required', 'required'); // Aggiunto required
+            selectAutori.setAttribute('required', 'required'); 
         for (autore of autori) {
             var option = document.createElement('option');
             option.setAttribute('value', autore.idAutore);
             option.textContent = autore.nome + ' ' + autore.cognome;
             selectAutori.appendChild(option);
         }
+    selectAutori.classList.add('selectAutori');
     listenerSelect(selectAutori);
     div.appendChild(selectAutori); 
     }
@@ -516,7 +603,7 @@ function listenerSelect(select) {
         //var id  = selected.idAutore;
         //console.log(selected + '  ' + id);
         autore[select.selectedIndex-1] = input.value;
-        console.log(autore[select.selectedIndex]);
+        //console.log(autore[select.selectedIndex]);
     });
 } [];
 var casaEditrice = null;
@@ -530,4 +617,40 @@ function listenerSelectCasaEditrice(select) {
 }
 
 
+function isNumericString(isbn) {
+  
+    var numericRegex = /^[0-9]+$/;
+    return numericRegex.test(isbn);
+}
 
+function fixISBN(isbn) {
+
+    var prefix = isbn.slice(0, 3);         
+    var registrationGroup = isbn.slice(3, 4); 
+    var registrant = isbn.slice(4, 7);     
+    var publication = isbn.slice(7, 12);    
+    var checkDigit = isbn.slice(12);      
+
+    return `${prefix}-${registrationGroup}-${registrant}-${publication}-${checkDigit}`;
+}
+
+function successPopUp()
+{
+    swal({
+        title: "Success!",
+        text: "The operation was successful.",
+        icon: "success",
+        button: "Great!"
+    });
+}
+
+
+function wrongPopUp()
+{
+    swal({
+        title: "Error!",
+        text: "The operation failed.",
+        icon: "error",
+        button: "Try Again"
+    });
+}

@@ -3,17 +3,16 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once("../database.php");
+require_once("../../database.php");
 
-// Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+/*if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $result = [
         'success' => false,
         'message' => 'Invalid request'
     ];
     echo json_encode($result);
     exit();
-}
+}*/
 
 // Check if the database connection is established
 if (!$db) {
@@ -29,10 +28,11 @@ if (!$db) {
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
+
 // Validate JSON data
 if (
     !isset($data['autore']) || empty($data['autore']) ||
-    !isset($data['idCarta']) || empty($data['idCarta'])
+    !isset($data['id']) || empty($data['id'])
 ) {
     $result = [
         'success' => false,
@@ -42,12 +42,11 @@ if (
     exit();
 }
 
-// Extract data from JSON
 $autori = $data['autore'];
-$idCarta = $data['idCarta'];
+$idCarta = $data['id'];
 
 foreach ($autori as $autoreId) {
-    $insertQuery = "INSERT INTO tlibro (idCartaGeoPolitica, idAutore) VALUES (?, ?)";
+    $insertQuery = "INSERT INTO tautorecarta (idCartaGeoPolitica, idAutore) VALUES (?, ?)";
     $insertStatement = mysqli_prepare($db, $insertQuery);
 
     if ($insertStatement) {
@@ -64,7 +63,6 @@ foreach ($autori as $autoreId) {
                 'message' => 'Failed to insert author',
                 'idAutore' => $autoreId
             ];
-            // Break the loop if insertion fails
             break;
         }
 

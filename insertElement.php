@@ -30,3 +30,4 @@ $type = $_REQUEST['type'];
 
 </html>
 <script src="resources/js/insertElement.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
