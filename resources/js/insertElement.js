@@ -23,6 +23,33 @@ function whichForm() {
 }
 
 //------------------------------------------------------------------
+async function feetchPosizioneLinbro(id)
+{
+    const dataToSend = {
+        id: id,
+    };
+    try {
+        const response = await fetch('function/AutoPosition/libro.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        if (data.success) {
+            return data.data; // Return the array of authors
+        } else {
+            throw new Error('Request was not successful: ' + data.message);
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return []; // Return an empty array if there's an error
+    }
+}
 
 async function fetchCaseEditrici() {
     try {
@@ -129,6 +156,7 @@ async function check(isbn)
 }
 async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
 {
+    console.log(sigma);
     var numerico = isNumericString(isbn);
     if(!numerico)
         {
@@ -152,7 +180,7 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
         nome: nome,
         isbn: isbnFORMAT,
         pubblicazione: pubblicazione,
-        idAutore: autore[0],
+        idAutore: sigma,
         idCasaEditrice: casaEditrice
     };
     try {
