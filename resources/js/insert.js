@@ -1,22 +1,20 @@
-document.addEventListener("DOMContentLoaded", function() {
-    var worker = document.getElementById('worker').value; 
-    console.log(worker == 1);
-    if(worker == 1) {
+document.addEventListener("DOMContentLoaded", function()
+{
+
         generateSelectElement();
         listenerBtnElement();
         listenerInsertElement();
-    }
 });
 
 var selectedElement = null;
 
 function generateSelectElement() {
-    var divLocation = document.querySelector('.location');
+    var divLocation = document.querySelector('.content');
 
     var div = document.createElement('div');
     div.className = 'selectElement';
 
-    var types = ['Libro', 'Carta Geo Politica', 'Enciclopedia'];
+    var types = ['Autore', 'Casa Editrice'];
     var divBtnElement = document.createElement('div');
     divBtnElement.classList.add('divBtnElement');
     for(type of types) {
@@ -60,7 +58,13 @@ function listenerBtnElement() {
 function listenerInsertElement() {
     var btn = document.querySelector('.divBtnSend button');
     btn.addEventListener('click', function() {
-        if(selectedElement!= null)
-            location.href = 'insertElement.php?type=' + selectedElement;
+        /*if(selectedElement!= null)
+            location.href = 'insertElement.php?type=' + selectedElement;*/
     });
+}
+
+//------------------------------------------------------------------------------------------------
+function createFormAutore()
+{
+    
 }

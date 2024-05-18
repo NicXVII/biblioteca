@@ -596,11 +596,13 @@ form.appendChild(divAutoriSelect);
 
         //console.log("Autore " + autore[0] + " casaEditrice " + casaEditrice);
         var data = await insertCarta(formData.get('name'), formData.get('isbn'), formData.get('publication'),formData.get('reference'), autore, casaEditrice);
-        //console.log(data);
+        console.log(data);
         //console.log(autore);
         //insertAutori('Carta', sigma, 1);
-        if(data.success)
+        console.log(data.success);
+        if(data.success === true)
         {
+
             insertAutori('Carta', sigma, data.id);
         }
     });

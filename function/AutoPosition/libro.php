@@ -9,7 +9,7 @@ $db;
 if (!$db) {
     $result = [
         'success' => false,
-        'message' => 'Failed to connect to database'
+        'message' => 'Failed to connect to database: ' . mysqli_connect_error()
     ];
     echo json_encode($result);
     exit();
@@ -18,6 +18,7 @@ if (!$db) {
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 $data['id'] = 21;
+
 // Controllo se i dati JSON sono validi
 if (!isset($data['id']) || empty($data['id'])) {
     $result = [
@@ -29,13 +30,14 @@ if (!isset($data['id']) || empty($data['id'])) {
 }
 $idLibro = $data['id'];
 
+// Prima query: chiamata alla procedura scaffaliLibro()
 $query = "CALL scaffaliLibro()";
 
 $stmt = mysqli_prepare($db, $query);
 if (!$stmt) {
     $result = [
         'success' => false,
-        'message' => 'Failed to prepare statement for scaffaliLibro()'
+        'message' => 'Failed to prepare statement for scaffaliLibro(): ' . mysqli_error($db)
     ];
     echo json_encode($result);
     exit();
@@ -44,7 +46,7 @@ if (!$stmt) {
 if (!mysqli_stmt_execute($stmt)) {
     $result = [
         'success' => false,
-        'message' => 'Failed to execute statement for scaffaliLibro()'
+        'message' => 'Failed to execute statement for scaffaliLibro(): ' . mysqli_stmt_error($stmt)
     ];
     echo json_encode($result);
     exit();
@@ -55,7 +57,7 @@ $queryResult = mysqli_stmt_get_result($stmt);
 if (!$queryResult) {
     $result = [
         'success' => false,
-        'message' => 'Failed to get result for scaffaliLibro()'
+        'message' => 'Failed to get result for scaffaliLibro(): ' . mysqli_error($db)
     ];
     echo json_encode($result);
     exit();
@@ -70,27 +72,31 @@ while ($row = mysqli_fetch_array($queryResult)) {
 
 mysqli_stmt_close($stmt);
 
+mysqli_free_result($queryResult);
+
 $countBOOKS = [];
-//echo json_encode($idScaffali);
-for ($i = 0; $i < sizeof($idScaffali); $i++) {
-    $id = $idScaffali[$i];
-    //echo ($id);
-    $query = "CALL LibriinScaffale($id);";
+
+foreach ($idScaffali as $idScaffale) {
+    // Seconda query: chiamata alla procedura LibriinScaffale()
+    $query = "CALL LibriinScaffale($idScaffale);";
     $queryResult = mysqli_query($db, $query);
 
     if (!$queryResult) {
-        $countBOOKS[] = [
-            'idScaffale' => $id,
-            'count' => 0,
+        $result = [
+            'success' => false,
+            'message' => 'Failed to execute query for LibriinScaffale(): ' . mysqli_error($db)
         ];
-    } else {
-
-        $row = mysqli_fetch_array($queryResult);
-        $countBOOKS[] = [
-            'idScaffale' => $id,
-            'count' => $row['COUNT(*)'],
-        ];
+        echo json_encode($result);
+        exit();
     }
+
+    $row = mysqli_fetch_array($queryResult);
+    $countBOOKS[] = [
+        'idScaffale' => $idScaffale,
+        'count' => $row['COUNT(*)'],
+    ];
+
+    mysqli_free_result($queryResult);
 }
 
 $idScaffale = null;
@@ -104,25 +110,33 @@ foreach ($countBOOKS as $shelf) {
     }
 }
 
-echo $idScaffale . '    ';
-echo $numeroScaffale . '        ';
-echo $idLibro . ' ';
-$finalQuery = "CALL insertPosizioneLibro($idScaffale,$idLibro,$numeroScaffale);";
-$queryResult = mysqli_query($db, $finalQuery);
+if ($idScaffale !== null && $numeroScaffale !== null) {
+    // Terza query: chiamata alla procedura insertPosizioneLibro()
+    $finalQuery = "CALL insertPosizioneLibro($idScaffale, $idLibro, $numeroScaffale);";
+    $queryResult = mysqli_query($db, $finalQuery);
 
-if (!$queryResult) {
+    if (!$queryResult) {
+        $result = [
+            'success' => false,
+            'message' => 'Failed to execute query for insertPosizioneLibro(): ' . mysqli_error($db)
+        ];
+        echo json_encode($result);
+        exit();
+    }
+
+    $result = [
+        'success' => true,
+        'message' => 'Book inserted successfully'
+    ];
+
+    // Leggi tutti i risultati delle query per evitare il problema dei comandi fuori sincrono
+    mysqli_free_result($queryResult);
+} else {
     $result = [
         'success' => false,
-        'message' => 'Failed to execute query for insertPosizioneLibro()'
+        'message' => 'No suitable shelf found or an error occurred'
     ];
-    echo json_encode($result);
-    exit();
 }
-
-$result = [
-    'success' => true,
-    'message' => 'Book inserted successfully'
-];
 
 mysqli_close($db);
 echo json_encode($result);

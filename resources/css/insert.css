@@ -1,60 +1,20 @@
 body {
-  font-family: "San Francisco", Arial, sans-serif !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  display: flex;
-  justify-content: center;
-  flex-direction: column !important;
-}
-.title {
   width: 100vw;
-  height: auto !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #333;
-  text-align: center;
+  height: 100vh;
+  font-family: "San Francisco", Arial, sans-serif !important;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
-
-.location {
-  margin-top: 3vh !important;
+.content {
+  margin-top: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 70vh;
   width: 100vw;
-  height: 50vh !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-
-iframe {
-  width: 80%;
-  height: 100%;
-  border: 0;
-}
-.location img {
-  transition: transform 0.3s ease; /* Cambio graduale della trasformazione con durata di 0.3 secondi e funzione di accelerazione */
-}
-
-.location img:hover {
-  transform: scale(1.15);
-}
-
-.info {
-  margin-left: 10vw;
-  margin-right: 10vw;
-  margin-top: 2vh;
-  width: 80vw;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* =================================================================*/
 .selectElement {
   width: 50%;
   height: 100%;
