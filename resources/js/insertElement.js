@@ -187,6 +187,11 @@ async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, ca
             wrongPopUp();
             return;
         }
+
+    if(clearAutore()) {
+        wrongPopUp();
+        return;
+    }
     var isbnFORMAT = fixISBN(isbn);
 
     var result = 0;
@@ -243,6 +248,11 @@ async function insertAutori(type,autori, id)
         autore: autori,
         id: id
     };
+
+    console.log(dataToSend);
+
+
+
 
     var functionToFetch = 'function/Inserisci/Autori/insertAutori';
 
@@ -558,11 +568,12 @@ form.appendChild(divAutoriSelect);
 
         //console.log("Autore " + autore[0] + " casaEditrice " + casaEditrice);
         var data = await insertCarta(formData.get('name'), formData.get('isbn'), formData.get('publication'),formData.get('reference'), autore, casaEditrice);
-        console.log(data);
-        console.log(autore);
+        //console.log(data);
+        //console.log(autore);
+        //insertAutori('Carta', sigma, 1);
         if(data.success)
         {
-            insertAutori('Carta', autore, data.id);
+            insertAutori('Carta', sigma, data.id);
         }
     });
 }
@@ -594,15 +605,15 @@ async function createSelectAutori() {
 
 
 var autore = [];
-var i = 0;
+var sigma = [];
 function listenerSelect(select) {
     select.addEventListener('change', function() {
-        var input = document.getElementById('autoreHidden');
-        input.value = select.options[select.selectedIndex].value;
+     
+        //input.value = select.options[select.selectedIndex].value;
         //console.log(input.value);
         //var id  = selected.idAutore;
         //console.log(selected + '  ' + id);
-        autore[select.selectedIndex-1] = input.value;
+        sigma.push(select.options[select.selectedIndex].value);
         //console.log(autore[select.selectedIndex]);
     });
 } [];
@@ -633,6 +644,19 @@ function fixISBN(isbn) {
 
     return `${prefix}-${registrationGroup}-${registrant}-${publication}-${checkDigit}`;
 }
+
+function clearAutore() {
+    var counts = {}; 
+    for (var i = 0; i < sigma.length; i++) {
+        var valoreCorrente = sigma[i];
+        counts[valoreCorrente] = (counts[valoreCorrente] || 0) + 1;
+        if (counts[valoreCorrente] > 1) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 function successPopUp()
 {
