@@ -257,8 +257,9 @@ async function popolateRicerca(data) {
         link.href = `show.php?id=${dato.id}&tipo_elementp=&${dato.tipo_elemento} nome=${dato.autore_nome}& cognome=${dato.autore_cognome}`;
         autoreP.appendChild(link);*/
         var autoreP = document.createElement('p');
-        if(selected === 'libri')
+        if(elemento === 'libri')
             {
+                console.log(dato.autore_cognome);
                 autoreP.textContent = `Autore: ${dato.autore_nome} ${dato.autore_cognome}`;
 
             }else
@@ -266,15 +267,10 @@ async function popolateRicerca(data) {
         var annoP = document.createElement('p');
         annoP.textContent = `Anno di pubblicazione: ${dato.anno_pubblicazione}`;
 
-// Creazione dell'elemento paragrafo per la casa editrice
 var casaEditriceP = document.createElement('p');
 
-// Creazione dell'elemento link per la casa editrice
 var link = document.createElement('a');
-link.href = `show.php?id=${dato.casa_editrice}&tipo_elemento=casaEditrice`;
-link.textContent = dato.casa_editrice; // Assegna il testo del link
-
-// Aggiungi il link come figlio dell'elemento paragrafo per la casa editrice
+link.textContent = dato.casa_editrice; 
 casaEditriceP.appendChild(link);
 
 

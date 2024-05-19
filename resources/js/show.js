@@ -221,12 +221,10 @@ function popolateLibro(data) {
     titleDiv.innerHTML = data['BookName'];
     detailDiv.innerHTML = `
         <p>ISBN: ${data['ISBN']}</p>
-        <p>Publication Date: ${data['PublicationDate']}</p>
-        <p>Publisher Name: ${data['PublisherName']}</p>
-        <p>Author Name: ${data['AuthorName']}</p>
-        <p>Author Surname: ${data['AuthorSurname']}</p>
-        <p>Author Birth Date: ${data['AuthorBirthDate']}</p>
-        <p>Author Death Date: ${data['AuthorDeathDate']}</p>
+        <p>Data pubblicazione: ${data['PublicationDate']}</p>
+        <p>Casa Editrice: ${data['PublisherName']}</p>
+        <p>Nome autore: ${data['AuthorName']}</p>
+        <p>Cognome autore: ${data['AuthorSurname']}</p>
     `;
 }
 

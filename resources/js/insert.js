@@ -5,6 +5,57 @@ document.addEventListener("DOMContentLoaded", function()
         listenerBtnElement();
         listenerInsertElement();
 });
+//------------------------------------------------------------------------------------------------
+async function fetchInsertCasaEditrice(nome)
+{
+    const dataToSend = {
+        nome: nome
+    }
+    try {
+        const response = await fetch('function/Inserisci/inserisciCasaEditrice.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return []; 
+    }
+}
+
+async function fetchInsertAutore(nome,cognome)
+{
+    const dataToSend = {
+        nome: nome,
+        cognome: cognome
+    }
+    try {
+        const response = await fetch('function/Inserisci/inserisciAutore.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return []; 
+    }
+}
+
+//------------------------------------------------------------------------------------------------
 
 var selectedElement = null;
 
@@ -133,6 +184,24 @@ function createFormAutore() {
     // Append the form to the div
     divForm.appendChild(form);
     div.appendChild(divForm);
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+       
+        var nome = document.getElementById('nome').value;
+        var cognome = document.getElementById('cognome').value;
+        var data = await fetchInsertAutore(nome,cognome);
+
+        console.log(data);
+
+        if(data.success === true) {
+            successPopUp('Autore inserito correttamente');
+        } else {
+            wrongPopUp('Autore non inserito');
+        }
+
+
+    });
 }
 
 function createFormCasaEditrice() {
@@ -174,16 +243,51 @@ function createFormCasaEditrice() {
    
     fieldset.appendChild(document.createElement('br'));
 
-    // Submit button
     var submitButton = document.createElement('button');
     submitButton.setAttribute('type', 'submit');
-    submitButton.textContent = 'Inscerisci Autore';
+    submitButton.textContent = 'Inscerisci Casa Editrice';
     fieldset.appendChild(submitButton);
 
-    // Append the fieldset to the form
     form.appendChild(fieldset);
 
-    // Append the form to the div
     divForm.appendChild(form);
     div.appendChild(divForm);
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+       
+        var nome = document.getElementById('nome').value;
+        var data = await fetchInsertCasaEditrice(nome);
+
+        console.log(data);
+
+        if(data.success === true) {
+            successPopUp('Casa Editrice inserita correttamente');
+        } else {
+            wrongPopUp('Casa Editrice non inserita');
+        }
+
+
+    });
+}
+
+function successPopUp(text)
+{
+    swal({
+        title: "Success!",
+        text: text,
+        icon: "success",
+        button: "Great!"
+    });
+}
+
+
+function wrongPopUp(text)
+{
+    swal({
+        title: "Error!",
+        text: text,
+        icon: "error",
+        button: "Try Again"
+    });
 }

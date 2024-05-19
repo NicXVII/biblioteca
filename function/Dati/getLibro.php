@@ -17,7 +17,7 @@ if (true) {
         $data = json_decode(file_get_contents('php://input'), true);
         if (isset($data['id'])) {
             $id = $data['id'];
-            $query = "SELECT tlibro.nome as nomeLibro, tlibro.isbn, tlibro.idLibro as idLibro, tlibro.pubblicazione, tcasaeditrice.nome as nomeEditore, tcasaeditrice.idCasaEditrice as idEditore, tautore.idAutore as idAutore, tautore.nome as nomeAutore, tautore.cognome as cognomeAutore, tautore.dataNascita, tautore.dataMorte
+            $query = "SELECT tlibro.nome as nomeLibro, tlibro.isbn, tlibro.idLibro as idLibro, tlibro.pubblicazione, tcasaeditrice.nome as nomeEditore, tcasaeditrice.idCasaEditrice as idEditore, tautore.idAutore as idAutore, tautore.nome as nomeAutore, tautore.cognome as cognomeAutore
             FROM `tlibro`
             JOIN tcasaeditrice ON tcasaeditrice.idCasaEditrice = tlibro.idCasaEditrice
             JOIN tautore ON tautore.idAutore = tlibro.idAutore
@@ -34,8 +34,6 @@ if (true) {
                     $resultArray =  [];
                     while ($row = mysqli_fetch_array($queryResult)) {
                         $publicationDate = date('d/m/Y', strtotime($row['pubblicazione']));
-                        $authorBirthDate = date('d/m/Y', strtotime($row['dataNascita']));
-                        $authorDeathDate = date('d/m/Y', strtotime($row['dataMorte']));
 
                         $resultArray = [
                             'BookName'          => $row['nomeLibro'],
@@ -47,8 +45,6 @@ if (true) {
                             'AuthorID'          => $row['idAutore'],
                             'AuthorName'        => $row['nomeAutore'],
                             'AuthorSurname'     => $row['cognomeAutore'],
-                            'AuthorBirthDate'   => $authorBirthDate,
-                            'AuthorDeathDate'   => $authorDeathDate
                         ];
                     }
 
