@@ -50,7 +50,7 @@ function listenerBtnElement() {
 
             var type = this.getAttribute('type');
             selectedElement = type;
-            console.log(selectedElement);
+            //console.log(selectedElement);
         });
     }
 }
@@ -58,13 +58,132 @@ function listenerBtnElement() {
 function listenerInsertElement() {
     var btn = document.querySelector('.divBtnSend button');
     btn.addEventListener('click', function() {
-        /*if(selectedElement!= null)
-            location.href = 'insertElement.php?type=' + selectedElement;*/
+        switch(selectedElement) {
+            case 'Autore':
+                createFormAutore();
+                break;
+            case 'Casa Editrice':
+                createFormCasaEditrice();
+                break;
+        }
     });
 }
 
 //------------------------------------------------------------------------------------------------
-function createFormAutore()
-{
-    
+function createFormAutore() {
+    var div = document.querySelector('.content');
+    div.innerHTML = '';
+
+    var divForm = document.createElement('div');
+    divForm.classList.add('formDiv');
+
+    var form = document.createElement('form');
+    form.setAttribute('method', 'POST');
+    form.setAttribute('action', 'insertElement.php');
+    form.setAttribute('enctype', 'multipart/form-data');
+    form.classList.add('form');
+
+    // Create a fieldset for better grouping
+    var fieldset = document.createElement('fieldset');
+    fieldset.classList.add('fieldset');
+
+    var legend = document.createElement('legend');
+    legend.textContent = 'Inserisci Autore';
+    fieldset.appendChild(legend);
+
+    // Nome
+    var nomeLabel = document.createElement('label');
+    nomeLabel.setAttribute('for', 'nome');
+    nomeLabel.textContent = 'Nome:';
+    fieldset.appendChild(nomeLabel);
+
+    var nomeInput = document.createElement('input');
+    nomeInput.setAttribute('type', 'text');
+    nomeInput.setAttribute('name', 'nome');
+    nomeInput.setAttribute('id', 'nome');
+    nomeInput.required = true;
+    fieldset.appendChild(nomeInput);
+
+    fieldset.appendChild(document.createElement('br'));
+
+    // Cognome
+    var cognomeLabel = document.createElement('label');
+    cognomeLabel.setAttribute('for', 'cognome');
+    cognomeLabel.textContent = 'Cognome:';
+    fieldset.appendChild(cognomeLabel);
+
+    var cognomeInput = document.createElement('input');
+    cognomeInput.setAttribute('type', 'text');
+    cognomeInput.setAttribute('name', 'cognome');
+    cognomeInput.setAttribute('id', 'cognome');
+    cognomeInput.required = true;
+    fieldset.appendChild(cognomeInput);
+
+    fieldset.appendChild(document.createElement('br'));
+
+    // Submit button
+    var submitButton = document.createElement('button');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.textContent = 'Inscerisci Autore';
+    fieldset.appendChild(submitButton);
+
+    // Append the fieldset to the form
+    form.appendChild(fieldset);
+
+    // Append the form to the div
+    divForm.appendChild(form);
+    div.appendChild(divForm);
+}
+
+function createFormCasaEditrice() {
+    var div = document.querySelector('.content');
+    div.innerHTML = '';
+
+    var divForm = document.createElement('div');
+    divForm.classList.add('formDiv');
+
+    var form = document.createElement('form');
+    form.setAttribute('method', 'POST');
+    form.setAttribute('action', 'insertElement.php');
+    form.setAttribute('enctype', 'multipart/form-data');
+    form.classList.add('form');
+
+    var fieldset = document.createElement('fieldset');
+    fieldset.classList.add('fieldset');
+
+    var legend = document.createElement('legend');
+    legend.textContent = 'Inserisci Casa Editrice';
+    fieldset.appendChild(legend);
+
+    // Nome
+    var nomeLabel = document.createElement('label');
+    nomeLabel.setAttribute('for', 'nome');
+    nomeLabel.textContent = 'Nome:';
+    fieldset.appendChild(nomeLabel);
+
+    var nomeInput = document.createElement('input');
+    nomeInput.setAttribute('type', 'text');
+    nomeInput.setAttribute('name', 'nome');
+    nomeInput.setAttribute('id', 'nome');
+    nomeInput.required = true;
+    fieldset.appendChild(nomeInput);
+
+    fieldset.appendChild(document.createElement('br'));
+
+
+   
+    fieldset.appendChild(document.createElement('br'));
+
+    // Submit button
+    var submitButton = document.createElement('button');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.textContent = 'Inscerisci Autore';
+    fieldset.appendChild(submitButton);
+
+    // Append the fieldset to the form
+    form.appendChild(fieldset);
+
+    // Append the form to the div
+    divForm.appendChild(form);
+    div.appendChild(divForm);
 }
