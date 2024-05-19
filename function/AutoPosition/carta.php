@@ -31,7 +31,7 @@ if (!isset($data['id']) || empty($data['id'])) {
 $idLibro = $data['id'];
 
 // Prima query: chiamata alla procedura scaffaliLibro()
-$query = "CALL scaffaliLibro()";
+$query = "CALL scaffaliCarta()";
 
 $stmt = mysqli_prepare($db, $query);
 if (!$stmt) {
@@ -78,7 +78,7 @@ $countBOOKS = [];
 
 foreach ($idScaffali as $idScaffale) {
     // Seconda query: chiamata alla procedura LibriinScaffale()
-    $query = "CALL LibriinScaffale($idScaffale);";
+    $query = "CALL CarteInScaffale(&idScaffale);";
     $queryResult = mysqli_query($db, $query);
 
     if (!$queryResult) {

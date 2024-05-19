@@ -2,13 +2,15 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-$worker = false;
-if (isset($_SESSION['workerID']))  {
-    $worker = true;
+$worker = true;
+
+if (isset($_SESSION['userID'])) {
+    $worker = false;
 }
 
 if (!isset($_SESSION['workerID']) && !isset($_SESSION['userID'])) {
-    header('Location: index.php');}
+    header('Location: index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -23,7 +23,7 @@ function whichForm() {
 }
 
 //------------------------------------------------------------------
-async function feetchPosizioneLinbro(id)
+async function fetchPosizioneLibro(id)
 {
     const dataToSend = {
         id: id,
@@ -41,7 +41,7 @@ async function feetchPosizioneLinbro(id)
         }
         const data = await response.json();
         if (data.success) {
-            return data.data; // Return the array of authors
+            return data.data; 
         } else {
             throw new Error('Request was not successful: ' + data.message);
         }
@@ -161,6 +161,9 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
     if(!numerico)
         {
             wrongPopUp();
+            return data = {
+                success: false
+            };
             return;
 
         }
@@ -174,7 +177,10 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
     if(result !== 0)
         {
             wrongPopUp();
-            return;
+            return data = {
+                success: false
+            };
+            ;
         }
     const dataToSend = {
         nome: nome,
@@ -196,8 +202,8 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
         }
         const data = await response.json();
         if (data.success) {
-            //console.log(data.data);
-            return data.data; // Return the array of authors
+        console.log("Libro inserito "+data);
+            return data; 
         } else {
             throw new Error('Request was not successful: ' + data.message);
         }
@@ -257,7 +263,7 @@ async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, ca
         const data = await response.json();
         //console.log(data);
         if (data.success) {
-            return data; 
+            return data.data; 
 
 
         } else {
@@ -426,7 +432,14 @@ async function createFormLibro() {
             console.log(pair[0] + ': ' + pair[1]);
         }
         console.log("Autore " + autore + " casaEditrice " + casaEditrice);
-        insertLibro(formData.get('name'), formData.get('isbn'), formData.get('publication'), autore, casaEditrice);
+        var data = await insertLibro(formData.get('name'), formData.get('isbn'), formData.get('publication'), autore, casaEditrice);
+        console.log(data);
+        if(data.success === true)
+            {
+
+                var esito = fetchPosizioneLibro(data.id);
+                console.log(esito);
+            }
     });
 }
 

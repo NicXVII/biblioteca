@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$worker;
+$worker = false;
 if (isset($_SESSION['workerID']))
     $worker = true;
 ?>

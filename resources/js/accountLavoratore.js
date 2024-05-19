@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     var worker = document.getElementById('worker');
-    if(worker)
+    if(worker === true)
         {
             fetchData();
         }
@@ -49,11 +49,11 @@ function popolateDataUser(data)
     var divUser = document.querySelector(".userMediaData");
     divUser.innerHTML = '';
     var p = document.createElement("p");
-    p.innerHTML = "Nome dipendente: "+data.nome;
+    p.innerHTML = "Nome: "+data.nome;
     divUser.appendChild(p);
 
     var p = document.createElement("p");
-    p.innerHTML = "Cognome dipendente: "+data.cognome;
+    p.innerHTML = "Cognome: "+data.cognome;
     divUser.appendChild(p);
 
     var p = document.createElement("p");

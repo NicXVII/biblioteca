@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 19, 2024 alle 17:55
+-- Creato il: Mag 19, 2024 alle 19:03
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedure
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CarteiInScaffale` (IN `scaffale_id` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CarteInScaffale` (IN `scaffale_id` INT)   BEGIN
     -- Corpo della stored procedure
     SELECT COUNT(*)
     FROM tscaffale
@@ -43,8 +43,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insertCasaEditrice` (IN `nome` VARC
     VALUES (nome);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertPosizioneCarta` (IN `p_idScaffale` INT, IN `p_Indice` INT, IN `p_numeroScaffale` INT)   BEGIN
+    INSERT INTO tscaffalecarta(idScaffale, idCarta, numeroScaffale)
+    VALUES (p_idScaffale, p_Indice, p_numeroScaffale);
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertPosizioneLibro` (IN `p_idScaffale` INT, IN `p_Indice` INT, IN `p_numeroScaffale` INT)   BEGIN
     INSERT INTO tscaffalelibro(idScaffale, idLibro, numeroScaffale)
+    VALUES (p_idScaffale, p_Indice, p_numeroScaffale);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertPosizioneVolume` (IN `p_idScaffale` INT, IN `p_Indice` INT, IN `p_numeroScaffale` INT)   BEGIN
+    INSERT INTO tscaffalevolume(idScaffale, idVolume, numeroScaffale)
     VALUES (p_idScaffale, p_Indice, p_numeroScaffale);
 END$$
 
@@ -134,7 +144,9 @@ INSERT INTO `tautore` (`idAutore`, `nome`, `cognome`) VALUES
 (7, 'J.K.', 'Rowling'),
 (8, 'Mark', 'Twain'),
 (9, 'George', 'Orwell'),
-(10, 'Toni', 'Morrison');
+(10, 'Toni', 'Morrison'),
+(15, 'Andrea', 'Kusuanco'),
+(16, 'Ciccio', 'Gamer89');
 
 -- --------------------------------------------------------
 
@@ -239,7 +251,8 @@ INSERT INTO `tcasaeditrice` (`idCasaEditrice`, `nome`) VALUES
 (2, 'HarperCollins Publishers'),
 (3, 'Simon & Schuster'),
 (4, 'Macmillan Publishers'),
-(5, 'Hachette Livre');
+(5, 'Hachette Livre'),
+(11, 'I Paguri');
 
 -- --------------------------------------------------------
 
@@ -341,7 +354,8 @@ INSERT INTO `tlibro` (`idLibro`, `nome`, `isbn`, `pubblicazione`, `idAutore`, `i
 (18, 'Le avventure di Tom Sawyer', '978-8804424350', '1876-12-10', 8, 3),
 (19, '1984', '978-88-04-18278-0', '1949-06-08', 9, 4),
 (20, 'Beloved', '978-8807818436', '1987-09-02', 10, 5),
-(21, 'Skibidy Toiler', '12312313213123', '2017-05-03', 9, 5);
+(21, 'Skibidy Toiler', '12312313213123', '2017-05-03', 9, 5),
+(22, 'In Cucina con Ciccio', '888-8-888-88888-8', '2020-12-25', 16, 11);
 
 -- --------------------------------------------------------
 
@@ -366,7 +380,8 @@ INSERT INTO `tprenotazione` (`idPrenotazione`, `idCliente`, `idLibro`, `dataPren
 (3, 1, 17, '2024-05-02', '2024-05-13'),
 (32, 1, 15, '2024-05-02', NULL),
 (66, 1, 16, '2024-05-06', '2024-05-13'),
-(67, 1, 11, '2024-05-07', '2024-05-12');
+(67, 1, 11, '2024-05-07', '2024-05-12'),
+(68, 1, 22, '2024-05-19', NULL);
 
 -- --------------------------------------------------------
 
@@ -542,16 +557,18 @@ CREATE TABLE `tscaffalelibro` (
 --
 
 INSERT INTO `tscaffalelibro` (`idScaffaleLibro`, `idScaffale`, `idLibro`, `numeroScaffale`) VALUES
-(1, 1, 19, 1),
+(10, 1, 11, 10),
 (2, 1, 12, 2),
-(3, 1, 20, 3),
+(8, 1, 13, 8),
 (4, 1, 14, 4),
 (5, 1, 15, 5),
-(6, 1, 17, 6),
 (7, 1, 16, 7),
-(8, 1, 13, 8),
+(6, 1, 17, 6),
 (9, 1, 18, 9),
-(10, 1, 11, 10);
+(1, 1, 19, 1),
+(3, 1, 20, 3),
+(12, 2, 21, 1),
+(14, 2, 22, 2);
 
 -- --------------------------------------------------------
 
@@ -787,6 +804,7 @@ ALTER TABLE `tscaffale`
 --
 ALTER TABLE `tscaffalecarta`
   ADD PRIMARY KEY (`idScaffaleCarta`),
+  ADD UNIQUE KEY `idScaffale` (`idScaffale`,`idCarta`,`numeroScaffale`),
   ADD KEY `fk_idScaffaleCarta` (`idScaffale`),
   ADD KEY `fk_idCartaScaffale` (`idCarta`);
 
@@ -795,6 +813,7 @@ ALTER TABLE `tscaffalecarta`
 --
 ALTER TABLE `tscaffalelibro`
   ADD PRIMARY KEY (`idScaffaleLibro`),
+  ADD UNIQUE KEY `idScaffale` (`idScaffale`,`idLibro`,`numeroScaffale`),
   ADD KEY `fk_idLibrofk` (`idLibro`),
   ADD KEY `fk_idScaffaleLibro` (`idScaffale`);
 
@@ -803,6 +822,7 @@ ALTER TABLE `tscaffalelibro`
 --
 ALTER TABLE `tscaffalevolume`
   ADD PRIMARY KEY (`idScaffaleVolume`),
+  ADD UNIQUE KEY `idScaffale` (`idScaffale`,`idVolume`,`numeroScaffale`),
   ADD KEY `fk_idScaffaleVolume` (`idScaffale`),
   ADD KEY `fk_idVolumeScaffale` (`idVolume`);
 
@@ -834,7 +854,7 @@ ALTER TABLE `tarmadio`
 -- AUTO_INCREMENT per la tabella `tautore`
 --
 ALTER TABLE `tautore`
-  MODIFY `idAutore` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idAutore` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT per la tabella `tautorecarta`
@@ -858,7 +878,7 @@ ALTER TABLE `tcartageopolitica`
 -- AUTO_INCREMENT per la tabella `tcasaeditrice`
 --
 ALTER TABLE `tcasaeditrice`
-  MODIFY `idCasaEditrice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idCasaEditrice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT per la tabella `tcliente`
@@ -882,13 +902,13 @@ ALTER TABLE `tlavoratore`
 -- AUTO_INCREMENT per la tabella `tlibro`
 --
 ALTER TABLE `tlibro`
-  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT per la tabella `tprenotazione`
 --
 ALTER TABLE `tprenotazione`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT per la tabella `tprenotazionecarta`
@@ -936,7 +956,7 @@ ALTER TABLE `tscaffalecarta`
 -- AUTO_INCREMENT per la tabella `tscaffalelibro`
 --
 ALTER TABLE `tscaffalelibro`
-  MODIFY `idScaffaleLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idScaffaleLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffalevolume`
