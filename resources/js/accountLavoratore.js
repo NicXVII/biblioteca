@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     var worker = document.getElementById('worker');
-    if(worker === true)
+    if(worker)
         {
             fetchData();
         }
@@ -49,19 +49,19 @@ function popolateDataUser(data)
     var divUser = document.querySelector(".userMediaData");
     divUser.innerHTML = '';
     var p = document.createElement("p");
-    p.innerHTML = "Nome: "+data.nome;
+    p.innerHTML = "Nome Dipendente: "+data.nome;
     divUser.appendChild(p);
 
     var p = document.createElement("p");
-    p.innerHTML = "Cognome: "+data.cognome;
+    p.innerHTML = "Cognome Dipendente: "+data.cognome;
     divUser.appendChild(p);
 
     var p = document.createElement("p");
-    p.innerHTML = "Codice fiscale utente: "+data.codiceFiscale;
+    p.innerHTML = "Codice fiscale Dipendente: "+data.codiceFiscale;
     divUser.appendChild(p);
 
     var p = document.createElement("p");
-    p.innerHTML = "Password: "+data.password;
+    p.innerHTML = "Password Dipendente: "+data.password;
     divUser.appendChild(p);
 
     var divBtn = document.querySelector('.userMediaBtn');

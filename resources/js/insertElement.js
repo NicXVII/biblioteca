@@ -5,7 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
     //fetchCaseEditrici();
     //fetchAutori();
     //check();
+    //test();
 });
+
+async function test()
+{
+    var data = await fetchPosizione(37, 'carta');
+    console.log(data);
+}
 
 //------------------------------------------------------------------
 
@@ -45,6 +52,8 @@ async function fetchPosizione(id, type)
     const dataToSend = {
         id: id,
     };
+
+    console.log(dataToSend);
     try {
         const response = await fetch(functionToFetch, {
             method: 'POST',
@@ -58,13 +67,13 @@ async function fetchPosizione(id, type)
         }
         const data = await response.json();
         if (data.success) {
-            return data.data; 
+            return data; 
         } else {
             throw new Error('Request was not successful: ' + data.message);
         }
     } catch (error) {
         console.error('An error occurred:', error);
-        return []; // Return an empty array if there's an error
+        return []; 
     }
 }
 
@@ -171,13 +180,14 @@ async function check(isbn)
 
     return result;
 }
+
 async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
 {
     console.log(sigma);
     var numerico = isNumericString(isbn);
     if(!numerico)
         {
-            wrongPopUp();
+            wrongPopUp('ISBN non numerico');
             return data = {
                 success: false
             };
@@ -193,7 +203,7 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
 
     if(result !== 0)
         {
-            wrongPopUp();
+            wrongPopUp('ISBN già presente nel database');
             return data = {
                 success: false
             };
@@ -212,7 +222,7 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(dataToSend)
+            body: JSON.stringify(dataToSend),
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -235,13 +245,16 @@ async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, ca
     var numerico = isNumericString(isbn);
     if(!numerico)
         {
-            wrongPopUp();
-            return;
+            wrongPopUp('ISBN non numerico');
+            return data = {
+                success: false
+            };
         }
 
     if(clearAutore()) {
-        wrongPopUp();
-        return;
+        return data ={
+            success: false
+        };
     }
     var isbnFORMAT = fixISBN(isbn);
 
@@ -252,8 +265,18 @@ async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, ca
 
     if(result !== 0)
         {
-            wrongPopUp();
-            return;
+            wrongPopUp('ISBN già presente nel database');            
+            return data = {
+                success: false
+            };
+        }
+
+    if(!checkDate(dataRiferimento,pubblicazione))
+        {
+            wrongPopUp('Data di rappresentazione precedente a quella di pubblicazione');
+            return data = {
+                success: false
+            };
         }
     const dataToSend = {
         nome: nome,
@@ -272,7 +295,7 @@ async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, ca
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(dataToSend)
+            body: JSON.stringify(dataToSend),
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -300,7 +323,7 @@ async function insertAutori(type,autori, id)
         id: id
     };
 
-    console.log(dataToSend);
+    //console.log(dataToSend);
 
 
 
@@ -322,14 +345,14 @@ async function insertAutori(type,autori, id)
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(dataToSend)
+            body: JSON.stringify(dataToSend),
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
         if (data.success) {
-            return data.data; 
+            return data; 
         } else {
             throw new Error('Request was not successful: ' + data.message);
         }
@@ -451,10 +474,11 @@ async function createFormLibro() {
         console.log("Autore " + autore + " casaEditrice " + casaEditrice);
         var data = await insertLibro(formData.get('name'), formData.get('isbn'), formData.get('publication'), autore, casaEditrice);
         console.log(data);
+        var id = data.bookID;
         if(data.success === true)
             {
 
-                var esito = await fetchPosizione(data.id,'libro');
+                var esito = await fetchPosizione(id,'libro');
                 console.log(esito);
             }
     });
@@ -630,15 +654,23 @@ form.appendChild(divAutoriSelect);
         //console.log(autore);
         //insertAutori('Carta', sigma, 1);
         console.log(data.success);
+        var id = data.id;  
+
         if(data.success === true)
         {
 
-            var data = await insertAutori('Carta', sigma, data.id);   
+            var data = await insertAutori('Carta', sigma, data.id); 
+            console.log(data);
             if(data.success)
                 {
-                    successPopUp();
-                    var data = await fetchPosizione(data.id,'carta');
+                    successPopUp("Carta e Autori Inseriti");
+                    var data = await fetchPosizione(id,'carta');
                     console.log(data);
+                    if(data.success)
+                        {
+                            successPopUp("Carta inserita con successo");
+
+                        }
                 }
         }
     });
@@ -710,7 +742,18 @@ function fixISBN(isbn) {
 
     return `${prefix}-${registrationGroup}-${registrant}-${publication}-${checkDigit}`;
 }
+function checkDate(rappresentazione,pubblicazione)
+{
+    var dataR = new Date(rappresentazione);
+    var dataP = new Date(pubblicazione);
 
+    if(dataR < dataP)
+        {
+            return true;
+        }
+    return false;
+
+}
 function clearAutore() {
     var counts = {}; 
     for (var i = 0; i < sigma.length; i++) {
@@ -724,23 +767,23 @@ function clearAutore() {
 }
 
 
-function successPopUp()
+function successPopUp(text)
 {
     swal({
         title: "Success!",
-        text: "The operation was successful.",
+        text: text,
         icon: "success",
-        button: "Great!"
+        button: "Ottimo!"
     });
 }
 
 
-function wrongPopUp()
+function wrongPopUp(text)
 {
     swal({
         title: "Error!",
-        text: "The operation failed.",
+        text: text,
         icon: "error",
-        button: "Try Again"
+        button: "Prova di nuovo"
     });
 }
