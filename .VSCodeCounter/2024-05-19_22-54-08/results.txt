@@ -1,0 +1,148 @@
+Date : 2024-05-19 22:54:08
+Directory : c:\xampp\htdocs\Info\biblioteca
+Total : 95 files,  9156 codes, 771 comments, 1741 blanks, all 11668 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| PHP        |         72 |      4,871 |        227 |        860 |      5,958 |
+| JavaScript |         12 |      2,695 |        171 |        536 |      3,402 |
+| CSS        |         10 |      1,028 |         16 |        158 |      1,202 |
+| SQL        |          1 |        562 |        357 |        187 |      1,106 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                             | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                |         95 |      9,156 |        771 |      1,741 |     11,668 |
+| . (Files)                                                                        |         11 |        989 |        358 |        243 |      1,590 |
+| components                                                                       |          1 |         45 |          0 |          9 |         54 |
+| function                                                                         |         61 |      4,399 |        226 |        795 |      5,420 |
+| function (Files)                                                                 |          5 |        213 |         10 |         58 |        281 |
+| function\AccettaPrenotazioni                                                     |          3 |        168 |          9 |         33 |        210 |
+| function\Account                                                                 |          9 |        672 |         35 |        103 |        810 |
+| function\AutoPosition                                                            |          3 |        396 |         32 |         81 |        509 |
+| function\Consegna                                                                |          3 |        174 |          9 |         39 |        222 |
+| function\CreaPrestiti                                                            |          3 |        172 |         12 |         36 |        220 |
+| function\Dati                                                                    |          7 |        496 |         13 |         83 |        592 |
+| function\Inserisci                                                               |          7 |        425 |         40 |         86 |        551 |
+| function\Inserisci (Files)                                                       |          6 |        368 |         29 |         72 |        469 |
+| function\Inserisci\Autori                                                        |          1 |         57 |         11 |         14 |         82 |
+| function\Lavoratore                                                              |          1 |         57 |          3 |         17 |         77 |
+| function\Posizione                                                               |          3 |        225 |         12 |         36 |        273 |
+| function\Prenota                                                                 |          3 |        296 |          7 |         54 |        357 |
+| function\Prenotazioni                                                            |          3 |        230 |         12 |         38 |        280 |
+| function\Prestiti                                                                |          3 |        259 |          3 |         35 |        297 |
+| function\Ricerca                                                                 |          1 |        208 |          1 |         15 |        224 |
+| function\checkIsbn                                                               |          4 |        231 |         16 |         48 |        295 |
+| function\terminaPrestito                                                         |          3 |        177 |         12 |         33 |        222 |
+| resources                                                                        |         22 |      3,723 |        187 |        694 |      4,604 |
+| resources\css                                                                    |         10 |      1,028 |         16 |        158 |      1,202 |
+| resources\css (Files)                                                            |          8 |        948 |         16 |        146 |      1,110 |
+| resources\css\components                                                         |          2 |         80 |          0 |         12 |         92 |
+| resources\js                                                                     |         12 |      2,695 |        171 |        536 |      3,402 |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                         | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\xampp\htdocs\Info\biblioteca\account.php                                      | PHP        |         41 |          0 |          7 |         48 |
+| c:\xampp\htdocs\Info\biblioteca\biblioteca_diminich.sql                          | SQL        |        562 |        357 |        187 |      1,106 |
+| c:\xampp\htdocs\Info\biblioteca\components\nav.php                               | PHP        |         45 |          0 |          9 |         54 |
+| c:\xampp\htdocs\Info\biblioteca\function\AccettaPrenotazioni\accettaCarta.php    | PHP        |         56 |          3 |         11 |         70 |
+| c:\xampp\htdocs\Info\biblioteca\function\AccettaPrenotazioni\accettaLibro.php    | PHP        |         56 |          3 |         11 |         70 |
+| c:\xampp\htdocs\Info\biblioteca\function\AccettaPrenotazioni\accettaVolume.php   | PHP        |         56 |          3 |         11 |         70 |
+| c:\xampp\htdocs\Info\biblioteca\function\Account\deletePrenotazione.php          | PHP        |         68 |          4 |          9 |         81 |
+| c:\xampp\htdocs\Info\biblioteca\function\Account\getDati.php                     | PHP        |         65 |          4 |         11 |         80 |
+| c:\xampp\htdocs\Info\biblioteca\function\Account\getDatiLavoratore.php           | PHP        |         64 |          4 |         11 |         79 |
+| c:\xampp\htdocs\Info\biblioteca\function\Account\getPrenotazioni.php             | PHP        |         71 |          3 |         11 |         85 |
+| c:\xampp\htdocs\Info\biblioteca\function\Account\getPrenotazioniCarta.php        | PHP        |         80 |          4 |         12 |         96 |
+| c:\xampp\htdocs\Info\biblioteca\function\Account\getPrenotazioniEnciclopedia.php | PHP        |         87 |          4 |         13 |        104 |
+| c:\xampp\htdocs\Info\biblioteca\function\Account\getPrestiti.php                 | PHP        |         71 |          4 |         11 |         86 |
+| c:\xampp\htdocs\Info\biblioteca\function\Account\getPrestitiEnciclopedia.php     | PHP        |         87 |          4 |         13 |        104 |
+| c:\xampp\htdocs\Info\biblioteca\function\Account\getPrestitoCarta.php            | PHP        |         79 |          4 |         12 |         95 |
+| c:\xampp\htdocs\Info\biblioteca\function\AutoPosition\carta.php                  | PHP        |        132 |         13 |         27 |        172 |
+| c:\xampp\htdocs\Info\biblioteca\function\AutoPosition\libro.php                  | PHP        |        132 |         13 |         27 |        172 |
+| c:\xampp\htdocs\Info\biblioteca\function\AutoPosition\volume.php                 | PHP        |        132 |          6 |         27 |        165 |
+| c:\xampp\htdocs\Info\biblioteca\function\Consegna\carta.php                      | PHP        |         58 |          3 |         13 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\Consegna\libro.php                      | PHP        |         58 |          3 |         13 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\Consegna\volume.php                     | PHP        |         58 |          3 |         13 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\CreaPrestiti\creaCarta.php              | PHP        |         58 |          4 |         12 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\CreaPrestiti\creaLibro.php              | PHP        |         58 |          4 |         12 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\CreaPrestiti\creaVolume.php             | PHP        |         56 |          4 |         12 |         72 |
+| c:\xampp\htdocs\Info\biblioteca\function\Dati\getAutori.php                      | PHP        |         52 |          1 |         11 |         64 |
+| c:\xampp\htdocs\Info\biblioteca\function\Dati\getCartina.php                     | PHP        |         91 |          3 |         11 |        105 |
+| c:\xampp\htdocs\Info\biblioteca\function\Dati\getCasaEditrice.php                | PHP        |         63 |          2 |         11 |         76 |
+| c:\xampp\htdocs\Info\biblioteca\function\Dati\getCaseEditrici.php                | PHP        |         51 |          1 |         11 |         63 |
+| c:\xampp\htdocs\Info\biblioteca\function\Dati\getEnciclopedia.php                | PHP        |        100 |          2 |         13 |        115 |
+| c:\xampp\htdocs\Info\biblioteca\function\Dati\getLibro.php                       | PHP        |         73 |          2 |         13 |         88 |
+| c:\xampp\htdocs\Info\biblioteca\function\Dati\getVolume.php                      | PHP        |         66 |          2 |         13 |         81 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\Autori\insertAutoriCarta.php  | PHP        |         57 |         11 |         14 |         82 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciAutore.php           | PHP        |         53 |          0 |         13 |         66 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciCarta.php            | PHP        |         69 |          5 |         12 |         86 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciCasaEditrice.php     | PHP        |         51 |          0 |         12 |         63 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciEnciclopedia.php     | PHP        |         69 |          5 |         12 |         86 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciLibro.php            | PHP        |         61 |         14 |         11 |         86 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciVolume.php           | PHP        |         65 |          5 |         12 |         82 |
+| c:\xampp\htdocs\Info\biblioteca\function\Lavoratore\login.php                    | PHP        |         57 |          3 |         17 |         77 |
+| c:\xampp\htdocs\Info\biblioteca\function\Posizione\getCarta.php                  | PHP        |         75 |          4 |         12 |         91 |
+| c:\xampp\htdocs\Info\biblioteca\function\Posizione\getLibro.php                  | PHP        |         76 |          4 |         11 |         91 |
+| c:\xampp\htdocs\Info\biblioteca\function\Posizione\getVolume.php                 | PHP        |         74 |          4 |         13 |         91 |
+| c:\xampp\htdocs\Info\biblioteca\function\Prenota\prenotaCartina.php              | PHP        |         99 |          3 |         18 |        120 |
+| c:\xampp\htdocs\Info\biblioteca\function\Prenota\prenotaLibri.php                | PHP        |         99 |          3 |         18 |        120 |
+| c:\xampp\htdocs\Info\biblioteca\function\Prenota\prenotaVolume.php               | PHP        |         98 |          1 |         18 |        117 |
+| c:\xampp\htdocs\Info\biblioteca\function\Prenotazioni\getCarta.php               | PHP        |         77 |          4 |         13 |         94 |
+| c:\xampp\htdocs\Info\biblioteca\function\Prenotazioni\getLibro.php               | PHP        |         77 |          4 |         12 |         93 |
+| c:\xampp\htdocs\Info\biblioteca\function\Prenotazioni\getVolume.php              | PHP        |         76 |          4 |         13 |         93 |
+| c:\xampp\htdocs\Info\biblioteca\function\Prestiti\getCarta.php                   | PHP        |         82 |          1 |         11 |         94 |
+| c:\xampp\htdocs\Info\biblioteca\function\Prestiti\getLibro.php                   | PHP        |         82 |          1 |         13 |         96 |
+| c:\xampp\htdocs\Info\biblioteca\function\Prestiti\getVolume.php                  | PHP        |         95 |          1 |         11 |        107 |
+| c:\xampp\htdocs\Info\biblioteca\function\Ricerca\getElement.php                  | PHP        |        208 |          1 |         15 |        224 |
+| c:\xampp\htdocs\Info\biblioteca\function\checkIsbn\checkCarta.php                | PHP        |         58 |          4 |         12 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\checkIsbn\checkEnciclopedia.php         | PHP        |         58 |          4 |         12 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\checkIsbn\checkLibro.php                | PHP        |         57 |          4 |         12 |         73 |
+| c:\xampp\htdocs\Info\biblioteca\function\checkIsbn\checkVolume.php               | PHP        |         58 |          4 |         12 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\database.php                            | PHP        |          6 |          4 |          5 |         15 |
+| c:\xampp\htdocs\Info\biblioteca\function\login.php                               | PHP        |         63 |          3 |         18 |         84 |
+| c:\xampp\htdocs\Info\biblioteca\function\loginLavoratore.php                     | PHP        |         55 |          3 |         18 |         76 |
+| c:\xampp\htdocs\Info\biblioteca\function\logout.php                              | PHP        |          5 |          0 |          1 |          6 |
+| c:\xampp\htdocs\Info\biblioteca\function\register.php                            | PHP        |         84 |          0 |         16 |        100 |
+| c:\xampp\htdocs\Info\biblioteca\function\terminaPrestito\terminaCarta.php        | PHP        |         59 |          4 |         11 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\terminaPrestito\terminaLibro.php        | PHP        |         59 |          4 |         11 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\function\terminaPrestito\terminaVolume.php       | PHP        |         59 |          4 |         11 |         74 |
+| c:\xampp\htdocs\Info\biblioteca\index.php                                        | PHP        |         47 |          1 |          5 |         53 |
+| c:\xampp\htdocs\Info\biblioteca\insert.php                                       | PHP        |         27 |          0 |          4 |         31 |
+| c:\xampp\htdocs\Info\biblioteca\insertElement.php                                | PHP        |         29 |          0 |          4 |         33 |
+| c:\xampp\htdocs\Info\biblioteca\login.php                                        | PHP        |         61 |          0 |          6 |         67 |
+| c:\xampp\htdocs\Info\biblioteca\loginWorker.php                                  | PHP        |         58 |          0 |          6 |         64 |
+| c:\xampp\htdocs\Info\biblioteca\register.php                                     | PHP        |         53 |          0 |          5 |         58 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\account.css                        | CSS        |        126 |          0 |         15 |        141 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\components\footer.css              | CSS        |         26 |          0 |          3 |         29 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\components\nav.css                 | CSS        |         54 |          0 |          9 |         63 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\index.css                          | CSS        |        124 |          1 |         15 |        140 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\insert.css                         | CSS        |        145 |          7 |         18 |        170 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\insertElement.css                  | CSS        |         75 |          0 |         10 |         85 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\login.css                          | CSS        |        161 |          0 |         45 |        206 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\ricerca.css                        | CSS        |        110 |          3 |         16 |        129 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\ricercaLavoratore.css              | CSS        |        114 |          3 |         16 |        133 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\show.css                           | CSS        |         93 |          2 |         11 |        106 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\account.js                          | JavaScript |        474 |         17 |         81 |        572 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\accountLavoratore.js                | JavaScript |         65 |          5 |         11 |         81 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\index.js                            | JavaScript |         57 |          0 |         10 |         67 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\insert.js                           | JavaScript |        227 |         11 |         55 |        293 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\insertElement.js                    | JavaScript |        613 |         59 |        117 |        789 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\login.js                            | JavaScript |         64 |          0 |         12 |         76 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\loginLavoratore.js                  | JavaScript |         64 |          0 |         12 |         76 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\nav.js                              | JavaScript |         31 |          0 |          8 |         39 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\register.js                         | JavaScript |        134 |          4 |         26 |        164 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\ricerca.js                          | JavaScript |        305 |         47 |         71 |        423 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\ricercaLavoratore.js                | JavaScript |        390 |          8 |         86 |        484 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\show.js                             | JavaScript |        271 |         20 |         47 |        338 |
+| c:\xampp\htdocs\Info\biblioteca\ricerca.php                                      | PHP        |         34 |          0 |          6 |         40 |
+| c:\xampp\htdocs\Info\biblioteca\ricercaLavoratore.php                            | PHP        |         29 |          0 |          4 |         33 |
+| c:\xampp\htdocs\Info\biblioteca\show.php                                         | PHP        |         48 |          0 |          9 |         57 |
+| Total                                                                            |            |      9,156 |        771 |      1,741 |     11,668 |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

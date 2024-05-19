@@ -1,0 +1,60 @@
+Date : 2024-05-19 22:54:08
+Directory : c:\xampp\htdocs\Info\biblioteca
+Total : 23 files,  852 codes, 63 comments, 255 blanks, all 1170 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| PHP        |         13 |        659 |         38 |        133 |        830 |
+| JavaScript |          6 |        443 |         16 |         95 |        554 |
+| CSS        |          3 |        157 |          7 |         16 |        180 |
+| SQL        |          1 |       -407 |          2 |         11 |       -394 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                            | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                               |         23 |        852 |         63 |        255 |      1,170 |
+| . (Files)                                                                       |          4 |       -378 |          2 |         16 |       -360 |
+| function                                                                        |         10 |        630 |         38 |        128 |        796 |
+| function\AutoPosition                                                           |          3 |        396 |         32 |         81 |        509 |
+| function\Dati                                                                   |          1 |         -4 |          0 |          0 |         -4 |
+| function\Inserisci                                                              |          6 |        238 |          6 |         47 |        291 |
+| function\Inserisci (Files)                                                      |          5 |        246 |          1 |         46 |        293 |
+| function\Inserisci\Autori                                                       |          1 |         -8 |          5 |          1 |         -2 |
+| resources                                                                       |          9 |        600 |         23 |        111 |        734 |
+| resources\css                                                                   |          3 |        157 |          7 |         16 |        180 |
+| resources\js                                                                    |          6 |        443 |         16 |         95 |        554 |
++---------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                        | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\xampp\htdocs\Info\biblioteca\account.php                                     | PHP        |          1 |          0 |          1 |          2 |
+| c:\xampp\htdocs\Info\biblioteca\biblioteca_diminich.sql                         | SQL        |       -407 |          2 |         11 |       -394 |
+| c:\xampp\htdocs\Info\biblioteca\function\AutoPosition\carta.php                 | PHP        |        132 |         13 |         27 |        172 |
+| c:\xampp\htdocs\Info\biblioteca\function\AutoPosition\libro.php                 | PHP        |        132 |         13 |         27 |        172 |
+| c:\xampp\htdocs\Info\biblioteca\function\AutoPosition\volume.php                | PHP        |        132 |          6 |         27 |        165 |
+| c:\xampp\htdocs\Info\biblioteca\function\Dati\getLibro.php                      | PHP        |         -4 |          0 |          0 |         -4 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\Autori\insertAutoriCarta.php | PHP        |         -8 |          5 |          1 |         -2 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciAutore.php          | PHP        |         53 |          0 |         12 |         65 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciCarta.php           | PHP        |          8 |         -9 |          1 |          0 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciCasaEditrice.php    | PHP        |         51 |          0 |         11 |         62 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciEnciclopedia.php    | PHP        |         69 |          5 |         11 |         85 |
+| c:\xampp\htdocs\Info\biblioteca\function\Inserisci\inserisciVolume.php          | PHP        |         65 |          5 |         11 |         81 |
+| c:\xampp\htdocs\Info\biblioteca\insert.php                                      | PHP        |         27 |          0 |          4 |         31 |
+| c:\xampp\htdocs\Info\biblioteca\insertElement.php                               | PHP        |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\index.css                         | CSS        |         17 |          0 |          0 |         17 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\insert.css                        | CSS        |        145 |          7 |         18 |        170 |
+| c:\xampp\htdocs\Info\biblioteca\resources\css\insertElement.css                 | CSS        |         -5 |          0 |         -2 |         -7 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\index.js                           | JavaScript |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\insert.js                          | JavaScript |        227 |         11 |         55 |        293 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\insertElement.js                   | JavaScript |        209 |          8 |         38 |        255 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\nav.js                             | JavaScript |          8 |          0 |          3 |         11 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\ricerca.js                         | JavaScript |          0 |         -3 |         -1 |         -4 |
+| c:\xampp\htdocs\Info\biblioteca\resources\js\show.js                            | JavaScript |         -2 |          0 |          0 |         -2 |
+| Total                                                                           |            |        852 |         63 |        255 |      1,170 |
++---------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
