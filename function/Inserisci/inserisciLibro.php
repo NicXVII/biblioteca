@@ -55,7 +55,7 @@ $insertQuery = "INSERT INTO tlibro (nome, isbn, pubblicazione, idAutore, idCasaE
 $insertStatement = mysqli_prepare($db, $insertQuery);
 
 if ($insertStatement) {
-    mysqli_stmt_bind_param($insertStatement, "ssdii", $nome, $isbn, $pubblicazione, $idAutore, $idCasaEditrice);
+    mysqli_stmt_bind_param($insertStatement, "sssii", $nome, $isbn, $pubblicazione, $idAutore, $idCasaEditrice);
 
     if (mysqli_stmt_execute($insertStatement)) {
         $bookID = mysqli_insert_id($db);

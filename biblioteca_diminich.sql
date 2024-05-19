@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 19, 2024 alle 19:36
+-- Creato il: Mag 19, 2024 alle 22:44
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -87,7 +87,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `scaffaliVolume` ()   BEGIN
     WHERE nome LIKE '%Enciclopedia%';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `VolumiiInScaffale` (IN `scaffale_id` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `VolumiInScaffale` (IN `scaffale_id` INT)   BEGIN
     -- Corpo della stored procedure
     SELECT COUNT(*)
     FROM tscaffale
@@ -174,7 +174,8 @@ INSERT INTO `tautorecarta` (`idAutoreCarta`, `idCartaGeoPolitica`, `idAutore`) V
 (7, 2, 2),
 (8, 6, 6),
 (9, 10, 1),
-(10, 10, 2);
+(10, 10, 2),
+(40, 40, 15);
 
 -- --------------------------------------------------------
 
@@ -230,7 +231,7 @@ INSERT INTO `tcartageopolitica` (`idCartaGeoPolitica`, `titolo`, `data`, `dataRa
 (8, 'Il Medio Oriente e il petrolio', '2023-02-20', '2023-03-10', 2, '8'),
 (9, 'Le dispute territoriali nel Mar Cinese Meridionale', '2023-07-08', '2023-08-01', 3, '9'),
 (10, 'La politica estera degli Stati Uniti', '2023-10-30', '2023-11-15', 1, '10'),
-(31, 'testAutoPos', '2024-05-02', '2014-05-01', 5, '1111111111111111111111111');
+(40, 'testFa', '2024-05-19', '2024-05-09', 1, '199-9-999-99999-9');
 
 -- --------------------------------------------------------
 
@@ -356,7 +357,8 @@ INSERT INTO `tlibro` (`idLibro`, `nome`, `isbn`, `pubblicazione`, `idAutore`, `i
 (19, '1984', '978-88-04-18278-0', '1949-06-08', 9, 4),
 (20, 'Beloved', '978-8807818436', '1987-09-02', 10, 5),
 (21, 'Skibidy Toiler', '12312313213123', '2017-05-03', 9, 5),
-(22, 'In Cucina con Ciccio', '888-8-888-88888-8', '2020-12-25', 16, 11);
+(22, 'In Cucina con Ciccio', '888-8-888-88888-8', '2020-12-25', 16, 11),
+(28, 'dawdawdaw', '121-3-213-12121-2', '2024-05-19', 1, 11);
 
 -- --------------------------------------------------------
 
@@ -533,7 +535,8 @@ INSERT INTO `tscaffalecarta` (`idScaffaleCarta`, `idScaffale`, `idCarta`, `numer
 (11, 4, 2, 2),
 (13, 4, 3, 3),
 (14, 4, 4, 4),
-(15, 4, 5, 5);
+(15, 4, 5, 5),
+(57, 4, 40, 6);
 
 -- --------------------------------------------------------
 
@@ -563,6 +566,7 @@ INSERT INTO `tscaffalelibro` (`idScaffaleLibro`, `idScaffale`, `idLibro`, `numer
 (9, 1, 18, 9),
 (1, 1, 19, 1),
 (3, 1, 20, 3),
+(15, 1, 28, 11),
 (12, 2, 21, 1),
 (14, 2, 22, 2);
 
@@ -858,7 +862,7 @@ ALTER TABLE `tautore`
 -- AUTO_INCREMENT per la tabella `tautorecarta`
 --
 ALTER TABLE `tautorecarta`
-  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `idAutoreCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT per la tabella `tautoreenciclopedia`
@@ -870,7 +874,7 @@ ALTER TABLE `tautoreenciclopedia`
 -- AUTO_INCREMENT per la tabella `tcartageopolitica`
 --
 ALTER TABLE `tcartageopolitica`
-  MODIFY `idCartaGeoPolitica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `idCartaGeoPolitica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT per la tabella `tcasaeditrice`
@@ -900,7 +904,7 @@ ALTER TABLE `tlavoratore`
 -- AUTO_INCREMENT per la tabella `tlibro`
 --
 ALTER TABLE `tlibro`
-  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT per la tabella `tprenotazione`
@@ -948,13 +952,13 @@ ALTER TABLE `tscaffale`
 -- AUTO_INCREMENT per la tabella `tscaffalecarta`
 --
 ALTER TABLE `tscaffalecarta`
-  MODIFY `idScaffaleCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `idScaffaleCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffalelibro`
 --
 ALTER TABLE `tscaffalelibro`
-  MODIFY `idScaffaleLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idScaffaleLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffalevolume`

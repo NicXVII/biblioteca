@@ -29,14 +29,13 @@ if (!isset($data['id']) || empty($data['id'])) {
 }
 $idCarta = $data['id'];
 
-// Prima query: chiamata alla procedura scaffaliLibro()
-$query = "CALL scaffaliLibro()";
+$query = "CALL scaffaliVolume()";
 
 $stmt = mysqli_prepare($db, $query);
 if (!$stmt) {
     $result = [
         'success' => false,
-        'message' => 'Failed to prepare statement for scaffaliLibro(): ' . mysqli_error($db)
+        'message' => 'Failed to prepare statement for scaffaliVolume(): ' . mysqli_error($db)
     ];
     echo json_encode($result);
     exit();
@@ -45,7 +44,7 @@ if (!$stmt) {
 if (!mysqli_stmt_execute($stmt)) {
     $result = [
         'success' => false,
-        'message' => 'Failed to execute statement for scaffaliLibro(): ' . mysqli_stmt_error($stmt)
+        'message' => 'Failed to execute statement for scaffaliVolume(): ' . mysqli_stmt_error($stmt)
     ];
     echo json_encode($result);
     exit();
@@ -56,7 +55,7 @@ $queryResult = mysqli_stmt_get_result($stmt);
 if (!$queryResult) {
     $result = [
         'success' => false,
-        'message' => 'Failed to get result for scaffaliLibro(): ' . mysqli_error($db)
+        'message' => 'Failed to get result for scaffaliVolume(): ' . mysqli_error($db)
     ];
     echo json_encode($result);
     exit();
@@ -76,33 +75,30 @@ mysqli_free_result($queryResult);
 $countBOOKS = [];
 foreach ($idScaffali as $idScaffale) {
     // Prepare statement for CarteInScaffale
-    $stmt = mysqli_prepare($db, "CALL LibriInScaffale(?)");
+    $stmt = mysqli_prepare($db, "CALL VolumiInScaffale(?)");
     if (!$stmt) {
         $result = [
             'success' => false,
-            'message' => 'Failed to prepare statement for LibriInScaffale(): ' . mysqli_error($db),
+            'message' => 'Failed to prepare statement for VolumiInScaffale(): ' . mysqli_error($db),
         ];
         echo json_encode($result);
         exit();
     }
 
-    // Bind parameter to the prepared statement
-    mysqli_stmt_bind_param($stmt, "i", $idScaffale); // Assuming idScaffale is an integer
+    mysqli_stmt_bind_param($stmt, "i", $idScaffale);
 
     // Execute the prepared statement
     if (!mysqli_stmt_execute($stmt)) {
         $result = [
             'success' => false,
-            'message' => 'Failed to execute statement for LibriInScaffale(): ' . mysqli_stmt_error($stmt),
+            'message' => 'Failed to execute statement for VolumiInScaffale(): ' . mysqli_stmt_error($stmt),
         ];
         echo json_encode($result);
         exit();
     }
 
-    // Get the result set from the prepared statement
     $queryResultScaffale = mysqli_stmt_get_result($stmt);
 
-    // Check if the result set is valid (not strictly necessary in this case)
     if ($queryResultScaffale) {
         $row = mysqli_fetch_array($queryResultScaffale);
         $countBOOKS[] = [
@@ -111,11 +107,9 @@ foreach ($idScaffali as $idScaffale) {
         ];
         mysqli_free_result($queryResultScaffale);
     } else {
-        // Handle potential errors here (optional)
     }
 
     mysqli_stmt_close($stmt);
-    //echo $idScaffale; // This might not be necessary depending on your logic
 }
 
 
@@ -131,24 +125,23 @@ foreach ($countBOOKS as $shelf) {
 }
 if ($idScaffale !== null && $numeroScaffale !== null) {
     // Prepare statement for insertPosizioneCarta
-    $stmt = mysqli_prepare($db, "CALL insertPosizioneLibro(?, ?, ?)");
+    $stmt = mysqli_prepare($db, "CALL insertPosizioneVolume(?, ?, ?)");
     if (!$stmt) {
         $result = [
             'success' => false,
-            'message' => 'Failed to prepare statement for insertPosizioneLibro(): ' . mysqli_error($db),
+            'message' => 'Failed to prepare statement for insertPosizioneVolume(): ' . mysqli_error($db),
         ];
         echo json_encode($result);
         exit();
     }
 
-    // Bind parameters to the prepared statement
-    mysqli_stmt_bind_param($stmt, "iii", $idScaffale, $idCarta, $numeroScaffale); // Assuming all parameters are integers
+    mysqli_stmt_bind_param($stmt, "iii", $idScaffale, $idCarta, $numeroScaffale);
 
     // Execute the prepared statement
     if (!mysqli_stmt_execute($stmt)) {
         $result = [
             'success' => false,
-            'message' => 'Failed to execute statement for insertPosizioneLibro(): ' . mysqli_stmt_error($stmt),
+            'message' => 'Failed to execute statement for insertPosizioneVolume(): ' . mysqli_stmt_error($stmt),
         ];
         echo json_encode($result);
         exit();
@@ -156,7 +149,7 @@ if ($idScaffale !== null && $numeroScaffale !== null) {
 
     $result = [
         'success' => true,
-        'message' => 'Libro inserted successfully',
+        'message' => 'Volume inserted successfully',
     ];
 
     mysqli_stmt_close($stmt);
