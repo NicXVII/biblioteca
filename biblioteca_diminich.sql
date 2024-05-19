@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 19, 2024 alle 19:03
+-- Creato il: Mag 19, 2024 alle 19:36
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -229,7 +229,8 @@ INSERT INTO `tcartageopolitica` (`idCartaGeoPolitica`, `titolo`, `data`, `dataRa
 (7, 'L\'America Latina nel XXI secolo', '2023-11-15', '2023-12-01', 1, '7'),
 (8, 'Il Medio Oriente e il petrolio', '2023-02-20', '2023-03-10', 2, '8'),
 (9, 'Le dispute territoriali nel Mar Cinese Meridionale', '2023-07-08', '2023-08-01', 3, '9'),
-(10, 'La politica estera degli Stati Uniti', '2023-10-30', '2023-11-15', 1, '10');
+(10, 'La politica estera degli Stati Uniti', '2023-10-30', '2023-11-15', 1, '10'),
+(31, 'testAutoPos', '2024-05-02', '2014-05-01', 5, '1111111111111111111111111');
 
 -- --------------------------------------------------------
 
@@ -532,12 +533,7 @@ INSERT INTO `tscaffalecarta` (`idScaffaleCarta`, `idScaffale`, `idCarta`, `numer
 (11, 4, 2, 2),
 (13, 4, 3, 3),
 (14, 4, 4, 4),
-(15, 4, 5, 5),
-(16, 5, 6, 1),
-(18, 5, 7, 2),
-(19, 5, 8, 3),
-(20, 5, 9, 4),
-(21, 5, 10, 5);
+(15, 4, 5, 5);
 
 -- --------------------------------------------------------
 
@@ -593,7 +589,6 @@ INSERT INTO `tscaffalevolume` (`idScaffaleVolume`, `idScaffale`, `idVolume`, `nu
 (3, 6, 78, 3),
 (4, 6, 81, 4),
 (5, 6, 83, 5),
-(6, 6, 83, 6),
 (7, 6, 86, 7),
 (8, 7, 87, 1),
 (9, 7, 88, 2),
@@ -805,6 +800,7 @@ ALTER TABLE `tscaffale`
 ALTER TABLE `tscaffalecarta`
   ADD PRIMARY KEY (`idScaffaleCarta`),
   ADD UNIQUE KEY `idScaffale` (`idScaffale`,`idCarta`,`numeroScaffale`),
+  ADD UNIQUE KEY `idCarta` (`idCarta`),
   ADD KEY `fk_idScaffaleCarta` (`idScaffale`),
   ADD KEY `fk_idCartaScaffale` (`idCarta`);
 
@@ -814,6 +810,7 @@ ALTER TABLE `tscaffalecarta`
 ALTER TABLE `tscaffalelibro`
   ADD PRIMARY KEY (`idScaffaleLibro`),
   ADD UNIQUE KEY `idScaffale` (`idScaffale`,`idLibro`,`numeroScaffale`),
+  ADD UNIQUE KEY `idLibro` (`idLibro`),
   ADD KEY `fk_idLibrofk` (`idLibro`),
   ADD KEY `fk_idScaffaleLibro` (`idScaffale`);
 
@@ -823,6 +820,7 @@ ALTER TABLE `tscaffalelibro`
 ALTER TABLE `tscaffalevolume`
   ADD PRIMARY KEY (`idScaffaleVolume`),
   ADD UNIQUE KEY `idScaffale` (`idScaffale`,`idVolume`,`numeroScaffale`),
+  ADD UNIQUE KEY `idVolume` (`idVolume`),
   ADD KEY `fk_idScaffaleVolume` (`idScaffale`),
   ADD KEY `fk_idVolumeScaffale` (`idVolume`);
 
@@ -872,7 +870,7 @@ ALTER TABLE `tautoreenciclopedia`
 -- AUTO_INCREMENT per la tabella `tcartageopolitica`
 --
 ALTER TABLE `tcartageopolitica`
-  MODIFY `idCartaGeoPolitica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `idCartaGeoPolitica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT per la tabella `tcasaeditrice`
@@ -950,7 +948,7 @@ ALTER TABLE `tscaffale`
 -- AUTO_INCREMENT per la tabella `tscaffalecarta`
 --
 ALTER TABLE `tscaffalecarta`
-  MODIFY `idScaffaleCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idScaffaleCarta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT per la tabella `tscaffalelibro`

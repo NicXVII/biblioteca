@@ -23,13 +23,30 @@ function whichForm() {
 }
 
 //------------------------------------------------------------------
-async function fetchPosizioneLibro(id)
+
+
+
+
+async function fetchPosizione(id, type)
 {
+    functionToFetch = 'function/AutoPosition/';
+
+    switch (type) {
+        case 'libro':
+            functionToFetch += 'libro.php';
+            break;
+        case 'volume':
+            functionToFetch += 'volume.php';
+            break;
+        case 'carta':
+            functionToFetch += 'carta.php';
+            break;
+    }
     const dataToSend = {
         id: id,
     };
     try {
-        const response = await fetch('function/AutoPosition/libro.php', {
+        const response = await fetch(functionToFetch, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -263,7 +280,7 @@ async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, ca
         const data = await response.json();
         //console.log(data);
         if (data.success) {
-            return data.data; 
+            return data; 
 
 
         } else {
@@ -437,7 +454,7 @@ async function createFormLibro() {
         if(data.success === true)
             {
 
-                var esito = fetchPosizioneLibro(data.id);
+                var esito = await fetchPosizione(data.id,'libro');
                 console.log(esito);
             }
     });
@@ -616,7 +633,13 @@ form.appendChild(divAutoriSelect);
         if(data.success === true)
         {
 
-            insertAutori('Carta', sigma, data.id);
+            var data = await insertAutori('Carta', sigma, data.id);   
+            if(data.success)
+                {
+                    successPopUp();
+                    var data = await fetchPosizione(data.id,'carta');
+                    console.log(data);
+                }
         }
     });
 }
