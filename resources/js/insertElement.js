@@ -618,7 +618,13 @@ async function createFormLibro() {
 
                 var esito = await fetchPosizione(id,'libro');
                 console.log(esito);
-            }
+                if(esito.success)
+                    {
+                        successPopUp("Libro inserito con successo");
+                    }else
+                        wrongPopUp(esito.message);
+            }else
+                wrongPopUp(data.message);
     });
 }
 
@@ -762,7 +768,7 @@ form.appendChild(divAutoriSelect);
 
     var button = document.createElement('button');
     button.setAttribute('type', 'submit');
-    button.innerHTML = "Inserisci Libro";
+    button.innerHTML = "Inserisci Carta Geo Politica";
     form.appendChild(button);
 
     var hiddenAutore = document.createElement('input');
@@ -936,7 +942,7 @@ form.appendChild(divAutoriSelect);
 
     var button = document.createElement('button');
     button.setAttribute('type', 'submit');
-    button.innerHTML = "Inserisci Libro";
+    button.innerHTML = "Inserisci Enciclopedia";
     form.appendChild(button);
 
     var hiddenAutore = document.createElement('input');
@@ -1079,7 +1085,12 @@ async function createFormVolume()
                         console.log(dataPos);
                         if(dataPos.success)
                                 successPopUp("Volume inserito con successo");
-                    }
+                            else
+                                wrongPopUp(dataPos.message);
+                    }else
+                        wrongPopUp(data.message);
+
+
             }
 
         

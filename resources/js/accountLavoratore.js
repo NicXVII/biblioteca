@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var worker = document.getElementById('worker');
-    if(worker)
+    console.log(sessionStorage.getItem('user'));
+    if(sessionStorage.getItem('user') === null)
         {
             fetchData();
         }
