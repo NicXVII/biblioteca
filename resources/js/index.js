@@ -1,17 +1,21 @@
 document.addEventListener("DOMContentLoaded", function() {
     var worker = document.getElementById('worker').value; 
-    console.log(worker == 1);
-    if(worker == 1) {
+    console.log(worker == true);
+    if(worker) {
+        erase();
         generateSelectElement();
         listenerBtnElement();
         listenerInsertElement();
-        erase();
-    }
+    }else
+        Map();
 });
 
 function erase()
 {
-    var div = document.querySelector('.info');
+    var div = document.querySelector('.map-container');
+    div.innerHTML = '';
+
+    var div = document.querySelector('.info');	
     div.remove();
 
 }
@@ -19,7 +23,7 @@ function erase()
 var selectedElement = null;
 
 function generateSelectElement() {
-    var divLocation = document.querySelector('.location');
+    var divLocation = document.querySelector('.map-container');
 
     var div = document.createElement('div');
     div.className = 'selectElement';
@@ -73,27 +77,42 @@ function listenerInsertElement() {
     });
 }
 
-/*
-function Maph()
-{
-    latitudine   = 45.650075;
-    longitudine  = 13.767766;
-    mapOptions = {
-        center: new google.maps.LatLng(latitudine,longitudine),
+function initMap() {
+    // Get the div where the map will be displayed
+    var div = document.querySelector('.location');
+    // Clear the div content
+    div.innerHTML = '';
+
+    // Define the map options
+   
+    const latitudine = 41.45630076576649;
+    const longitudine =  15.55987817020046;
+    const mapOptions = {
+        center: new google.maps.LatLng(latitudine, longitudine),
         zoom: 16,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    // Create the map
+    const map = new google.maps.Map(div, mapOptions);
+
+    // Define the marker options
+    const markerOptions = {
+        position: new google.maps.LatLng(latitudine, longitudine),
+        map: map,
+        // Optional icon and url properties
+        // icon: image, 
+        // url: "https://www.soloaziende.it//infopunto.php?id=" + imp.ElencoPunti[i].id
+    };
+
+    // Create the marker
+    const marker = new google.maps.Marker(markerOptions);
+
+    // Add click listener to the marker if url is defined
+    if (markerOptions.url) {
+        google.maps.event.addListener(marker, 'click', function() {
+            window.location.href = this.url;
+        });
     }
-    map = new google.maps.Map($("#dvMap")[0], mapOptions);
-    marker = new google.maps.Marker({position: new google.maps.LatLng(latitudine,longitudine), map: map});
-    var imp = JSON.parse(result);
-    pLatLng = new google.maps.LatLng(imp.ElencoPunti[i].lat,imp.ElencoPunti[i].lon);
-    marker = new google.maps.Marker({
-         position: pLatLng,
-         map: map,
-         icon: image,
-         //url: "https://www.soloaziende.it//infopunto.php?id="+imp.ElencoPunti[i].id
-    });
-    google.maps.event.addListener(marker, 'click', function() {
-        window.location.href = this.url;
-    });
-}*/
+}
+

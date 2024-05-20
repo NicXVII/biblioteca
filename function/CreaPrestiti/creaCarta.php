@@ -19,6 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $data = json_decode(file_get_contents('php://input'), true);
         if (isset($data['id']) && isset($_SESSION['workerID'])) {
             $idPrenotazione = $data['id'];
+
+
+
             $idLavoratore = $_SESSION['workerID'];
             $dataInizio = date('Y-m-d H:i:s');
 

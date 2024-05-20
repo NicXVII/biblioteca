@@ -84,6 +84,17 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
 }
 
+.nome,
+.autore,
+.pubblicazione,
+.casaEditrice,
+.btn {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
 .risultatoRicerca p {
   margin-right: 5%;
 }

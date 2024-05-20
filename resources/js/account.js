@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     var worker = document.getElementById("worker").value;
-    if(!worker)
+    console.log(worker = '1');
+    if(worker  = '1')
     {
         fetcUtente();
         fetchPrestiti();  

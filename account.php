@@ -2,11 +2,12 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-$worker = null;
+$worker = false;
 
 if (isset($_SESSION['userID'])) {
     $worker = false;
-}
+} else
+    $worker = true;
 
 if (!isset($_SESSION['workerID']) && !isset($_SESSION['userID'])) {
     header('Location: index.php');
@@ -43,6 +44,7 @@ if (!isset($_SESSION['workerID']) && !isset($_SESSION['userID'])) {
 </body>
 
 </html>
-<script src="resources/js/account.js"></script>
 <script src="resources/js/accountLavoratore.js"></script>
+
+<script src="resources/js/account.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -5,9 +5,8 @@ require_once("../database.php");
 $result = array();
 
 // Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-//if (true) 
-{
+//if ($_SERVER['REQUEST_METHOD'] == 'POST')
+if (true) {
     $db;
 
     if (!$db) {
@@ -17,7 +16,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
+        $data['id'] = 32;
         if (isset($data['id']) && isset($_SESSION['workerID'])) {
+
+
+            $queryIdLibro = "SELECT tprenotazione.idLibro FROM tprenotazione
+            WHERE tprenotazione.idPrenotazione = ?";
+            $stmt = mysqli_prepare($db, $queryIdLibro);
+
+            mysqli_stmt_bind_param($stmt, "i", $data['id']);
+            mysqli_stmt_execute($stmt);;
+
+            $resultIdLibro = mysqli_stmt_get_result($stmt);
+
+
+            $idLibro = mysqli_fetch_array($resultIdLibro)['idLibro'];
+
+            echo $idLibro;
+
+            $queryControllo = "CALL checkPrestitoLibro($idLibro);";
+
+            // Execute the query
+            $queryControlloResult = $db->query($queryControllo);
+
+            if ($queryControlloResult) {
+                // Fetch the result as an associative array
+                $result = $queryControlloResult->fetch_array(MYSQLI_ASSOC);
+
+                // Check if the result is available and print the count
+                if ($result) {
+                    echo "Number of Completed Reservations: " . $result['NumberOfCompletedReservations'];
+                } else {
+                    echo "No data found.";
+                }
+            } else {
+                echo "Query failed: " . $db->error;
+            }
+
             $idPrenotazione = $data['id'];
             $idLavoratore = $_SESSION['workerID'];
             $dataInizio = date('Y-m-d H:i:s');

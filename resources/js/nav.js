@@ -1,15 +1,17 @@
 var worker = null;
 document.addEventListener("DOMContentLoaded", function()
 {
-    worker = document.getElementById("worker").value;
-    console.log(worker);
     addLiPrestiti();
 });
 
 
 function addLiPrestiti()
 {
-    if(worker === true && worker === null)
+    worker = document.getElementById("worker").value;
+    console.log(worker == true);
+
+
+    if(worker == true)
         {
             sessionStorage.setItem("worker", true);
             var ul = document.getElementById("ul");

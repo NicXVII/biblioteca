@@ -30,24 +30,37 @@ if (!isset($_SESSION['userID']) && !isset($_SESSION['workerID'])) {
         <h1>Biblioteca Comunale di Foggia</h1>
     </div>
 
-    <div class='location'>
-        <?php
-        if (isset($_SESSION['userID'])) {
-            //echo '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5577.613951838511!2d13.80103262389527!3d45.65469793328836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x477b6b18d90183bd%3A0x5482ace2196d376!2sVilla%20Bottacin%20Residence!5e0!3m2!1sit!2sit!4v1715687356084!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade&"></iframe>';
-            echo '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2990.2188669231373!2d15.557238876442474!3d41.4561680917255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1339d84fd7af3ccf%3A0x17d51498dcfa8899!2sBiblioteca%20di%20Foggia%20%22la%20Magna%20Capitana%22!5e0!3m2!1sit!2sit!4v1715008983363!5m2!1sit!2sit" width="850" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
-        }
-        ?>
-
-    </div>
     <div class='info'>
-        <h2>Informazioni</h2>
-        <p>
-            La Biblioteca Comunale di Foggia è una biblioteca pubblica situata in Via Arpi, 107, 71121 Foggia FG.
-            La biblioteca è stata fondata nel 1869 e dispone di un vasto archivio di libri, riviste e documenti storici.
-            La biblioteca è aperta al pubblico dal lunedì al venerdì dalle 9:00 alle 18:00.
-        </p>
+        <div class="descrizione">
+            <h2>Informazioni</h2>
+
+            <p>
+                La Biblioteca Comunale di Foggia, fondata nel 1869, è un luogo di cultura e conoscenza che accoglie tutti gli appassionati di lettura. Con un vasto archivio di libri, riviste e documenti storici, la biblioteca offre una risorsa inestimabile per studenti, ricercatori e curiosi. Situata nel cuore di Foggia è un punto di riferimento per la comunità, promuovendo eventi culturali e attività didattiche che stimolano la crescita personale e collettiva.
+            </p>
+
+        </div>
+        <div class="orari">
+            <h2>Orari di apertura</h2>
+            <p>
+                <strong>Lunedì:</strong> 9:00 - 18:00<br>
+                <strong>Martedì:</strong> 9:00 - 18:00<br>
+                <strong>Mercoledì:</strong> 9:00 - 18:00<br>
+                <strong>Giovedì:</strong> 9:00 - 18:00<br>
+                <strong>Venerdì:</strong> 9:00 - 18:00<br>
+                <strong>Sabato:</strong> Chiuso<br>
+                <strong>Domenica:</strong> Chiuso<br>
+            </p>
+        </div>
+    </div>
+
+
+    <div class="map-container">
+        <h1>Dove trovarci</h1>
+        <div class='location'>
+        </div>
     </div>
 </body>
 
 </html>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2eB0uH1_PcUqvpsoWzrCBCr0fXuRuF2U&callback=initMap" async defer></script>
 <script src="resources/js/index.js"></script>
