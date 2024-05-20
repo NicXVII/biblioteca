@@ -317,6 +317,76 @@ async function insertCarta(nome, isbn, pubblicazione,dataRiferimento, autore, ca
 }
 
 
+
+
+async function insertEnciclopedia(nome,pubblicazione, isbn, volumiTotali, casaEditrice)
+{
+    var numerico = isNumericString(isbn);
+    if(!numerico)
+        {
+            wrongPopUp('ISBN non numerico');
+            return data = {
+                success: false
+            };
+        }
+
+    if(clearAutore()) {
+        return data ={
+            success: false
+        };
+    }
+    var isbnFORMAT = fixISBN(isbn);
+
+    var result = 0;
+    result = await check(isbnFORMAT);
+
+    console.log(result);
+
+    if(result !== 0)
+        {
+            wrongPopUp('ISBN già presente nel database');            
+            return data = {
+                success: false
+            };
+        }
+    const dataToSend = {
+        titolo: nome,
+        isbn: isbnFORMAT,
+        data: pubblicazione,
+        volumiTotali: volumiTotali,
+        idCasaEditrice: casaEditrice
+    };
+
+    
+    //check
+    console.log(dataToSend);
+
+    //console.log(dataToSend);
+    try {
+        const response = await fetch('function/Inserisci/inserisciEnciclopedia.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend),
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        //console.log(data);
+        if (data.success) {
+            return data; 
+
+
+        } else {
+            throw new Error('Request was not successful: ' + data.message);
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return []; // Return an empty array if there's an error
+    }    
+}
 async function insertAutori(type,autori, id)
 {
     const dataToSend = {
@@ -470,7 +540,7 @@ async function createFormLibro() {
         event.preventDefault();
         var formData = new FormData(form);
         for (var pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
+            //console.log(pair[0] + ': ' + pair[1]);
         }
         console.log("Autore " + autore + " casaEditrice " + casaEditrice);
         var data = await insertLibro(formData.get('name'), formData.get('isbn'), formData.get('publication'), autore, casaEditrice);
@@ -654,13 +724,13 @@ form.appendChild(divAutoriSelect);
         console.log(data);
         //console.log(autore);
         //insertAutori('Carta', sigma, 1);
-        console.log(data.success);
+        //console.log(data.success);
         var id = data.id;  
 
         if(data.success === true)
         {
 
-            var data = await insertAutori('Carta', sigma, data.id); 
+            var data = await insertAutori('Carta', sigma, id); 
             console.log(data);
             if(data.success)
                 {
@@ -736,24 +806,6 @@ async function createFormEnciclopedia()
 
 
 
-    /*var priceLabel = document.createElement('label');
-    priceLabel.textContent = 'Price:';
-    var priceInput = document.createElement('input');
-    priceInput.setAttribute('type', 'text');
-    priceInput.setAttribute('name', 'price');
-    priceInput.setAttribute('required', 'required'); // Aggiunto required
-    form.appendChild(priceLabel);
-    form.appendChild(priceInput);*/
-    /*var divBtn = document.createElement('div');
-    divBtn.classList.add('divAutoriBtn');
-    divBtn.appendChild(buttonAddAutore);
-    var buttoRemove = document.createElement('button');
-    buttoRemove.textContent = "Rimuovi Autori";
-    divBtn.appendChild(buttoRemove);
-    divAutori.appendChild(divBtn);
-    var buttonAddAutore = document.createElement('button');
-    buttonAddAutore.textContent = "Inserisci Autori";*/
-
 
     var divAutori = document.createElement('div');
     divAutori.id = 'autori';
@@ -786,7 +838,6 @@ select.addEventListener('change', async function() {
    numero = select.options[select.selectedIndex].value;
    var div  = await createSelectAutori();
    divA.appendChild(div);
-   //console.log(numero);
 });
 
 divAutoriSelect.appendChild(select);
@@ -837,6 +888,28 @@ form.appendChild(divAutoriSelect);
 
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
+        var formData = new FormData(form);
+
+        var data = await insertEnciclopedia(formData.get('name'), formData.get('publication'),formData.get('isbn'), formData.get('volumi') , casaEditrice.idCasaEditrice);
+        var id = data.id;  
+        console.log(data);
+        if(data.success === true)
+        {
+            var data = await insertAutori('Enciclopedia', sigma, id); 
+            console.log(data);
+            if(data.success)
+                {
+                    successPopUp("Enciclopedia e Autori Inseriti");
+                    /*var data = await fetchPosizione(id,'carta');
+                    console.log(data);
+                    if(data.success)
+                        {
+                            successPopUp("Carta inserita con successo");
+
+                        }*/
+                }
+        }else
+            wrongPopUp("Errore nell'inserimento dell'enciclopedia");
 
     });
 }

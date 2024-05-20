@@ -5,14 +5,14 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once("../database.php");
 $result = array();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+/*if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $result = array(
         'success' => false,
         'message' => 'Invalid request'
     );
     echo json_encode($result);
     exit();
-}
+}*/
 
 if (!$db) {
     $result = array(
@@ -25,16 +25,16 @@ if (!$db) {
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
-/*$data['nome'] = '12';
-$data['isbn'] = '12';
-$data['pubblicazione'] = '2024-12-04';
-$data['dataRiferimento'] = '2024-12-04';
-$data['idCasaEditrice']  = 1;*/
+/*$data['titolo'] = 'test';
+$data['isbn'] = '1238976541203';
+$data['data'] = '2024-12-04';
+$data['idCasaEditrice']  = 1;
+$data['volumiTotali'] = 3;*/
 if (
     !isset($data['titolo']) || empty($data['titolo']) ||
     !isset($data['data']) || empty($data['data']) ||
     !isset($data['volumiTotali']) || empty($data['volumiTotali']) ||
-    !isset($data['isbn ']) || empty($data['isbn']) ||
+    !isset($data['isbn']) || empty($data['isbn']) ||
     !isset($data['idCasaEditrice']) || empty($data['idCasaEditrice'])
 ) {
     $result = array(
@@ -44,6 +44,7 @@ if (
     echo json_encode($result);
     exit();
 }
+var_dump($data['volumiTotali']);
 
 $nome = $data['titolo'];
 $isbn = $data['isbn'];
@@ -51,7 +52,7 @@ $data = $data['data'];
 $volumiTotali = $data['volumiTotali'];
 $idCasaEditrice = $data['idCasaEditrice'];
 
-$insertQuery = "INSERT INTO `tenciclopedia` (`titolo`, `data`, `volumiTotali`, `isbn `, `idCasaEditrice `) VALUES (?,?,?,?,?);";
+$insertQuery = "INSERT INTO `tenciclopedia` (`titolo`, `data`, `volumiTotali`, `isbn`, `idCasaEditrice`) VALUES (?,?,?,?,?);";
 $insertStatement = mysqli_prepare($db, $insertQuery);
 
 if ($insertStatement) {
@@ -76,7 +77,7 @@ if ($insertStatement) {
 } else {
     $result = array(
         'success' => false,
-        'message' => 'Failed to prepare statement'
+        'message' => 'Failed to prepare statement', mysqli_error($db)
     );
 }
 

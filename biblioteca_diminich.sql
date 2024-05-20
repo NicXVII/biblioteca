@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 19, 2024 alle 22:44
+-- Creato il: Mag 20, 2024 alle 08:52
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -303,7 +303,8 @@ INSERT INTO `tenciclopedia` (`idEnciclopedia`, `titolo`, `data`, `volumiTotali`,
 (7, 'Enciclopedia di Biologia Moderna', '2023-02-20', 8, '978-2345678901', 1),
 (8, 'Enciclopedia di Fisica Quantistica', '2023-03-25', 12, '978-3456789012', 2),
 (9, 'Enciclopedia di Letteratura Contemporanea', '2023-04-30', 7, '978-4567890123', 2),
-(10, 'Enciclopedia di Arte Medievale', '2023-05-10', 5, '978-5678901234', 3);
+(10, 'Enciclopedia di Arte Medievale', '2023-05-10', 5, '978-5678901234', 3),
+(13, 'test', '2024-12-04', 3, '1238976541203', 3);
 
 -- --------------------------------------------------------
 
@@ -655,7 +656,8 @@ INSERT INTO `tvolume` (`idVolume`, `isbn`, `numeroVolume`, `idEnciclopedia`) VAL
 (93, '978-4567890127', 3, 9),
 (96, '978-5678901230', 1, 10),
 (97, '978-5678901231', 2, 10),
-(98, '978-5678901232', 3, 10);
+(98, '978-5678901232', 3, 10),
+(103, '1238976541203', 1, 13);
 
 --
 -- Indici per le tabelle scaricate
@@ -840,6 +842,7 @@ ALTER TABLE `tstanza`
 ALTER TABLE `tvolume`
   ADD PRIMARY KEY (`idVolume`),
   ADD UNIQUE KEY `isbn` (`isbn`),
+  ADD UNIQUE KEY `unicita numero volume` (`numeroVolume`,`idEnciclopedia`),
   ADD KEY `fk_idEnciclopedia` (`idEnciclopedia`);
 
 --
@@ -892,7 +895,7 @@ ALTER TABLE `tcliente`
 -- AUTO_INCREMENT per la tabella `tenciclopedia`
 --
 ALTER TABLE `tenciclopedia`
-  MODIFY `idEnciclopedia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idEnciclopedia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT per la tabella `tlavoratore`
@@ -976,7 +979,7 @@ ALTER TABLE `tstanza`
 -- AUTO_INCREMENT per la tabella `tvolume`
 --
 ALTER TABLE `tvolume`
-  MODIFY `idVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `idVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- Limiti per le tabelle scaricate

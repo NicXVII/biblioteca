@@ -5,14 +5,14 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once("../database.php");
 $result = array();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+/*if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $result = array(
         'success' => false,
         'message' => 'Invalid request'
     );
     echo json_encode($result);
     exit();
-}
+}*/
 
 if (!$db) {
     $result = array(
@@ -30,9 +30,13 @@ $data['isbn'] = '12';
 $data['pubblicazione'] = '2024-12-04';
 $data['dataRiferimento'] = '2024-12-04';
 $data['idCasaEditrice']  = 1;*/
+
+$data['numeroVolume'] = 1;
+$data['isbn'] = '1238976543203';
+$data['idEnciclopedia'] = 13;
 if (
     !isset($data['numeroVolume']) || empty($data['numeroVolume']) ||
-    !isset($data['isbn ']) || empty($data['isbn']) ||
+    !isset($data['isbn']) || empty($data['isbn']) ||
     !isset($data['idEnciclopedia']) || empty($data['idEnciclopedia'])
 ) {
     $result = array(
@@ -47,7 +51,7 @@ $numeroVolume = $data['numeroVolume'];
 $isbn = $data['isbn'];
 $idEnciclopedia = $data['idEnciclopedia'];
 
-$insertQuery = "INSERT INTO `tvolume` (`isbn`, `numeroVolume`, `idEnciclopedia `) VALUES (?,?,?);";
+$insertQuery = "INSERT INTO `tvolume` (`isbn`, `numeroVolume`, `idEnciclopedia`) VALUES (?,?,?);";
 $insertStatement = mysqli_prepare($db, $insertQuery);
 
 if ($insertStatement) {
