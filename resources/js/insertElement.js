@@ -1,7 +1,9 @@
 var type = null;
 document.addEventListener('DOMContentLoaded', function() {
-    type = document.getElementById('type').value;
-    whichForm();
+    createFormVolume();
+
+    //type = document.getElementById('type').value;
+    //whichForm();
     //fetchCaseEditrici();
     //fetchAutori();
     //check();
@@ -968,8 +970,8 @@ async function createFormVolume()
             input.setAttribute('type', 'text');
             input.setAttribute('name', 'isbn'+i);
             input.setAttribute('required', 'required');
-            input.setAttribute('min', '13');
-            input.setAttribute('max', '13');
+            input.setAttribute('minlength', '13'); 
+            input.setAttribute('maxlength', '13');
 
 
             form.appendChild(input);
@@ -987,9 +989,13 @@ async function createFormVolume()
         event.preventDefault();
         var formData = new FormData(form);
 
+        let isbns = [];
         for (var pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
+            isbns.push(pair[1]);
+            //console.log(pair[0] + ': ' + pair[1]);
         }
+        console.log(isbns);
+        console.log(checkISBNEquals(isbns));
     });    
     formDiv.appendChild(form);
 
@@ -997,7 +1003,11 @@ async function createFormVolume()
 
 }
 // ------------------------------------------------------------------------------------------------
-
+function checkISBNEquals(isbns)
+{
+    let allUnique = new Set(isbns).size === isbns   .length;
+    return allUnique;
+}
 
 var autore = [];
 var sigma = [];
