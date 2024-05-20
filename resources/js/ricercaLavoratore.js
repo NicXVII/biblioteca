@@ -164,7 +164,8 @@ async function fetchAccettaPrenotazione(id) {
         }
 
         const data = await response.json();
-        return data.success;
+        console.log('esito prenotazione ' + data.message);
+        return data;
     } catch (error) {
         console.error('Si è verificato un errore:', error);
         return false; 
@@ -458,13 +459,13 @@ function listenerConsegna(btn,id)
     btn.addEventListener('click', async function() {
         console.log(id);
         var result = await fetchAccettaPrenotazione(id);
-        if (result) {
+        if (result.success) {
             console.log('Prenotazione accettata');
             var result = await fetchCreaPrestito(id);
-            console.log("Esito creazione prestito: "+result);
+            console.log("Esito creazione prestito: "+result.data);
             whatFetch();
         } else {
-            console.log('Prenotazione non accettata');
+            console.log('Prenotazione non accettata ' + result.data);
         }
     });
 }
