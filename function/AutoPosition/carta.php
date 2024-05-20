@@ -99,10 +99,8 @@ foreach ($idScaffali as $idScaffale) {
         exit();
     }
 
-    // Get the result set from the prepared statement
     $queryResultScaffale = mysqli_stmt_get_result($stmt);
 
-    // Check if the result set is valid (not strictly necessary in this case)
     if ($queryResultScaffale) {
         $row = mysqli_fetch_array($queryResultScaffale);
         $countBOOKS[] = [
@@ -111,11 +109,9 @@ foreach ($idScaffali as $idScaffale) {
         ];
         mysqli_free_result($queryResultScaffale);
     } else {
-        // Handle potential errors here (optional)
     }
 
     mysqli_stmt_close($stmt);
-    //echo $idScaffale; // This might not be necessary depending on your logic
 }
 
 
@@ -130,7 +126,6 @@ foreach ($countBOOKS as $shelf) {
     }
 }
 if ($idScaffale !== null && $numeroScaffale !== null) {
-    // Prepare statement for insertPosizioneCarta
     $stmt = mysqli_prepare($db, "CALL insertPosizioneCarta(?, ?, ?)");
     if (!$stmt) {
         $result = [
@@ -141,10 +136,8 @@ if ($idScaffale !== null && $numeroScaffale !== null) {
         exit();
     }
 
-    // Bind parameters to the prepared statement
     mysqli_stmt_bind_param($stmt, "iii", $idScaffale, $idCarta, $numeroScaffale); // Assuming all parameters are integers
 
-    // Execute the prepared statement
     if (!mysqli_stmt_execute($stmt)) {
         $result = [
             'success' => false,

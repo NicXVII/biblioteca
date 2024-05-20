@@ -5,7 +5,6 @@ require_once("../database.php");
 $result = array();
 $db;
 
-// Controllo se la connessione al database è riuscita
 if (!$db) {
     $result = [
         'success' => false,
@@ -17,8 +16,7 @@ if (!$db) {
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
-
-// Controllo se i dati JSON sono validi
+//$data['id'] = 118;
 if (!isset($data['id']) || empty($data['id'])) {
     $result = [
         'success' => false,
@@ -74,7 +72,6 @@ mysqli_free_result($queryResult);
 
 $countBOOKS = [];
 foreach ($idScaffali as $idScaffale) {
-    // Prepare statement for CarteInScaffale
     $stmt = mysqli_prepare($db, "CALL VolumiInScaffale(?)");
     if (!$stmt) {
         $result = [
@@ -87,7 +84,6 @@ foreach ($idScaffali as $idScaffale) {
 
     mysqli_stmt_bind_param($stmt, "i", $idScaffale);
 
-    // Execute the prepared statement
     if (!mysqli_stmt_execute($stmt)) {
         $result = [
             'success' => false,
@@ -124,7 +120,6 @@ foreach ($countBOOKS as $shelf) {
     }
 }
 if ($idScaffale !== null && $numeroScaffale !== null) {
-    // Prepare statement for insertPosizioneCarta
     $stmt = mysqli_prepare($db, "CALL insertPosizioneVolume(?, ?, ?)");
     if (!$stmt) {
         $result = [
@@ -137,7 +132,6 @@ if ($idScaffale !== null && $numeroScaffale !== null) {
 
     mysqli_stmt_bind_param($stmt, "iii", $idScaffale, $idCarta, $numeroScaffale);
 
-    // Execute the prepared statement
     if (!mysqli_stmt_execute($stmt)) {
         $result = [
             'success' => false,

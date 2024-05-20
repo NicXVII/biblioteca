@@ -350,14 +350,13 @@ async function insertEnciclopedia(nome,pubblicazione, isbn, volumiTotali, casaEd
             };
         }
 
-        let volumiTotaliStr = String(volumiTotali);
-        let idCasaEditriceStr = String(casaEditrice);
+
     const dataToSend = {
         titolo: nome,
         isbn: isbnFORMAT,
-        data: pubblicazione,
-        volumiTotali: volumiTotaliStr,
-        idCasaEditrice: idCasaEditriceStr
+        dataPubblicazione: pubblicazione,
+        volumiTotali: volumiTotali,
+        idCasaEditrice: casaEditrice
     };
 
     sessionStorage.setItem('volumiTotali', volumiTotali);
@@ -900,6 +899,7 @@ form.appendChild(divAutoriSelect);
         console.log(data);
         if(data.success === true)
         {
+            console.log("id " +id);
             var data = await insertAutori('Enciclopedia', sigma, id); 
             console.log(data);
             if(data.success)

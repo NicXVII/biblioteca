@@ -25,14 +25,14 @@ if (!$db) {
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
-/*$data['titolo'] = 'test';
-$data['isbn'] = '1238976541203';
-$data['data'] = '2024-12-04';
+/*$data['titolo'] = 'test2';
+$data['isbn'] = '1238976549203';
+$data['dataPubblicazione'] = '2024-12-04';
 $data['idCasaEditrice']  = 1;
 $data['volumiTotali'] = 3;*/
 if (
     !isset($data['titolo']) || empty($data['titolo']) ||
-    !isset($data['data']) || empty($data['data']) ||
+    !isset($data['dataPubblicazione']) || empty($data['dataPubblicazione']) ||
     !isset($data['volumiTotali']) || empty($data['volumiTotali']) ||
     !isset($data['isbn']) || empty($data['isbn']) ||
     !isset($data['idCasaEditrice']) || empty($data['idCasaEditrice'])
@@ -44,11 +44,11 @@ if (
     echo json_encode($result);
     exit();
 }
-var_dump($data['volumiTotali']);
+//var_dump($data['volumiTotali']);
 
 $nome = $data['titolo'];
 $isbn = $data['isbn'];
-$data = $data['data'];
+$dataPub = $data['dataPubblicazione'];
 $volumiTotali = $data['volumiTotali'];
 $idCasaEditrice = $data['idCasaEditrice'];
 
@@ -56,7 +56,7 @@ $insertQuery = "INSERT INTO `tenciclopedia` (`titolo`, `data`, `volumiTotali`, `
 $insertStatement = mysqli_prepare($db, $insertQuery);
 
 if ($insertStatement) {
-    mysqli_stmt_bind_param($insertStatement, "ssisi", $nome, $data, $volumiTotali, $isbn, $idCasaEditrice);
+    mysqli_stmt_bind_param($insertStatement, "ssisi", $nome, $dataPub, $volumiTotali, $isbn, $idCasaEditrice);
 
     if (mysqli_stmt_execute($insertStatement)) {
         $enciclopediaID = mysqli_insert_id($db);
