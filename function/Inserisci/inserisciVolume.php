@@ -31,9 +31,9 @@ $data['pubblicazione'] = '2024-12-04';
 $data['dataRiferimento'] = '2024-12-04';
 $data['idCasaEditrice']  = 1;*/
 
-$data['numeroVolume'] = 1;
+/*$data['numeroVolume'] = 1;
 $data['isbn'] = '1238976543203';
-$data['idEnciclopedia'] = 13;
+$data['idEnciclopedia'] = 13;*/
 if (
     !isset($data['numeroVolume']) || empty($data['numeroVolume']) ||
     !isset($data['isbn']) || empty($data['isbn']) ||

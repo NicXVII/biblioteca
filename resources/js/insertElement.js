@@ -349,13 +349,18 @@ async function insertEnciclopedia(nome,pubblicazione, isbn, volumiTotali, casaEd
                 success: false
             };
         }
+
+        let volumiTotaliStr = String(volumiTotali);
+        let idCasaEditriceStr = String(casaEditrice);
     const dataToSend = {
         titolo: nome,
         isbn: isbnFORMAT,
         data: pubblicazione,
-        volumiTotali: volumiTotali,
-        idCasaEditrice: casaEditrice
+        volumiTotali: volumiTotaliStr,
+        idCasaEditrice: idCasaEditriceStr
     };
+
+    sessionStorage.setItem('volumiTotali', volumiTotali);
 
     
     //check
@@ -907,9 +912,11 @@ form.appendChild(divAutoriSelect);
                             successPopUp("Carta inserita con successo");
 
                         }*/
+
+                        createFormVolume();
                 }
         }else
-            wrongPopUp("Errore nell'inserimento dell'enciclopedia");
+            wrongPopUp(data.message);
 
     });
 }
@@ -937,6 +944,58 @@ async function createSelectAutori() {
     return div;
 }
 
+
+async function createFormVolume()
+{
+    var numeroVolumi = sessionStorage.getItem('volumiTotali');
+    console.log(numeroVolumi);
+
+    var formDiv = document.querySelector('.formDiv');
+    formDiv.innerHTML = '';
+
+    var form = document.createElement('form');
+    form.setAttribute('method', 'POST');
+
+
+    var label = document.createElement('label');
+    label.innerHTML = 'Inerisci isbn volumi';
+
+    form.appendChild(label);
+    for(var i = 0; i < numeroVolumi; i++)
+        {
+            var input = document.createElement('input');
+            input.placeholder = 'ISBN volume ' + (i+1) ;
+            input.setAttribute('type', 'text');
+            input.setAttribute('name', 'isbn'+i);
+            input.setAttribute('required', 'required');
+            input.setAttribute('min', '13');
+            input.setAttribute('max', '13');
+
+
+            form.appendChild(input);
+
+        }
+
+
+        var button = document.createElement('button');
+        button.setAttribute('type', 'submit');
+        button.innerHTML = "Inserisci ISBN";
+        form.appendChild(button);
+
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(form);
+
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
+    });    
+    formDiv.appendChild(form);
+
+
+
+}
 // ------------------------------------------------------------------------------------------------
 
 
