@@ -1,9 +1,11 @@
 var type = null;
 document.addEventListener('DOMContentLoaded', function() {
-    createFormVolume();
+    /*sessionStorage.setItem('volumiTotali', 3);
+    sessionStorage.setItem('idEnciclopedia', 13);
+    createFormVolume();*/
 
-    //type = document.getElementById('type').value;
-    //whichForm();
+    type = document.getElementById('type').value;
+    whichForm();
     //fetchCaseEditrici();
     //fetchAutori();
     //check();
@@ -393,6 +395,65 @@ async function insertEnciclopedia(nome,pubblicazione, isbn, volumiTotali, casaEd
         return []; // Return an empty array if there's an error
     }    
 }
+
+
+
+
+async function insertVolume(isbn,numeroVolume)
+{
+    var numerico = isNumericString(isbn);
+    if(!numerico)
+        {
+            wrongPopUp('ISBN non numerico');
+            return data = {
+                success: false
+            };
+        }
+
+    var isbnFORMAT = fixISBN(isbn);
+
+    var result = 0;
+    result = await check(isbnFORMAT);
+
+    console.log(result);
+
+    if(result !== 0)
+        {
+            wrongPopUp('ISBN già presente nel database');            
+            return data = {
+                success: false
+            };
+        }
+    const dataToSend = {
+        isbn: isbnFORMAT,
+        numeroVolume: numeroVolume,
+        idEnciclopedia: sessionStorage.getItem('idEnciclopedia'),
+    };
+    //check
+    //console.log(dataToSend);
+
+    //console.log(dataToSend);
+    try {
+        const response = await fetch('function/Inserisci/inserisciVolume.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend),
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        //console.log(data);
+        return data;
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return []; // Return an empty array if there's an error
+    }
+}
+
+
 async function insertAutori(type,autori, id)
 {
     const dataToSend = {
@@ -896,8 +957,10 @@ form.appendChild(divAutoriSelect);
         event.preventDefault();
         var formData = new FormData(form);
 
-        var data = await insertEnciclopedia(formData.get('name'), formData.get('publication'),formData.get('isbn'), formData.get('volumi') , casaEditrice.idCasaEditrice);
+        var data = await insertEnciclopedia(formData.get('name'), formData.get('publication'),formData.get('isbn'), formData.get('volumi') , casaEditrice);
         var id = data.id;  
+        sessionStorage.setItem('volumiTotali', formData.get('volumi'));
+        sessionStorage.setItem('idEnciclopedia', id);
         console.log(data);
         if(data.success === true)
         {
@@ -985,7 +1048,7 @@ async function createFormVolume()
         form.appendChild(button);
 
 
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', async function(event) {
         event.preventDefault();
         var formData = new FormData(form);
 
@@ -994,8 +1057,32 @@ async function createFormVolume()
             isbns.push(pair[1]);
             //console.log(pair[0] + ': ' + pair[1]);
         }
-        console.log(isbns);
-        console.log(checkISBNEquals(isbns));
+        //console.log(isbns);
+        //console.log(checkISBNEquals(isbns));
+        if(!checkISBNEquals(isbns))
+            {
+                wrongPopUp('ISBN uguali');
+                return data = {
+                    success: false
+                };
+            }
+        
+        
+        for(var i = 0; i < sessionStorage.getItem('volumiTotali'); i++)
+            {
+                var data = await  insertVolume(isbns[i], i+1);
+                console.log(data);
+                if(data.success)
+                    {
+                        //successPopUp("Volume" + (i+1) + " inserito con successo");
+                        var dataPos = await fetchPosizione(data.id,'volume');
+                        console.log(dataPos);
+                        if(dataPos.success)
+                                successPopUp("Volume inserito con successo");
+                    }
+            }
+
+        
     });    
     formDiv.appendChild(form);
 
