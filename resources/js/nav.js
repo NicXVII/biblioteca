@@ -3,14 +3,13 @@ document.addEventListener("DOMContentLoaded", function()
 {
     worker = document.getElementById("worker").value;
     console.log(worker);
-    if(worker !== null)
-        addLiPrestiti();
+    addLiPrestiti();
 });
 
 
 function addLiPrestiti()
 {
-    //if(worker === true && worker === null)
+    if(worker === true && worker === null)
         {
             sessionStorage.setItem("worker", true);
             var ul = document.getElementById("ul");

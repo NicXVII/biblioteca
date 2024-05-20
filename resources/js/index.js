@@ -5,8 +5,16 @@ document.addEventListener("DOMContentLoaded", function() {
         generateSelectElement();
         listenerBtnElement();
         listenerInsertElement();
+        erase();
     }
 });
+
+function erase()
+{
+    var div = document.querySelector('.info');
+    div.remove();
+
+}
 
 var selectedElement = null;
 
@@ -64,3 +72,28 @@ function listenerInsertElement() {
             location.href = 'insertElement.php?type=' + selectedElement;
     });
 }
+
+/*
+function Maph()
+{
+    latitudine   = 45.650075;
+    longitudine  = 13.767766;
+    mapOptions = {
+        center: new google.maps.LatLng(latitudine,longitudine),
+        zoom: 16,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map($("#dvMap")[0], mapOptions);
+    marker = new google.maps.Marker({position: new google.maps.LatLng(latitudine,longitudine), map: map});
+    var imp = JSON.parse(result);
+    pLatLng = new google.maps.LatLng(imp.ElencoPunti[i].lat,imp.ElencoPunti[i].lon);
+    marker = new google.maps.Marker({
+         position: pLatLng,
+         map: map,
+         icon: image,
+         //url: "https://www.soloaziende.it//infopunto.php?id="+imp.ElencoPunti[i].id
+    });
+    google.maps.event.addListener(marker, 'click', function() {
+        window.location.href = this.url;
+    });
+}*/
