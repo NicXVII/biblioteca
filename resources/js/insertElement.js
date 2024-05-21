@@ -214,13 +214,16 @@ async function insertLibro(nome, isbn, pubblicazione, autore, casaEditrice)
             };
             ;
         }
+
     const dataToSend = {
         nome: nome,
         isbn: isbnFORMAT,
         pubblicazione: pubblicazione,
-        idAutore: sigma,
+        idAutore: sigma[0],
         idCasaEditrice: casaEditrice
     };
+
+    console.log(dataToSend);
     try {
         const response = await fetch('function/Inserisci/inserisciLibro.php', {
             method: 'POST',
@@ -559,9 +562,11 @@ async function createFormLibro() {
     var selectAutori = document.createElement('select');
     selectAutori.setAttribute('required', 'required'); // Aggiunto required
     var autori = await fetchAutori();
+    var pos = 0;
     for (autore of autori) {
         var option = document.createElement('option');
         option.setAttribute('value', autore.idAutore);
+        option.setAttribute('id',pos);
         option.textContent = autore.nome + ' ' + autore.cognome;
         selectAutori.appendChild(option);
     }
@@ -610,7 +615,7 @@ async function createFormLibro() {
             //console.log(pair[0] + ': ' + pair[1]);
         }
         console.log("Autore " + autore + " casaEditrice " + casaEditrice);
-        var data = await insertLibro(formData.get('name'), formData.get('isbn'), formData.get('publication'), autore, casaEditrice);
+        var data = await insertLibro(formData.get('name'), formData.get('isbn'), formData.get('publication'), sigma[0], casaEditrice);
         console.log(data);
         var id = data.bookID;
         if(data.success === true)
@@ -998,12 +1003,14 @@ async function createSelectAutori() {
     //console.log(numero);
     var div = document.createElement('div');
     div.classList.add('divAutoriMostra');
+    
     for(var i = 0; i < numero; i++)
         {
             var selectAutori = document.createElement('select');
             selectAutori.setAttribute('required', 'required'); 
         for (autore of autori) {
             var option = document.createElement('option');
+            option.setAttribute('id',i);
             option.setAttribute('value', autore.idAutore);
             option.textContent = autore.nome + ' ' + autore.cognome;
             selectAutori.appendChild(option);
@@ -1112,11 +1119,13 @@ var sigma = [];
 function listenerSelect(select) {
     select.addEventListener('change', function() {
      
-        //input.value = select.options[select.selectedIndex].value;
+        input = select.options[select.selectedIndex];
         //console.log(input.value);
         //var id  = selected.idAutore;
         //console.log(selected + '  ' + id);
-        sigma.push(select.options[select.selectedIndex].value);
+        var pos = input.getAttribute('id');
+        console.log(pos);
+        sigma[pos] = (select.options[select.selectedIndex].value);
         //console.log(autore[select.selectedIndex]);
     });
 } [];

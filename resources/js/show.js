@@ -270,7 +270,7 @@ async function popolateVolume(data)
             worker = false;
         }
         //console.log(sessionStorage.getItem('worker'));
-        if(worker)
+        if(!worker)
             {
             var btn = document.createElement('button');
             btn.classList.add('btnPrenotazione');
