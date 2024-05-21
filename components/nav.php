@@ -42,10 +42,19 @@ if ($worker === null && $id === null)
                 </a>
             </li>
             <li>
-                <a href="account.php">
-                    <i class="fa-solid fa-scroll"></i>
-                    Account
-                </a>
+                <?php
+                if ($worker) {
+                    echo '<a href="accountLavoratore.php">';
+                    echo '<i class="fa-solid fa-user"></i>';
+                    echo 'Account';
+                    echo '</a>';
+                } else {
+                    echo '<a href="account.php">';
+                    echo '<i class="fa-solid fa-user"></i>';
+                    echo 'Account';
+                    echo '</a>';
+                }
+                ?>
             </li>
         </ul>
     </div>

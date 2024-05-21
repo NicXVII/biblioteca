@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
-    var worker = document.getElementById("worker").value;
-    console.log(worker = '1');
-    if(worker  = '1')
+    var user = sessionStorage.getItem('user');
+    console.log(user != null && user);
+    if(user)
     {
         fetcUtente();
         fetchPrestiti();  

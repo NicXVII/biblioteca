@@ -259,7 +259,7 @@ async function popolateRicerca(data) {
         var autoreP = document.createElement('p');
         if(elemento === 'libri')
             {
-                console.log(dato.autore_cognome);
+                //console.log(dato.autore_cognome);
                 autoreP.textContent = `Autore: ${dato.autore_nome} ${dato.autore_cognome}`;
 
             }else

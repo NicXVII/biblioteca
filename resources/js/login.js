@@ -44,6 +44,8 @@ function Fetchlogin(email, password)
 
         if (data.success) {
             console.log('La richiesta ha avuto successo:', data.data);
+            sessionStorage.clear();
+
             sessionStorage.setItem('user', true);
             //createTokenSession(data);
             location.href = "index.php";   

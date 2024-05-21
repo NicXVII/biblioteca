@@ -250,46 +250,44 @@ async function popolateVolume(data)
 
  divVolumi.classList.add('divVolumi');
 
- for(dato of data)
-    {
-        var div = document.createElement('div');
-        div.classList.add('divVolume');
-        var p = document.createElement('p');
-        p.innerHTML = "Numero Volume: "+dato.numeroVolume;
-        div.appendChild(p);
+ for (let dato of data) {
+    var div = document.createElement('div');
+    div.classList.add('divVolume');
+    
+    var p = document.createElement('p');
+    p.innerHTML = "Numero Volume: " + dato.numeroVolume;
+    div.appendChild(p);
 
-        var p = document.createElement('p');
-        p.innerHTML = "ISBN: "+dato.isbn;
-        div.appendChild(p);
+    p = document.createElement('p'); 
+    p.innerHTML = "ISBN: " + dato.isbn;
+    div.appendChild(p);
 
-        var worker = sessionStorage.getItem('worker');
-
-        worker = worker ? worker : null;
-        
-        if (!worker) {
-            worker = false;
-        }
-        //console.log(sessionStorage.getItem('worker'));
-        if(!worker)
-            {
-            var btn = document.createElement('button');
-            btn.classList.add('btnPrenotazione');
-            btn.innerHTML = 'Prenota';
-            listenerPrenotaVolume(btn,dato.id);
-            div.appendChild(btn);
-        }else
+    var user = sessionStorage.getItem('user');
+    var worker = sessionStorage.getItem('worker');
+    console.log(user + "  worker " + worker);
+    if(worker!== null && worker)
         {
             var data = await fetchPosizioneVolume(dato.id);
-            //console.log(data);
             var p = document.createElement('p');
-            p.innerHTML = "Stanza: " + data.nomeStanza+ " armadio: " + data.nomeArmadio + " scaffale: " + data.nomeScaffale + " posizione: " + data.numeroScaffale;
+            p.innerHTML = "Stanza: " + data.nomeStanza + " armadio: " + data.nomeArmadio + " scaffale: " + data.nomeScaffale + " posizione: " + data.numeroScaffale;
             div.appendChild(p);
         }
-        divVolumi.appendChild(div);
+    
+       console.log( user);
+    if(user!== null && user)
+        {
+        var btn = document.createElement('button');
+        btn.classList.add('btnPrenotazione');
+        btn.innerHTML = 'Prenota';
+        listenerPrenotaVolume(btn, dato.id);
+        div.appendChild(btn);
+        }
 
-    }
 
-    detailDiv.appendChild(divVolumi);
+    divVolumi.appendChild(div);
+}
+
+detailDiv.appendChild(divVolumi);
 }
 
 function popolateCartina(data) {

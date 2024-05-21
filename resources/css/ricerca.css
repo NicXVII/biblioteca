@@ -73,15 +73,25 @@ body {
 }
 
 .risultatoRicerca {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+  grid-gap: 20px;
   justify-content: center;
-  display: flex;
-  flex-direction: row;
+  align-items: center;
   width: 80%;
-  padding: 20px; /* Increased padding for better spacing */
+  padding: 20px;
   margin-bottom: 20px; /* Added margin between search results */
   background-color: #f5f2f2; /* Light background color for better readability */
   border-radius: 10px; /* Rounded corners for a more modern look */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+}
+
+.risultatoRicerca > .item {
+  background-color: #fff; /* White background for each item */
+  padding: 10px; /* Padding inside each item */
+  border-radius: 5px; /* Rounded corners for each item */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for each item */
 }
 
 .nome,

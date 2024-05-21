@@ -45,5 +45,5 @@ if (!isset($_SESSION['workerID']) && !isset($_SESSION['userID'])) {
 
 </html>
 
-<script src="resources/js/account.js"></script>
+<script src="resources/js/accountLavoratore.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

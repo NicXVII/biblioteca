@@ -27,7 +27,7 @@ session_start();
                     <label for="firstname">Cognome</label>
                     <input type="text" name="surname" id="surname" placeholder="Cognome" required />
                     <label for="firstname">Codice Fiscale</label>
-                    <input type="text" name="fiscale" id="fiscale" placeholder="Codice Fiscale" required />
+                    <input type="text" name="fiscale" id="fiscale" placeholder="Codice Fiscale" required minlength="16" maxlength="16" />
                     <label for="password">Password</label>
                     <input type="text" name="password" id="password" placeholder="Password" required />
                     <label for="conpass">Conferma Password:</label>

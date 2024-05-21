@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log(worker == true);
-    if(worker  == true)
+    var worker = sessionStorage.getItem('worker');
+    console.log(worker != null && worker);
+
+    if(worker != null && worker)
         {
+            console.log('worker account already logged in');
             fetchData();
         }
 });

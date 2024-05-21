@@ -75,11 +75,29 @@ async function gestistiRegistrazione(nome,email,password,cognome,codiceFiscale,c
 {
     var esito = false;
     if(!controlloPassword(password, checkPassword))
+        {
+        popUpWrong("Password non corrispondenti");
         return;
-    else
-    {   if(!codiceFiscaleCheck(codiceFiscale))
+        }
+    
+    if(!isOnlyLetters(nome))
+        {
+            popUpWrong("Nome non valido");
+            return;
+        }
+    if(!isOnlyLetters(cognome))
+        {
+            popUpWrong("Cognome non valido");
+            return;
+        }    
+            //console.log(codiceFiscaleCheck(codiceFiscale));
+        if(codiceFiscaleCheck(codiceFiscale))
             esito =  await fetchRegister(nome,email,password,cognome,codiceFiscale);
-    }
+        else
+        {
+            popUpWrong("Codice fiscale non valido");
+            return;
+        }
 
     console.log(esito);
     popUp(esito);
@@ -90,6 +108,7 @@ function popUp(esito){
     if(esito)
     {
         popUpRight();
+        sessionStorage.setItem('user',true);
         window.location.href = "index.php";
     }
     else
@@ -139,8 +158,12 @@ function codiceFiscaleCheck(codiceFiscale) {
     var resto = somma % 26;
     var carattereControlloCalcolato = caratteri[resto];
     
-    // Confronto con l'ultimo carattere
     return carattereControllo === carattereControlloCalcolato;
+}
+
+
+function isOnlyLetters(str) {
+    return /^[A-Za-z]+$/.test(str);
 }
 
 //---------------------------------------------------------------------------------------------------
