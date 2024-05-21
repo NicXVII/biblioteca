@@ -208,7 +208,7 @@ async function fetchCreaPrestito(id)
         }
 
         const data = await response.json();
-        return data.success;
+        return data;
     } catch (error) {
         console.error('Si è verificato un errore:', error);
         return false; 
@@ -458,14 +458,20 @@ function listenerConsegna(btn,id)
 {
     btn.addEventListener('click', async function() {
         console.log(id);
-        var result = await fetchAccettaPrenotazione(id);
-        if (result.success) {
-            console.log('Prenotazione accettata');
+        var resultAccetta = await fetchAccettaPrenotazione(id);
+        console.log(resultAccetta);
+        if (resultAccetta.success) {
+            successPopUp('Prenotazione accettata');
             var result = await fetchCreaPrestito(id);
-            console.log("Esito creazione prestito: "+result.data);
+            console.log("Esito creazione prestito: "+result);
+            if(result.success)
+                {
+                    successPopUp('Prenotazione accettata e prestito creato');
+                }
+                
             whatFetch();
         } else {
-            console.log('Prenotazione non accettata ' + result.data);
+            wrongPopUp('Prenotazione non accettata ' + resultAccetta.message);
         }
     });
 }
@@ -476,10 +482,33 @@ function listenerTermina(btn,id)
         //console.log(id);
         var result = await terminaPrestito(id);
         if (result) {
-            console.log('Prestito terminato');
+            successPopUp('Prestito terminato');
             whatFetch();
         } else {
-            console.log('Prestito non terminato');
+            wrongPopUp('Prestito non terminato');
         }
+    });
+}
+
+
+
+function successPopUp(text)
+{
+    swal({
+        title: "Success!",
+        text: text,
+        icon: "success",
+        button: "Great!"
+    });
+}
+
+
+function wrongPopUp(text)
+{
+    swal({
+        title: "Error!",
+        text: text,
+        icon: "error",
+        button: "Try Again"
     });
 }

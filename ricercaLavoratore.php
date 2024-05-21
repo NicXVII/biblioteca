@@ -30,4 +30,5 @@ if (session_status() === PHP_SESSION_NONE) {
 </body>
 
 </html>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="resources/js/ricercaLavoratore.js"></script>

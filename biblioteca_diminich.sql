@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 20, 2024 alle 08:52
+-- Creato il: Mag 21, 2024 alle 17:14
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -31,6 +31,33 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `CarteInScaffale` (IN `scaffale_id` 
     FROM tscaffale
     JOIN tscaffalecarta ON tscaffale.idScaffale = tscaffalecarta.idScaffale
     WHERE tscaffale.idScaffale = scaffale_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkPrestitoCarta` (IN `p_idCarta` INT)   BEGIN
+    SELECT COUNT(*)
+    FROM tprenotazionecarta
+    JOIN tprestitocarta ON tprenotazionecarta.idPrenotazione = tprestitocarta.idPrenotazione
+    WHERE tprenotazionecarta.idCarta = p_idCarta
+    AND tprestitocarta.dataFine IS NULL;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkPrestitoLibro` (IN `libroID` INT)   BEGIN
+    DECLARE countCompletedReservations INT;
+
+    SELECT COUNT(*) INTO countCompletedReservations
+    FROM tprenotazione
+    JOIN tprestito ON tprenotazione.idPrenotazione = tprestito.idPrenotazione
+    WHERE tprenotazione.idLibro = libroID
+AND tprestito.dataFine IS NULL;
+    SELECT countCompletedReservations AS NumberOfCompletedReservations;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkPrestitoVolume` (IN `p_idVolume` INT)   BEGIN
+    SELECT COUNT(*)
+    FROM tprenotazioneenciclopedia
+    JOIN tprestitoenciclopedia ON tprenotazioneenciclopedia.idPrenotazione = tprestitoenciclopedia.idPrenotazione
+    WHERE tprenotazioneenciclopedia.idVolume = p_idVolume
+    AND tprestitoenciclopedia.dataFine IS NULL;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertAutore` (IN `nome` VARCHAR(255), IN `cognome` VARCHAR(255))   BEGIN
@@ -199,7 +226,8 @@ INSERT INTO `tautoreenciclopedia` (`idMultiAutori`, `idAutore`, `idEnciclopedia`
 (3, 4, 9),
 (4, 4, 6),
 (5, 7, 7),
-(6, 2, 8);
+(6, 2, 8),
+(7, 2, 36);
 
 -- --------------------------------------------------------
 
@@ -277,7 +305,8 @@ CREATE TABLE `tcliente` (
 
 INSERT INTO `tcliente` (`IdCliente`, `nome`, `cognome`, `codiceFiscale`, `password`, `mail`) VALUES
 (1, 'Nicolas', 'Diminich', 'codiceFiscvale', '1234', 'test@gmail.com'),
-(2, 'test2', 'test2', 'test2', 'test2', 'test2@gmail.com');
+(2, 'test2', 'test2', 'test2', 'test2', 'test2@gmail.com'),
+(3, 'Drako', 'Snake', '3123123213123dawdaw', '123', 'giacomino@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -304,7 +333,8 @@ INSERT INTO `tenciclopedia` (`idEnciclopedia`, `titolo`, `data`, `volumiTotali`,
 (8, 'Enciclopedia di Fisica Quantistica', '2023-03-25', 12, '978-3456789012', 2),
 (9, 'Enciclopedia di Letteratura Contemporanea', '2023-04-30', 7, '978-4567890123', 2),
 (10, 'Enciclopedia di Arte Medievale', '2023-05-10', 5, '978-5678901234', 3),
-(13, 'test', '2024-12-04', 3, '1238976541203', 3);
+(13, 'test', '2024-12-04', 3, '1238976541203', 3),
+(36, 'fwafawfawfawf', '2024-04-30', 5, '123-3-445-66666-6', 3);
 
 -- --------------------------------------------------------
 
@@ -382,10 +412,16 @@ CREATE TABLE `tprenotazione` (
 INSERT INTO `tprenotazione` (`idPrenotazione`, `idCliente`, `idLibro`, `dataPrenotazione`, `dataAccetazione`) VALUES
 (1, 1, 19, '2024-04-01', '2024-05-01'),
 (3, 1, 17, '2024-05-02', '2024-05-13'),
-(32, 1, 15, '2024-05-02', NULL),
+(32, 1, 15, '2024-05-02', '2024-05-20'),
 (66, 1, 16, '2024-05-06', '2024-05-13'),
 (67, 1, 11, '2024-05-07', '2024-05-12'),
-(68, 1, 22, '2024-05-19', NULL);
+(68, 1, 22, '2024-05-19', '2024-05-20'),
+(69, 1, 28, '2024-05-20', '2024-05-20'),
+(71, 3, 28, '2024-05-20', '2024-05-20'),
+(72, 3, 28, '2024-05-20', '2024-05-20'),
+(73, 3, 15, '2024-05-20', '2024-05-20'),
+(74, 1, 17, '2024-05-21', '2024-05-21'),
+(75, 3, 17, '2024-05-21', '2024-05-21');
 
 -- --------------------------------------------------------
 
@@ -407,9 +443,11 @@ CREATE TABLE `tprenotazionecarta` (
 
 INSERT INTO `tprenotazionecarta` (`idPrenotazione`, `idCliente`, `idCarta`, `dataPrenotazione`, `dataAccetazione`) VALUES
 (1, 1, 1, '2024-05-05', '2024-05-13'),
-(2, 1, 4, '2024-05-05', NULL),
-(3, 1, 7, '2024-05-05', NULL),
-(4, 1, 3, '2024-05-06', '2024-05-13');
+(2, 1, 4, '2024-05-05', '2024-05-21'),
+(3, 1, 7, '2024-05-05', '2024-05-21'),
+(4, 1, 3, '2024-05-06', '2024-05-13'),
+(5, 1, 1, '2024-05-21', '2024-05-21'),
+(6, 3, 1, '2024-05-21', NULL);
 
 -- --------------------------------------------------------
 
@@ -447,8 +485,12 @@ CREATE TABLE `tprestito` (
 INSERT INTO `tprestito` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`, `idLavoratoreConsegna`, `idLavoratoreRitiro`) VALUES
 (1, 1, '2024-05-01', '2024-05-12', 1, 1),
 (5, 67, NULL, '2024-05-13', 1, 1),
-(6, 66, NULL, NULL, 1, NULL),
-(7, 3, '2024-05-13', NULL, 1, NULL);
+(6, 66, NULL, '2024-05-20', 1, 1),
+(7, 3, '2024-05-13', '2024-05-20', 1, 1),
+(9, 68, '2024-05-20', '2024-05-20', 1, 1),
+(10, 32, '2024-05-20', '2024-05-21', 1, 1),
+(11, 74, '2024-05-21', '2024-05-21', 1, 1),
+(12, 75, '2024-05-21', '2024-05-21', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -471,7 +513,10 @@ CREATE TABLE `tprestitocarta` (
 
 INSERT INTO `tprestitocarta` (`idPrestito`, `idPrenotazione`, `dataInizio`, `dataFine`, `idLavoratoreConsegna`, `idLavoratoreRitiro`) VALUES
 (1, 4, '2024-05-13', '2024-05-13', 1, 1),
-(2, 1, '2024-05-13', NULL, 1, NULL);
+(2, 1, '2024-05-13', '2024-05-21', 1, 1),
+(3, 2, '2024-05-21', '2024-05-21', 1, 1),
+(4, 3, '2024-05-21', '2024-05-21', 1, 1),
+(5, 5, '2024-05-21', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -595,6 +640,7 @@ INSERT INTO `tscaffalevolume` (`idScaffaleVolume`, `idScaffale`, `idVolume`, `nu
 (4, 6, 81, 4),
 (5, 6, 83, 5),
 (7, 6, 86, 7),
+(16, 6, 118, 7),
 (8, 7, 87, 1),
 (9, 7, 88, 2),
 (10, 7, 91, 3),
@@ -657,7 +703,8 @@ INSERT INTO `tvolume` (`idVolume`, `isbn`, `numeroVolume`, `idEnciclopedia`) VAL
 (96, '978-5678901230', 1, 10),
 (97, '978-5678901231', 2, 10),
 (98, '978-5678901232', 3, 10),
-(103, '1238976541203', 1, 13);
+(103, '1238976541203', 1, 13),
+(118, '9898989890121', 2, 13);
 
 --
 -- Indici per le tabelle scaricate
@@ -871,7 +918,7 @@ ALTER TABLE `tautorecarta`
 -- AUTO_INCREMENT per la tabella `tautoreenciclopedia`
 --
 ALTER TABLE `tautoreenciclopedia`
-  MODIFY `idMultiAutori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idMultiAutori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT per la tabella `tcartageopolitica`
@@ -889,13 +936,13 @@ ALTER TABLE `tcasaeditrice`
 -- AUTO_INCREMENT per la tabella `tcliente`
 --
 ALTER TABLE `tcliente`
-  MODIFY `IdCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `IdCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `tenciclopedia`
 --
 ALTER TABLE `tenciclopedia`
-  MODIFY `idEnciclopedia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idEnciclopedia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT per la tabella `tlavoratore`
@@ -913,13 +960,13 @@ ALTER TABLE `tlibro`
 -- AUTO_INCREMENT per la tabella `tprenotazione`
 --
 ALTER TABLE `tprenotazione`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT per la tabella `tprenotazionecarta`
 --
 ALTER TABLE `tprenotazionecarta`
-  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idPrenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT per la tabella `tprenotazioneenciclopedia`
@@ -931,13 +978,13 @@ ALTER TABLE `tprenotazioneenciclopedia`
 -- AUTO_INCREMENT per la tabella `tprestito`
 --
 ALTER TABLE `tprestito`
-  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT per la tabella `tprestitocarta`
 --
 ALTER TABLE `tprestitocarta`
-  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idPrestito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT per la tabella `tprestitoenciclopedia`
@@ -967,7 +1014,7 @@ ALTER TABLE `tscaffalelibro`
 -- AUTO_INCREMENT per la tabella `tscaffalevolume`
 --
 ALTER TABLE `tscaffalevolume`
-  MODIFY `idScaffaleVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idScaffaleVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT per la tabella `tstanza`
@@ -979,7 +1026,7 @@ ALTER TABLE `tstanza`
 -- AUTO_INCREMENT per la tabella `tvolume`
 --
 ALTER TABLE `tvolume`
-  MODIFY `idVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `idVolume` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- Limiti per le tabelle scaricate

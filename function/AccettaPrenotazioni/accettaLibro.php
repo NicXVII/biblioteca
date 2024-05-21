@@ -16,7 +16,7 @@ if (true) {
         ];
     } else {
         $data = json_decode(file_get_contents('php://input'), true);
-        //$data['id'] = 72;
+        $data['id'] = 75;
         if (isset($data['id'])) {
             $id = $data['id'];
 
@@ -57,9 +57,9 @@ if (true) {
                     'success'    =>  false,
                     'message'   =>  'Book is already borrowed',
                 ];
-                json_encode($result);
+                echo json_encode($result);
                 mysqli_close($db);
-                exit(0);
+                exit();
             }
 
             $db->next_result();
