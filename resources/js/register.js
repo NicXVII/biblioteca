@@ -129,37 +129,20 @@ function controlloPassword(password, checkPassword)
     }
     return true;
 }
-
 function codiceFiscaleCheck(codiceFiscale) {
     if (codiceFiscale.length !== 16) {
         return false;
     }
-    
-    var cognome = codiceFiscale.substring(0, 3).toUpperCase();
-    var nome = codiceFiscale.substring(3, 6).toUpperCase();
-    var dataNascita = codiceFiscale.substring(6, 10);
-    var carattereControllo = codiceFiscale.substring(15).toUpperCase();
-    
-    var caratteri = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var somma = 0;
-    for (var i = 0; i < 15; i++) {
-        var c = codiceFiscale[i].toUpperCase();
-        var valore;
-        if (i % 2 === 0) {
-            valore = caratteri.indexOf(c) * 1;
-        } else {
-            valore = caratteri.indexOf(c) * 2;
-            if (valore > 9) {
-                valore = valore - 9;
-            }
-        }
-        somma += valore;
+
+    // Controlla che il codice fiscale abbia il pattern corretto
+    if (!/^[0-9A-Z]+$/i.test(codiceFiscale)) {
+        return false;
     }
-    var resto = somma % 26;
-    var carattereControlloCalcolato = caratteri[resto];
-    
-    return carattereControllo === carattereControlloCalcolato;
+
+    return true;
 }
+
+
 
 
 function isOnlyLetters(str) {
