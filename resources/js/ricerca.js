@@ -279,7 +279,7 @@ casaEditriceP.appendChild(link);
         divResult.appendChild(annoP);
         divResult.appendChild(casaEditriceP);
         
-        if(!worker && (selected !== 'enciclopedie' && selected !== 'tutti'))
+        if(elemento != 'enciclopedie')
         {
             var button = document.createElement('button');
             button.setAttribute('id',dato.id);

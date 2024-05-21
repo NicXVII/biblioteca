@@ -262,9 +262,15 @@ async function popolateVolume(data)
         p.innerHTML = "ISBN: "+dato.isbn;
         div.appendChild(p);
 
+        var worker = sessionStorage.getItem('worker');
+
+        worker = worker ? worker : null;
         
+        if (!worker) {
+            worker = false;
+        }
         //console.log(sessionStorage.getItem('worker'));
-        if(sessionStorage.getItem("worker") === true)
+        if(worker)
             {
             var btn = document.createElement('button');
             btn.classList.add('btnPrenotazione');
