@@ -64,8 +64,8 @@ body {
 
 #btn {
   margin-left: 2%;
-  width: 15%;
-  height: 40%;
+  width: 230px;
+  height: 80px;
   background-color: #dc3545;
   color: #fff;
   padding: 8px 16px;
@@ -109,12 +109,30 @@ body {
   align-items: center;
   justify-content: center;
 }
-
 .elemento {
   margin-top: 2vh;
-  display: flex;
-  flex-direction: row;
+  display: grid;
   justify-items: center;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.elemento4 {
+  font-size: 20px !important;
+  margin-top: 2vh;
+  display: grid;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.elemento > div {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -137,4 +155,10 @@ select option {
   padding: 8px;
   background-color: #fff;
   color: #333;
+}
+
+.noData {
+  text-align: center;
+  font-size: 2.5rem;
+  align-items: center;
 }

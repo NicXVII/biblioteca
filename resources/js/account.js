@@ -53,7 +53,7 @@ function fetcUtente()
     .then(data => {
 
         if (data.success) {
-            console.log('La richiesta ha avuto successo:', data.data);
+            //console.log('La richiesta ha avuto successo:', data.data);
             popolateDataUser(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
@@ -84,7 +84,7 @@ function fetchPrestiti()
     .then(data => {
 
         if (data.success) {
-            console.log('La richiesta ha avuto successo:', data.data);
+            //console.log('La richiesta ha avuto successo:', data.data);
             populatePrestiti(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
@@ -116,7 +116,7 @@ function fetchPrenotazioni()
     .then(data => {
 
         if (data.success) {
-            console.log('La richiesta ha avuto successo:', data.data);
+            //console.log('La richiesta ha avuto successo:', data.data);
             populatePrenotazioni(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
@@ -343,18 +343,18 @@ function logout(btn) {
     });
 }
 
-function generateSelect(divPrestiti)
-{
-
+function generateSelect(divPrestiti) {
     var select = document.createElement("select");
     var elements = ['Libro', 'Enciclopedia', 'Carta Geo Politica'];
-    
+
     for (var i = 0; i < elements.length; i++) {
         var option = document.createElement("option");
         option.text = elements[i];
         select.add(option);
     }
+
     addEventListenerSelect(select);
+
     divPrestiti.appendChild(select);
 }
 
@@ -364,6 +364,15 @@ function populatePrestiti(data) {
     var titolo = document.createElement("h2");
     titolo.innerHTML = "Prestiti";
     divPrestiti.appendChild(titolo);
+
+    if(data.lenght === 0)
+        {
+            var p = document.createElement("p");
+            p.innerHTML = "Nessun prestito";
+            p.classList.add("noData");
+            divPrestiti.appendChild(p);
+            return;
+        }
     
    generateSelect(divPrestiti);
     
@@ -409,6 +418,15 @@ function populatePrestitiNoLibro(data)
     var titolo = document.createElement("h2");
     titolo.innerHTML = "Prestiti";
     divPrestiti.appendChild(titolo);
+    console.log(data.length === 0);
+    if(data.lenght === 0)
+        {
+            var p = document.createElement("p");
+            p.innerHTML = "Nessun prestito";
+            p.classList.add("noData");
+            divPrestiti.appendChild(p);
+            return;
+        }
     generateSelect(divPrestiti);
     console.log("Test " +data.length <= 0);
     if(data.lengh <= 0)
@@ -453,6 +471,15 @@ function populatePrenotazioni(data) {
     var divPrestiti = document.querySelector('.prenotazioni');
     divPrestiti.innerHTML = '';	
 
+    if(data.length === 0)
+        {
+            var p = document.createElement("p");
+            p.innerHTML = "Nessuna prenotazione";
+            p.classList.add("noData");
+            divLibro.appendChild(p);
+            return;
+        }
+
     var titolo = document.createElement("h2");
     titolo.innerHTML = "Prenotazioni";
     divPrestiti.appendChild(titolo);
@@ -483,6 +510,8 @@ function populatePrenotazioni(data) {
                 btn.id = "btn";
                 btn.setAttribute("data-id", dato.idPrenotazione);
                 divElemento.appendChild(btn);
+                divElemento.classList.remove("elemento");
+                divElemento.classList.add("elemento4"); 
             }
         divLibro.appendChild(divElemento);
     }
@@ -500,8 +529,18 @@ function populatePrenotazioniNoLibro(data)
     titolo.innerHTML = "Prenotazioni";
     divPrestiti.appendChild(titolo);
 
-    divLibro = document.createElement("div");
-    divLibro.classList.add("libro");
+  
+    //console.log(data.length === 0);
+    if(data.length === 0)
+        {
+            var p = document.createElement("p");
+            p.innerHTML = "Nessuna prenotazione";
+            p.classList.add("noData");
+            divPrestiti.appendChild(p);
+            return;
+        }
+        divLibro = document.createElement("div");
+        divLibro.classList.add("libro");
     for (dato of data) {
         var divElemento = document.createElement("div");
         divElemento.classList.add("elemento");
@@ -534,11 +573,11 @@ function populatePrenotazioniNoLibro(data)
 }
 
 //-----------------------------------------------------------------------------
-var selected = 'Libro';
+var selected = null;
 function addEventListenerSelect(select) {
     select.addEventListener("change", function() {
         selected = select.options[select.selectedIndex].value;
-        //console.log(selected);
+        console.log(select.options[select.selectedIndex].value);
         whatIFecth(selected);
     });
 }
