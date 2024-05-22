@@ -73,6 +73,12 @@ function popolateDataUser(data)
     button.innerHTML = "Logout";
     logout(button);
     divBtn.appendChild(button);
+
+    var divPrenotazioni = document.querySelector('.prenotazioni');
+    divPrenotazioni.remove();
+
+    var divPrestiti = document.querySelector('.prestiti');
+    divPrestiti.remove();
 }
 
 function logout(btn) {

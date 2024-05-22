@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if(user)
     {
         fetcUtente();
+        generateSelect();
         fetchPrestiti();  
         fetchPrenotazioni(); 
     }
@@ -19,15 +20,15 @@ function whatIFecth(value)
 {
     switch(value)
     {
-        case "Libro":
+        case "libro":
             fetchPrestiti();
             fetchPrenotazioni();
             break;
-        case "Enciclopedia":
+        case "enciclopedia":
             prestitiVolume();
             prenotazioniVolume();
             break;
-        case "Carta Geo Politica":
+        case "carta geo politica":
             fetchPrenotazioniCarta();
             prestitiCarta();
             break;
@@ -343,19 +344,21 @@ function logout(btn) {
     });
 }
 
-function generateSelect(divPrestiti) {
+function generateSelect() {
+    var div = document.querySelector('.select');
     var select = document.createElement("select");
     var elements = ['Libro', 'Enciclopedia', 'Carta Geo Politica'];
 
     for (var i = 0; i < elements.length; i++) {
         var option = document.createElement("option");
-        option.text = elements[i];
+        option.textContent = elements[i];
+        option.value = elements[i].toLowerCase();
         select.add(option);
     }
 
     addEventListenerSelect(select);
 
-    divPrestiti.appendChild(select);
+    div.appendChild(select);
 }
 
 function populatePrestiti(data) {
@@ -374,7 +377,7 @@ function populatePrestiti(data) {
             return;
         }
     
-   generateSelect(divPrestiti);
+   //generateSelect(divPrestiti);
     
     
  
@@ -427,7 +430,7 @@ function populatePrestitiNoLibro(data)
             divPrestiti.appendChild(p);
             return;
         }
-    generateSelect(divPrestiti);
+    //generateSelect(divPrestiti);
     console.log("Test " +data.length <= 0);
     if(data.lengh <= 0)
         {
@@ -573,12 +576,14 @@ function populatePrenotazioniNoLibro(data)
 }
 
 //-----------------------------------------------------------------------------
-var selected = null;
+console.log(sessionStorage.getItem('selected'));
+var selected = sessionStorage.getItem('selected') ?? 'libro';
 function addEventListenerSelect(select) {
     select.addEventListener("change", function() {
         selected = select.options[select.selectedIndex].value;
-        console.log(select.options[select.selectedIndex].value);
-        whatIFecth(selected);
+        sessionStorage.setItem('selected', selected);
+        console.log(selected);
+        whatIFecth(sessionStorage.getItem('selected'));
     });
 }
 

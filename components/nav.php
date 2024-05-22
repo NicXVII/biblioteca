@@ -32,7 +32,7 @@ if ($worker === null && $id === null)
             <li id="img">
                 <a href="index.php">
                     <i class="fa-solid fa-house"></i>
-                    <img src="resources/img/logo.jpg" alt="logoBiblioteca">
+                    <img src="resources/img/logo.png" alt="logoBiblioteca">
                 </a>
             </li>
             <li>

@@ -382,7 +382,7 @@ function addEventListenerSelect() {
     var select = document.getElementById("selectType");
     select.addEventListener("change", function() {
         elemento = select.options[select.selectedIndex].value;
-        console.log(elemento);
+        //console.log(elemento);
     });
 }
 

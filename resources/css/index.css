@@ -102,6 +102,17 @@ body {
   border-radius: 8px;
   overflow: hidden;
   background-color: #f9f9f9;
+  position: relative;
+}
+
+.selectElement::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background-color: #ccc;
 }
 
 .selectElement button {

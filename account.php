@@ -36,6 +36,7 @@ if (!isset($_SESSION['workerID']) && !isset($_SESSION['userID'])) {
             <div class="userMediaData"></div>
             <div class="userMediaBtn"></div>
         </div>
+        <div class='select'></div>
         <div class='prestiti'>
         </div>
         <div class='prenotazioni'>
