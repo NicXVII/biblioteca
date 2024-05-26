@@ -56,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'isbn' => $row['isbn'],
                         'nome' => $row['nome'],
                         'cognome' => $row['cognome'],
-                        'dataPrenotazione' => $row['dataPrenotazione'],
-                        'dataAccetazione' => $row['dataAccetazione'],
+                        'dataPrenotazione'   => date('d/m/Y', strtotime($row['dataPrenotazione'])),
+                        'dataAccetazione'    => ($row['dataAccetazione'] != null) ? date('d/m/Y', strtotime($row['dataAccetazione'])) : null,
                     ];
                 }
 

@@ -51,15 +51,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $resultArray =  [];
                 while ($row = mysqli_fetch_assoc($queryResult)) {
                     $resultArray[] = [
-                        'idLavoratoreConsegna'   => $row['idLavoratoreConsegna'],
+                        'idLavoratoreConsegna' => $row['idLavoratoreConsegna'],
                         'idLavoratoreRitiro'   => $row['idLavoratoreRitiro'],
-                        'id'   => $row['idPrestito'],
-                        'nome'  => $row['nome'],
-                        'cognome'  => $row['cognome'],
-                        'idPrenotazione'  => $row['idPrenotazione'],
-                        'isbn'  => $row['isbn'],
-                        'dataInizio'  => $row['dataInizio'],
-                        'dataFine'  => $row['dataFine']
+                        'id'                   => $row['idPrestito'],
+                        'nome'                 => $row['nome'],
+                        'cognome'              => $row['cognome'],
+                        'idPrenotazione'       => $row['idPrenotazione'],
+                        'isbn'                 => $row['isbn'],
+                        'dataInizio'           => date('d/m/Y', strtotime($row['dataInizio'])),
+                        'dataFine'             => ($row['dataFine'] != null) ? date('d/m/Y', strtotime($row['dataFine'])) : null,
                     ];
                 }
 

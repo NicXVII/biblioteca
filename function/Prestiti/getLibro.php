@@ -60,8 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'cognome'  => $row['cognome'],
                         'idPrenotazione'  => $row['idPrenotazione'],
                         'isbn'  => $row['isbn'],
-                        'dataInizio'  => $row['dataInizio'],
-                        'dataFine'  => $row['dataFine']
+                        'dataInizio'           => date('d/m/Y', strtotime($row['dataInizio'])),
+                        'dataFine'             => ($row['dataFine'] != null) ? date('d/m/Y', strtotime($row['dataFine'])) : null,
                     ];
                 }
 

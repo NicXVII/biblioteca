@@ -6,8 +6,7 @@ $result = array();
 
 // Check if the request method is POST
 //if ($_SERVER['REQUEST_METHOD'] == 'POST')
-if (true) 
-{
+if (true) {
     $db;
 
     if (!$db) {
@@ -41,8 +40,8 @@ if (true)
                             'nomeLibro'     =>  $row['nomeLibro'],
                             'nomeAutore'    =>  $row['nomeAutore'],
                             'cognomeAutore' =>  $row['cognomeAutore'],
-                            'dataInizio'    =>  $row['dataInizio'],
-                            'dataFine'      =>  $row['dataFine'],
+                            'dataInizio'  => date('d/m/Y', strtotime($row['dataInizio'])),
+                            'dataFine'   => ($row['dataFine'] != null) ? date('d/m/Y', strtotime($row['dataFine'])) : null,
                         ];
                     }
 

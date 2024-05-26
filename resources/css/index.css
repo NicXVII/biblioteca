@@ -5,10 +5,10 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column !important;
-  height: auto;
-  width: auto;
   width: 100vw !important;
+  height: auto;
 }
+
 .title {
   width: 100vw;
   height: auto !important;
@@ -49,7 +49,7 @@ body {
 }
 
 .location img {
-  transition: transform 0.3s ease; /* Cambio graduale della trasformazione con durata di 0.3 secondi e funzione di accelerazione */
+  transition: transform 0.3s ease;
 }
 
 .location img:hover {
@@ -91,7 +91,6 @@ body {
   margin-bottom: 0;
 }
 
-/* =================================================================*/
 .selectElement {
   width: 50%;
   height: 100%;

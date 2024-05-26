@@ -53,12 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 $resultArray =  [];
                 while ($row = mysqli_fetch_array($queryResult)) {
                     $resultArray[] = [
-                        'id'   => $row['idPrenotazione'],
-                        'isbn' => $row['isbn'],
-                        'nome' => $row['nome'],
-                        'cognome' => $row['cognome'],
-                        'dataPrenotazione' => $row['dataPrenotazione'],
-                        'dataAccetazione' => $row['dataAccetazione'],
+                        'id'                 => $row['idPrenotazione'],
+                        'isbn'               => $row['isbn'],
+                        'nome'               => $row['nome'],
+                        'cognome'            => $row['cognome'],
+                        'dataPrenotazione'   => date('d/m/Y', strtotime($row['dataPrenotazione'])),
+                        'dataAccetazione'    => ($row['dataAccetazione'] != null) ? date('d/m/Y', strtotime($row['dataAccetazione'])) : null,
                     ];
                 }
 

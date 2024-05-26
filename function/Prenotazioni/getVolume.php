@@ -5,7 +5,8 @@ ini_set('display_errors', 0);
 if (session_status() == PHP_SESSION_NONE) {
     // Avvia la sessione solo se non è stata già avviata
     session_start();
-}require_once("../database.php");
+}
+require_once("../database.php");
 
 $result = array();
 
@@ -56,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         'isbn' => $row['isbn'],
                         'nome' => $row['nome'],
                         'cognome' => $row['cognome'],
-                        'dataPrenotazione' => $row['dataPrenotazione'],
-                        'dataAccetazione' => $row['dataAccetazione'],
+                        'dataPrenotazione'   => date('d/m/Y', strtotime($row['dataPrenotazione'])),
+                        'dataAccetazione'    => ($row['dataAccetazione'] != null) ? date('d/m/Y', strtotime($row['dataAccetazione'])) : null,
                     ];
                 }
 

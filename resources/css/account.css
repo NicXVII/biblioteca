@@ -11,7 +11,7 @@ body {
 .media {
   margin-top: 5vh;
   width: 100%;
-  height: 78vh; /* Altezza del contenuto media, togliendo l'altezza del navbar */
+  height: 78vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,7 +114,7 @@ body {
   display: grid;
   justify-items: center;
   justify-content: center;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
 }
 
 .elemento4 {
